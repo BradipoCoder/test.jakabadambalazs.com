@@ -25,10 +25,25 @@
         },
 
         doFunkyStuff: function onNextClick(event) {
-            this.model.doSomething();
+            //this.model.doSomething();
+            this.promptForNewTitle();
+
+            let dataTosend = {
+                title: "xxx"
+            };
+
+            //this.model.save(dataTosend, {patch: true});//{patch: true}
+            this.model.sync();
+
             event.preventDefault();
             event.stopPropagation();
         },
+
+        promptForNewTitle: function() {
+            let title = prompt("Please enter a new title", this.model.get("title"));
+            this.model.set({title: title});
+
+        }
     });
 
 

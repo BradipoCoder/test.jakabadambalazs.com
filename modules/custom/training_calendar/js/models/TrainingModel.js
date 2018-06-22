@@ -12,6 +12,13 @@
      * @augments Backbone.Model
      */
     Drupal.trainingCalendar.TrainingModel = Backbone.Model.extend({
+        urlRoot:'https://tests.jakabadambalazs.com/node',
+
+        save: function(attrs, options) {
+            options.patch = true;
+            // Proxy the call to the original save function
+            Backbone.Model.prototype.save.call(this, attrs, options);
+        },
 
         /**
          * @type {object}
@@ -47,19 +54,11 @@
             /** @type {string} */
             "field_training_type": "",
         },
-
-        /**
-         * Change the active page to the next.
-         */
-        doSomething: function () {
-            this.set('title', this.get('title') + "+");
-        },
     });
 
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
         url: 'https://tests.jakabadambalazs.com/rest/trainings-listing?_format=hal_json',
-
     });
 
 })(Backbone, Drupal);
