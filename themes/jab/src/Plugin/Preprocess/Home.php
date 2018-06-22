@@ -17,8 +17,7 @@ use Drupal\archive\Data\LinkCount;
 /**
  * Preprocess Home page
  */
-class Home
-{
+class Home {
 
   /**
    * @param array $variables

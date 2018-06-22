@@ -1,4 +1,5 @@
 <?php
+
 namespace Drupal\jab\Plugin\Preprocess;
 
 use Drupal\bootstrap\Utility\Element;
@@ -18,8 +19,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  *
  * @BootstrapPreprocess("page")
  */
-class Page extends DrupalPreprocessPage
-{
+class Page extends DrupalPreprocessPage {
 
   // It should be noted that you do not need all three methods here.
   // This is to just show you the different examples of how this plugin
@@ -37,7 +37,7 @@ class Page extends DrupalPreprocessPage
    * @param $hook
    * @param array $info
    */
-  function __construct(array &$vars, $hook, array $info){
+  function __construct(array &$vars, $hook, array $info) {
     parent::__construct($vars, $hook, $info);
 
     $this->pathMatcher = \Drupal::service('path.matcher');
@@ -46,13 +46,12 @@ class Page extends DrupalPreprocessPage
     $this->menuLinkManager = \Drupal::service('plugin.manager.menu.link');
   }
 
-  public function preprocess(array &$variables, $hook, array $info)
-  {
+  public function preprocess(array &$variables, $hook, array $info) {
     parent::preprocess($variables, $hook, $info);
 
     //kint($variables['page']['content']);
 
-    if ($variables['is_front']){
+    if ($variables['is_front']) {
       $home = new Home();
       $home->preprocess($variables);
     }
