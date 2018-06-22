@@ -1,0 +1,7 @@
+training_calendar.training_calendar_controller_calendar:
+  path: '/training_calendar'
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::calendar'
+    _title: 'Training Calendar'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,5 @@
+name: Training Calendar
+type: module
+description: Training Calendar
+core: 8.x
+package: JAB

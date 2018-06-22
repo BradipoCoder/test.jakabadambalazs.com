@@ -1,0 +1,11 @@
+{
+  "name": "drupal/training_calendar",
+  "type": "drupal-module",
+  "description": "Calendar module for training",
+  "keywords": ["Drupal"],
+  "license": "MIT",
+  "minimum-stability": "dev",
+  "require": {
+
+  }
+}

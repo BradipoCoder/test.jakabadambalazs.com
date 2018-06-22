@@ -1,0 +1,18 @@
+training-calendar:
+  version: 1.0
+  js:
+    # CORE Application
+    js/training-calendar.js: {}
+    # Models
+    js/models/TrainingModel.js: {}
+    # Views
+    js/views/TrainingView.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/backbone
+    - core/jquery
+    - core/jquery.once
+    - core/matchmedia
+    - core/matchmedia.addListener
+

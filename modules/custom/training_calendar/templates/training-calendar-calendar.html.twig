@@ -1,0 +1,32 @@
+{{ attach_library('training_calendar/training-calendar') }}
+{#{{ attach_library('sameh/sameh') }}#}
+
+<div class="calendar-main">
+	<h1>{{ content.component_title }}</h1>
+</div>
+
+<hr />
+
+<div id="trainings-list-container">
+</div>
+
+{#--------------------------------------------------------------------------------------------------------------------#}
+{#----------------------------------------------------- TEMPLATES ----------------------------------------------------#}
+{#--------------------------------------------------------------------------------------------------------------------#}
+
+{#--- TRAINING ELEMENT TEMPLATE ---#}
+<script type="text/template" id="template--training-view">
+	<div class="training col-md-4">
+		<h2><%= title %></h2>
+		<p>Date: <%= field_date_programmed %></p>
+		<p>Total distance: <%= field_total_distance %></p>
+		<p><%= body %></p>
+		<button type="button" class="training-calendar--event--action-1">Action 1</button>
+	</div>
+</script>
+
+{#--- TRAINING ELEMENT LIST TEMPLATE ---#}
+<script type="text/template" id="template--trainings-list">
+	<div class="row trainings">
+	</div>
+</script>
