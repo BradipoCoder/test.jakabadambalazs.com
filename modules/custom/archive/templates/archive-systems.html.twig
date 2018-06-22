@@ -1,0 +1,83 @@
+{#
+/**
+ * Archive Systems Teaser
+ */
+#}
+
+{{ attach_library('sameh/sameh') }}
+
+<div class="archive-teaser">
+  <div class="row">
+    <div class="falpi-header falpi-header-systems">
+      <div class="container negative">
+        <div class="falpi-header-content falpi-header-content-systems">
+          <div class="cover-line"></div>
+          <h1 class="h2 margin-b-025 margin-t-0">Soluzioni e sistemi</h1>
+          <p class="margin-b-05">Procedure e tecniche per la pulizia professionale</p>
+          
+          <div class="archive-more">
+            {{ content.more }}
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <div class="row row-card">
+    <div class="falpi-content falpi-content-systems">
+      <div class="container">
+        <div class="card card-xs-spread put-back margin-b-2">
+          <div class="proteaser wrapper-sameh" data-items-selector=".sameh-teaser">
+            <div class="proteaser-system wrapper-sameh">
+              <div class="proteaser-system--item">  
+                {{ content.sweeping_title }}
+                <div class="sameh">
+                  {{ content.sweeping }}
+                </div>
+              </div>
+              <div class="proteaser-system--item">  
+                {{ content.washing_title }}
+                <div class="sameh">
+                  {{ content.washing }}
+                </div>
+              </div>
+              <div class="proteaser-system--item">  
+                {{ content.glasses_title }}
+                <div class="sameh">
+                  {{ content.glasses }}
+                </div>
+              </div>
+            </div>
+
+            <div class="proteaser-solution negative wrapper-sameh">
+              <div class="proteaser-solution--item">
+                {{ content.hospital_title }}
+                <div class="sameh">
+                  {{ content.hospital }}
+                </div>
+              </div>
+              <div class="proteaser-solution--item">
+                {{ content.hotel_title }}
+                <div class="sameh">
+                  {{ content.hotel }}
+                </div>
+              </div>
+              <div class="proteaser-solution--item">
+                {{ content.informatic_title }}
+                <div class="sameh">
+                  {{ content.informatic }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-below-card">
+    <div class="container margin-b-2">
+      {{ content.webform }}
+    </div>
+  </div>
+</div>

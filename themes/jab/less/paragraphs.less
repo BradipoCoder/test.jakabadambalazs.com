@@ -1,0 +1,151 @@
+/* less/paragraphs.less */
+
+.node-page{
+  .field--name-field-content{
+    @media (min-width: @screen-md-min){
+      .margin-v(2);
+    }
+  } 
+}
+
+@sidebar-width-lg: 388px;
+@sidebar-width-md: 322px;
+
+// Title over page non è propriamente un paragraph
+// segue però una logica molto simile
+.title-over-page{
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    margin-left: @sidebar-width-md;
+  }
+
+  @media (min-width: @screen-lg-min){
+    margin-left: @sidebar-width-lg;
+  }  
+}
+
+// ** FORM IN CARD **
+// ------------------
+
+.form-in-card{
+  margin-top: -50px;
+  .margin-b(2);
+
+  @media (min-width: @screen-md-min){
+    margin-right: 50px;
+  }
+
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    margin-left: @sidebar-width-md;
+  }
+
+  @media (min-width: @screen-lg-min){
+    margin-left: @sidebar-width-lg;
+  }  
+}
+
+// ** TIPOLOGIE DI PARAGRAFI **
+// ----------------------------
+
+.paragraph--type--chapter{
+  position: relative;
+  .margin-b(3);
+
+  .field--name-field-title-side{
+
+    &:after{
+      content: '';
+      display: block;
+      height: 2px;
+      background: @brand-primary;
+      width: 50px;
+      .margin-b(1);
+
+      @media (min-width: @screen-md-min){
+        margin-bottom: 0;
+        position: absolute;
+        top: 24px;
+        right: -75px;
+      }
+    }
+
+    @media (min-width: @screen-md-min){
+      position: absolute;
+      top: -10px;
+      width: 150px;
+      text-align: right; 
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      left: @sidebar-width-md - 250px;
+    }
+
+    @media (min-width: @screen-lg-min){
+      left: @sidebar-width-lg - 250px;
+    }
+  }
+
+  .field--name-field-body{
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @sidebar-width-md;
+      margin-right: 50px;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @sidebar-width-lg;
+      margin-right: 100px;
+    }
+  }
+}
+
+.paragraph--type--copy{
+  .margin-b(3);
+  .field--name-field-body{
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @sidebar-width-md;
+      margin-right: 50px;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @sidebar-width-lg;
+      margin-right: 100px;
+    }
+  }
+}
+
+.paragraph--type--video,
+.paragraph--type--img2vertical,
+.paragraph--type--img2square,
+.paragraph--type--img{
+  .margin-b(3);
+
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    margin-left: @sidebar-width-md - 50px;
+  }
+
+  @media (min-width: @screen-lg-min){
+    margin-left: @sidebar-width-lg - 50px;
+    margin-right: 50px;
+  }  
+}
+
+.paragraph--type--img2vertical,
+.paragraph--type--img2square{
+  .field--name-field-2img{
+    @media (max-width: @screen-sm-max){
+      .field--item{
+        .margin-b(1);
+      }
+    }
+
+    @media (min-width: @screen-sm-min){
+      .clearfix();
+      margin-left: -12.5px;
+      margin-right: -12.5px;
+      .field--item{
+        width: 50%;
+        float: left;
+        padding: 0 12.5px;
+      }  
+    }
+  } 
+}

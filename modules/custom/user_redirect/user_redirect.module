@@ -1,0 +1,50 @@
+<?php
+
+/**
+ * @file
+ * Contains user_redirect.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_help().
+ */
+function user_redirect_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the user_redirect module.
+    case 'help.page.user_redirect':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('User redirect after login') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function user_redirect_form_alter(&$form, FormStateInterface $form_state, $form_id) {
+  /*
+  switch ($form_id) {
+    // Alter login form and add own custom submit handler.
+    case 'user_login_form':
+      //drupal_set_message($form_id);
+      $form['#submit'][] = '_user_redirect_user_login_form_submit';
+      break;
+  }*/
+}
+
+/**
+ * Custom submit handler for login form.
+ */
+function _user_redirect_user_login_form_submit($form, FormStateInterface $form_state) {
+  // Set redirect to login form.
+  $url = Url::fromUri('internal:/all-tech');
+  //kint($form_state);
+  $form_state->setRedirectUrl($url);
+}

@@ -1,0 +1,107 @@
+{#
+/**
+ * Page Html Twig Template
+ * Sovrascritto da quello orginale di bootstrap
+ */
+#}
+
+{# Sadmin #}
+{% if page.sadmin %}
+  {% block sadmin %}
+    {{ page.sadmin }}
+  {% endblock %} 
+{% endif %} 
+
+{% set container = theme.settings.fluid_container ? 'container-fluid' : 'container' %}
+{# Navbar #}
+{% if page.navigation or page.navigation_collapsible %}
+  {% block navbar %}
+    {%
+      set navbar_classes = [
+        'navbar',
+        theme.settings.navbar_inverse ? 'navbar-inverse' : 'navbar-default',
+        theme.settings.navbar_position ? 'navbar-' ~ theme.settings.navbar_position|clean_class : container,
+      ]
+    %}
+    <header{{ navbar_attributes.addClass(navbar_classes) }} id="navbar" role="banner">
+      {% if not navbar_attributes.hasClass(container) %}
+        <div class="{{ container }}">
+      {% endif %}
+      <div class="navbar-header">
+        {{ page.navigation }}
+        {# .btn-navbar is used as the toggle for collapsed navbar content #}
+        {% if page.navigation_collapsible %}
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+            <span class="sr-only">{{ 'Toggle navigation'|t }}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+        {% endif %}
+      </div>
+
+      {{ page.logo }}
+
+      {# Navigation (collapsible) #}
+      {% if page.navigation_collapsible %}
+        <div id="navbar-collapse" class="navbar-collapse collapse">
+          {{ page.navigation_collapsible }}
+        </div>
+      {% endif %}
+      {% if not navbar_attributes.hasClass(container) %}
+        </div>
+      {% endif %}
+    </header>
+  {% endblock %}
+{% endif %}
+
+{# Main #}
+{% block main %}
+  <div role="main" class="main-container {{ container }} js-quickedit-main-content">
+
+    {# Action Links #}
+    {% if action_links %}
+      {% block action_links %}
+        <ul class="action-links">{{ action_links }}</ul>
+      {% endblock %}
+    {% endif %}
+
+    {# Help #}
+    {% if page.help %}
+      {% block help %}
+        {{ page.help }}
+      {% endblock %}
+    {% endif %}
+
+    {{ page.cover }}
+
+    {# Content #}
+    {% block content %}
+      <a id="main-content"></a>
+      {{ page.content }}
+    {% endblock %}
+
+    {{ page.front }}
+
+    {% if page.webform %}
+      <div class="row row-page-webform row-dark">
+        <div class="container">
+          {{ page.webform }}  
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+{% endblock %}
+
+{% if page.footer %}
+  {% block footer %}
+    <footer class="footer {{ container }}" role="contentinfo">
+      <div class="row row-darker">
+        <div class="container-fluid">
+          {{ page.footer }}
+        </div>
+      </div>
+    </footer>
+  {% endblock %}
+{% endif %}

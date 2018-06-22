@@ -1,0 +1,415 @@
+<?php
+
+/**
+ * @file
+ * Contains kadmin.module..
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\Core\Menu\MenuTreeParameters;
+use Drupal\Core\Url;
+use Drupal\Component\Utility\SafeMarkup;
+
+/**
+ * Implements hook_preprocess_html()
+ */
+function kadmin_preprocess_html(&$vars){
+  if (\Drupal::currentUser()->hasPermission('access kadmin')){
+    $vars['attributes']['class'][] = 'kadmin';
+    $vars['attributes']['class'][] = 'kadmin-open';
+  }
+}
+
+/**
+ * Implements hook_help().
+ */
+function kadmin_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the kadmin module.
+    case 'help.page.kadmin':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('K Admin menu for drupal sites') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_page_top().
+ *
+ * Add K Admin menu to the top of the page
+ */
+function kadmin_page_top(array &$page_top) {
+  $access = \Drupal::currentUser()->hasPermission('access kadmin');
+
+  if ($access){
+    $page_top['toolbar'] = array(
+      '#theme' => 'kadmin_menu',
+      '#content' => _kadmin_create_menu(),
+      '#access' => $access,
+      //'#cache' => [
+      //  'keys' => ['toolbar'],
+      //  'contexts' => ['user.permissions'],
+      //],
+      '#attached' => array(
+        'library' =>  array(
+          'kadmin/kadmin-lib'
+        ),
+      ),
+    );
+  }
+  
+}
+
+/**
+ * Costruisce ed implementa il menu managment
+ * @todo: aggiungere voci per l'utente
+ */
+function _kadmin_create_menu(){
+
+  $config = \Drupal::config('kadmin.configkadmin');
+
+  $menu_tree = \Drupal::menuTree();
+  $menu_tree_parameters = new MenuTreeParameters();
+  //$menu_tree_parameters->minDepth = 1;
+  $menu_tree_parameters->excludeRoot();
+
+  $tree = \Drupal::menuTree()->load('admin', $menu_tree_parameters);
+  $manipulators = array(
+    array('callable' => 'menu.default_tree_manipulators:checkAccess'),
+    array('callable' => 'menu.default_tree_manipulators:generateIndexAndSort'),
+  );
+  $tree = $menu_tree->transform($tree, $manipulators);
+
+  if (!empty($tree)){
+    $first = array_keys($tree)[0];
+    if (!empty($tree[$first]->subtree)){
+      $list = $tree[$first]->subtree;
+
+      $data['menu'] = array(
+        '#prefix' => '<ul class="kadmin-menu">',
+        '#suffix' => '</ul>',
+      );
+
+      _kadmin_add_default_links($data, $config);
+
+      foreach ($list as $key => $link) {
+        $k = substr(strrchr($key, ' '), 1);
+        $data['menu'][$k] = _kadmin_create_menu_link($link);
+      }
+
+      _kadmin_add_ct_links($data, $config);
+      _kadmin_add_views_links($data, $config);
+
+      _kadmin_add_user_links($data, $config);
+      _kadmin_add_icons($data, $config);
+
+    } else {
+      drupal_set_message('KAdmin bar non può funzionare se la prima voce del menu non ha sottovoci.', 'warning');
+    }
+  }
+
+  return $data;
+}
+
+/**
+ * Crea una voce di menu e le sue sottovoci
+ */
+function _kadmin_create_menu_link($link, array $options = array()){
+
+  $title = $link->link->getDescription();
+
+  $data['#prefix'] = '<li class="ka-li">';
+  $data['#suffix'] = '</li>';
+  
+  $text = $link->link->getTitle();
+  $route = $link->link->getRouteName();
+  $url = Url::fromRoute($route);
+
+  $fa = \Drupal::moduleHandler()->moduleExists('fontawesome');
+
+  $data['link'] = array(
+    '#type' => 'link',
+    '#title' => array(
+      '#markup' => $text,
+    ),
+    '#url' => $url,
+  );
+
+  if (!empty($link->subtree)){
+    $subs = $link->subtree;
+    $data['sub']['#prefix'] = '<ul>';
+    $data['sub']['#suffix'] = '</ul>';
+    
+    // Add submenu arrow
+    if ($link->depth !== 2){
+      if ($fa){
+        $data['link']['#title']['#suffix'] = '<i class="fa fa-caret-right ka-fa-triangle"></i>';
+      } else {
+        $data['link']['#title']['#suffix'] = '<span class="ka-fa-triangle small">&rang;</span>';
+      }
+    }
+
+    foreach ($subs as $key => $l) {
+      $k = substr(strrchr($key, ' '), 1);
+      $data['sub'][$k] = _kadmin_create_menu_link($l);
+    }
+  }
+
+  return $data;
+}
+
+function _kadmin_add_ct_links(&$data, $config){
+  $ct_links = $config->get('ct_links');
+
+  if ($ct_links){
+    if (isset($data['menu']['system.admin_structure']['sub']['entity.node_type.collection'])){ 
+      
+      $ct_sub['#prefix'] = '<ul>';
+      $ct_sub['#suffix'] = '</ul>';
+
+      $suffix = '<i class="fa fa-caret-right ka-fa-triangle"></i>';
+      $data['menu']['system.admin_structure']['sub']['entity.node_type.collection']['link']['#title']['#suffix'] = $suffix;
+
+      $contentTypes = \Drupal::service('entity.manager')->getStorage('node_type')->loadMultiple();
+      foreach ($contentTypes as $key => $ct) {
+        $name = $ct->label();
+        $machine = $ct->id();
+
+        $url = Url::fromUri('internal:/admin/structure/types/manage/' . $machine);
+        $url_field = Url::fromUri('internal:/admin/structure/types/manage/' . $machine . '/fields');
+        $url_display = Url::fromUri('internal:/admin/structure/types/manage/' . $machine . '/display');
+
+        $ct_sub[$machine] = array(
+          '#prefix' => '<li class="ka-li">',
+          '#suffix' => '</li>',
+          'link' => array(
+            '#type' => 'link',
+            '#title' => array(
+              '#markup' => $name,
+              '#suffix' => $suffix,
+            ),
+            '#url' => $url,
+          ),
+          'sub' => array(
+            '#prefix' => '<ul>',
+            '#suffix' => '</ul>',
+            'field' => array(
+              '#prefix' => '<li class="ka-li">',
+              '#suffix' => '</li>',
+              '#type' => 'link',
+              '#title' => array(
+                '#markup' => 'Manage fields',
+              ),
+              '#url' => $url_field,
+            ),
+            'display' => array(
+              '#prefix' => '<li class="ka-li">',
+              '#suffix' => '</li>',
+              '#type' => 'link',
+              '#title' => array(
+                '#markup' => 'Manage display',
+              ),
+              '#url' => $url_display,
+            ),
+          ),
+        );
+      }
+      $data['menu']['system.admin_structure']['sub']['entity.node_type.collection']['sub'] = $ct_sub;
+    }
+  }
+}
+
+function _kadmin_add_views_links(&$data, $config){
+  $views_links = $config->get('views_links');
+
+  if ($views_links){
+    
+    if (isset($data['menu']['system.admin_structure']['sub']['entity.view.collection'])){ 
+      
+      $vs_sub['#prefix'] = '<ul>';
+      $vs_sub['#suffix'] = '</ul>';
+
+      $suffix = '<i class="fa fa-caret-right ka-fa-triangle"></i>';
+      $data['menu']['system.admin_structure']['sub']['entity.view.collection']['link']['#title']['#suffix'] = $suffix;
+
+
+
+      // $views = views_get_all_views();
+      // kint($views);
+      /*
+      $contentTypes = \Drupal::service('entity.manager')->getStorage('node_type')->loadMultiple();
+      foreach ($contentTypes as $key => $ct) {
+        $name = $ct->label();
+        $machine = $ct->id();
+
+        $url = Url::fromUri('internal:/admin/structure/types/manage/' . $machine);
+        $url_field = Url::fromUri('internal:/admin/structure/types/manage/' . $machine . '/fields');
+        $url_display = Url::fromUri('internal:/admin/structure/types/manage/' . $machine . '/display');
+
+        $ct_sub[$machine] = array(
+          '#prefix' => '<li class="ka-li">',
+          '#suffix' => '</li>',
+          'link' => array(
+            '#type' => 'link',
+            '#title' => array(
+              '#markup' => $name,
+              '#suffix' => $suffix,
+            ),
+            '#url' => $url,
+          ),
+          'sub' => array(
+            '#prefix' => '<ul>',
+            '#suffix' => '</ul>',
+            'field' => array(
+              '#prefix' => '<li class="ka-li">',
+              '#suffix' => '</li>',
+              '#type' => 'link',
+              '#title' => array(
+                '#markup' => 'Manage fields',
+              ),
+              '#url' => $url_field,
+            ),
+            'display' => array(
+              '#prefix' => '<li class="ka-li">',
+              '#suffix' => '</li>',
+              '#type' => 'link',
+              '#title' => array(
+                '#markup' => 'Manage display',
+              ),
+              '#url' => $url_display,
+            ),
+          ),
+        );
+      }
+      $data['menu']['system.admin_structure']['sub']['entity.node_type.collection']['sub'] = $ct_sub;
+      */
+    }
+  }
+}
+
+function _kadmin_add_default_links(&$data, $config){
+  $fa = $config->get('fontawesome');
+
+  $url = Url::fromRoute('<front>');
+  $text = 'Home';
+  
+  $data['menu']['home'] = array(
+    '#prefix' => '<li class="ka-li ka-li-front">',
+    '#suffix' => '</li>',
+    'link' => array(
+      '#type' => 'link',
+      '#title' => array(
+        '#markup' => 'Home',
+      ),
+      '#url' => $url,
+    ),
+  );
+  if ($fa && \Drupal::moduleHandler()->moduleExists('fontawesome')) {
+    $data['menu']['home']['link']['#title']['#markup'] = '<i class="fa fa-home"></i>';
+  }
+}
+
+function _kadmin_add_user_links(&$data, $config){
+  $user = \Drupal::currentUser();
+  $name = $user->getUsername();
+
+  $url = Url::fromRoute('user.page');
+  $data['menu']['user'] = array(
+    '#prefix' => '<li class="ka-li ka-li-user">',
+    '#suffix' => '</li>',
+    'link' => array(
+      '#type' => 'link',
+      '#title' => array(
+        '#markup' => $name,
+      ),
+      '#url' => $url,
+    ),
+  );
+
+  $url = Url::fromRoute('user.logout.http');
+  $data['menu']['logout'] = array(
+    '#prefix' => '<li class="ka-li ka-li-logout">',
+    '#suffix' => '</li>',
+    'link' => array(
+      '#type' => 'link',
+      '#title' => array(
+        '#markup' => 'Log out',
+      ),
+      '#url' => $url,
+    ),
+  );
+
+  // Add Fontawesome Icon
+  $fa = $config->get('fontawesome');
+  if ($fa && \Drupal::moduleHandler()->moduleExists('fontawesome')) {
+    $data['menu']['logout']['link']['#title']['#markup'] = '<i class="fa fa-sign-out"></i>';
+  }
+}
+
+/**
+ * Add default icons to menu
+ * @todo: riscrivere quando il modulo icon sarà pronto
+ * Le icone potranno essere scelte dal menu, e non arbitrariamente nel modulo
+ */
+function _kadmin_add_icons(&$data){
+  $config = \Drupal::config('kadmin.configkadmin');
+  $fa = $config->get('fontawesome');
+
+  if ($fa && \Drupal::moduleHandler()->moduleExists('fontawesome')){
+    foreach ($data['menu'] as $key => $li) {
+      switch ($key) {
+        case 'system.admin_content':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-list-ul"></i> ';
+          break;
+
+        case 'system.admin_structure':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-trello"></i> ';
+          break;
+
+        case 'system.themes_page':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-paint-brush"></i> ';
+          break;
+
+        case 'system.modules_list':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-cubes"></i> ';
+          break;
+
+        case 'system.admin_config':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-cog"></i> ';
+          break;
+
+        case 'entity.user.collection':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-user"></i> ';
+          break;
+
+        case 'system.admin_reports':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-line-chart"></i> ';
+          break;
+
+        case 'help.main':
+          $data['menu'][$key]['link']['#title']['#prefix'] = '<i class="fa fa-info"></i> ';
+          break;
+
+        default:
+          # code...
+          break;
+      }
+    }
+  }
+}
+
+/**
+ * Implementes hook_theme();
+ */
+function kadmin_theme($existing, $type, $theme, $path){
+  return array(
+    'kadmin_menu' => array(
+      'variables' => array(
+        'content' => NULL,
+      ),
+    ),
+  );
+}

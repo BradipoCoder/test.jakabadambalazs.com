@@ -1,0 +1,14 @@
+{
+  "name": "drupal/footer",
+  "type": "drupal-module",
+  "description": "Custom footer",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/footer",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/footer",
+    "source": "http://cgit.drupalcode.org/footer"
+  },
+  "require": { }
+}

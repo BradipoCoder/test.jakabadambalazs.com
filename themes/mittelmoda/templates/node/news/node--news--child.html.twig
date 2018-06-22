@@ -1,0 +1,41 @@
+{#
+/**
+ * Node Teaser Child
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+    'margin-b-1',
+    'col-sm-6', 'col-md-4',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    
+    {{content.field_image}}
+
+    <div class="news-child-content sameh">
+      <p class="small">
+        {{content.field_date.0}}
+      </p>
+      {{content.title}}
+      <p class="small">
+        {% set text = content.body|render %}
+        {% set text = text|striptags %}
+        {{ text }} [...]
+      </p>
+      <a href="{{url}}" class="btn btn-with-arrow btn-ghost btn-cutted">Read more</a>
+    </div>
+  </div>
+</div>

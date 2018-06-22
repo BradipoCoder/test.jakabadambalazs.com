@@ -1,0 +1,5 @@
+name: Footer
+type: module
+description: Custom footer
+core: 8.x
+package: Mekit

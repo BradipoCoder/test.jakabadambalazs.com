@@ -1,0 +1,499 @@
+/* less/typo.less */
+
+// ** MIXINS **
+// ------------
+ 
+.text-color(@color){
+  color: @color;
+  .link-color(@color);
+}
+
+.link-color(@color){
+  a{
+    .color-and-hover(@color); 
+  } 
+}
+
+.color-and-hover(@color){
+  color: @color;
+  &:hover,
+  &:focus,
+  &:active{
+    color: darken(@color,10%);
+  }  
+}
+
+// ** MATERIAL ICONS **
+// --------------------
+
+.material-icons(@code){
+  content: @code;
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: inherit;
+  line-height: inherit;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+}
+
+// ** HEADINGS **
+// --------------
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{
+  .link-color(@headings-color);
+}
+
+.h1-big{
+  font-size: floor((@font-size-base * 2.7)); // 48 px
+  font-weight: @font-weight-base;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h1, .h1{
+  .margin-b(1.5);
+  font-weight: @font-weight-base;
+}
+
+h2, .h2,
+h4, .h4{
+  font-weight: @font-weight-base;
+}
+
+h3, .h3{
+  font-weight: @font-weight-base;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h5, .h5{
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+// h4, .h4{
+//   .text-color(@brand-primary);
+// }
+
+.small, small{
+  font-size: @font-size-small;
+}
+
+// ** TEXT GREEN **
+// ----------------
+
+.text-green{
+  .text-color(@brand-primary) !important;
+}
+
+.text-gray{
+  .text-color(@gray-light) !important;  
+}
+
+// ** SELECTION **
+// ---------------
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6,
+p, span, a{
+  &::selection {
+    background: @brand-primary; /* WebKit/Blink Browsers */
+    color: #fff;
+  }
+  &::-moz-selection {
+    background: @brand-primary; /* Gecko Browsers */
+    color: #fff;
+  }
+}
+
+
+// ** BOLD AND LINKS **
+// --------------------
+
+strong, b,
+th,
+.text-bold{
+  font-weight: @font-weight-bold;
+}
+
+a{
+  .transition(all ease-in-out .2s);
+}
+
+a:hover,
+a:focus,
+a:active{
+  text-decoration: none;
+}
+
+// ** LABEL **
+// -----------
+
+label{
+  font-weight: @font-weight-base;
+}
+
+// ** NODE EDIT FORM **
+// --------------------
+
+.node-form{
+  label{
+    font-size: @font-size-small;
+    font-weight: @font-weight-base;
+  }
+
+  legend{
+    color: @gray-light;
+    font-size: @font-size-small;
+    margin-bottom: 5px;
+    border-bottom: none;
+  }
+}
+
+// ** BLOCKQUOTE **
+// ----------------
+// * border-color: see variable.less:825
+
+blockquote{
+  .margin-v(1);
+  font-size: @font-size-large;
+}
+
+// ** LEAD **
+// ----------
+
+.lead{
+  font-size: floor((@font-size-base * 1.15));
+  font-weight: @font-weight-base;
+
+  @media (min-width: @screen-sm-min) {
+    font-size: floor(@font-size-base * 1.35);
+  }
+
+  color: @gray;
+}
+
+// ** NEGATIVE **
+// --------------
+
+.negative{
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6{
+    .text-color(#fff);
+  }
+
+  p, .p, i, label,{
+    color: fade(#fff, 80%);
+  }
+
+  .link-color(#fff);
+
+  .btn-default{
+    border-color: fade(#fff, 50%);
+    background: none;
+    color: #fff;
+
+    &:active,
+    &:hover,
+    &:focus{
+      background: fade(#000, 10%);
+      color: #fff;
+    }
+  }
+
+  .text-gray{
+    .text-color(fade(#fff, 55%)) !important;
+  }
+}
+
+// ** TOOLTIP **
+// -------------
+
+// .tooltip{
+//   font-family: @font-family-monospace;
+//   &.top{
+//     margin-top:  -10px
+//   }
+// }
+// .tooltip-inner{
+//   border-radius: 0;
+// }
+
+// ** IMAGE LABEL **
+// -----------------
+
+.img-label{
+  font-size: floor(@font-size-small * 0.9);
+}
+
+// ** NAV BAR **
+// -------------
+
+.navbar-default{
+  .navbar-nav > li > a{
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: @font-size-h5;
+    padding-left: 25px;
+    padding-right: 25px;
+
+    &.a-with-icon{
+      padding-left: 50px;
+    }
+  }
+}
+
+.navbar-nav.navbar-right > li > a{
+  border-left: 1px solid @gray-lighter;
+}
+.navbar-nav.navbar-left > li > a{
+  border-right: 1px solid @gray-lighter;
+}
+
+.navbar-default .navbar-nav > .open > a {
+  &,
+  &:hover,
+  &:focus {
+    background-color: @gray-lightest;
+    border-color: @gray-lighter;
+  }
+}
+
+@media (min-width: 768px) {
+  .navbar-left {
+    margin-left: -14px;
+  }
+}
+
+.dropdown-menu{
+  border: 1px solid @gray-lighter;
+  li{
+    font-size: @font-size-h5;
+    &.is-active{
+      background: @gray-lighter;
+    }
+  }
+}
+
+.a-with-icon{
+  position: relative;
+  i{
+    position: absolute;
+    left: 17px;
+  } 
+}
+
+// ** ICON INSIDE A LINK **
+// ------------------------
+
+.a-small-with-icon{
+  color: red;
+}
+
+.a-download,
+.a-angle,
+.a-plus,
+.a-arrow{
+  font-weight: @font-weight-bold;
+
+  &:before{
+    position: relative;
+    top: 3px;
+    margin-right: 4px;
+  } 
+}
+
+.a-arrow{
+  &:before{
+    .material-icons('arrow_forward');
+  }
+}
+
+.a-plus{
+  &:before{
+    .material-icons('add');
+  }
+}
+
+.a-angle{
+  &:before{
+    .material-icons('keyboard_arrow_right');
+  }
+}
+
+.a-download{
+  &:before{
+    .material-icons('get_app');
+  }
+}
+
+// ** UL DONE **
+// -------------
+
+.ul-done{
+  list-style: none;
+  padding-left: 5px;
+  .margin-b(1);
+
+  li:before{
+    .material-icons('done');
+    top: 3px;
+    left: -4px;
+    position: relative;
+  }
+}
+
+// ** BLOCK LIST **
+// ----------------
+
+.block-list{
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: -1px;
+  font-size: @font-size-extra-small;
+  text-transform: uppercase;
+  font-weight: @font-weight-bold;
+  letter-spacing: 1px;
+
+  li{
+    position: relative;
+    .link-color(@text-color);
+
+    &:hover{
+      .hover{
+        width: 100%;  
+      }
+
+      .link-color(@gray-dark);
+
+      a i{
+        color: @brand-primary;
+      }
+    }
+  }
+
+  .count{
+    font-weight: @font-weight-base;
+    color: @gray-light;
+  }
+
+  .hover{
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background: @gray-lightest;
+    z-index: 0;
+    .transition(all ease-out .5s);
+  }  
+
+  li a{
+    margin: 0;
+    display: block;
+    position: relative;
+    .padding-v(0.5);
+    .padding-l(0.5);
+    .padding-r(1);
+    border-top: 1px solid @gray-lighter;
+  }
+
+  &:last-child{
+    border-bottom: 1px solid @gray-lighter;  
+  }
+
+  a i{
+    color: @gray-light;
+    position: absolute;
+    top: 13px;
+    font-size: 20px;
+    right: 5px;
+  }
+
+  .green-circle--small{
+    position: absolute;
+    top: 2px;
+    right: 4px;
+  }
+}
+
+.negative{
+  .block-list{
+    li a{
+      border-top: 1px solid fade(#fff, 20%);
+      color: fade(#fff, 80%);
+    }
+
+    a i{
+      color: fade(#fff, 80%); 
+    }
+
+    li:hover a{
+      color: #fff;
+
+      i{
+        color: #fff;
+      }
+    }
+
+    &:last-child{
+      border-bottom: 1px solid fade(#fff, 20%);  
+    }
+
+    .hover{
+      background: fade(@gray-darker, 5%);
+    }
+  }
+}
+
+// ** LINK INSIDE COPY **
+// ----------------------
+
+// Use .field--field-name, to add this functionality
+.cke_editable,
+.field--name-field-body,
+.field--name-field-copy,
+.copy{
+  .link-color(@secondary);
+
+  a strong{
+    .color-and-hover(@secondary);
+  }
+
+  a{
+    &.a-plus,
+    &.a-arrow,
+    &.a-angle{
+      .color-and-hover(@gray-darker);  
+    }
+  }
+
+  a.btn-default{
+    .color-and-hover(@btn-default-color);
+  }
+
+  a.btn-primary{
+    .color-and-hover(#fff);
+  }
+}
+
+.nav-tabs > li > a{
+  font-size: @font-size-small;
+}
+
+// ** FORM CONTROL **
+// ------------------
+
+.form-control{
+  font-size: @font-size-small;
+  padding: 10px 20px;
+}

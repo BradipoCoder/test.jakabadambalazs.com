@@ -1,0 +1,5 @@
+name: Simple admin
+type: module
+description: Amministrazione semplificata per utenti non amministratori
+core: 8.x
+package: Mekit

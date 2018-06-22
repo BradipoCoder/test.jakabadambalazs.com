@@ -1,0 +1,52 @@
+/* less/front.less */
+
+.mittelmoda-front{
+  .field--name-field-image{
+    img{
+      width: 100%;
+    }
+  }
+}
+
+.front-cta{
+  .margin-t(-2);
+
+  margin-left: -@basic-unit;
+  margin-right: -@basic-unit;
+
+
+  @media(min-width: @screen-sm-min){
+    margin-right: 0;
+    margin-left: auto;
+    max-width: 380px;
+    .margin-b(-4);
+  }
+}
+
+.mittelmoda-main-title{
+  position: relative;
+  .padding-v(2);
+  
+  @media(min-width: @screen-md-min){
+    max-width: 740px;
+    .padding-l(4);
+  }
+
+  &:before{
+    content: '';
+    display: block;
+    background: @brand-primary;
+    height: 3px;
+    width: 120px;
+
+    @media(min-width: @screen-md-min){
+      position: absolute;
+      top: 106px;
+      left: -60px;
+    }
+  }
+}
+
+.wrapper-lightslider-related{
+  .margin-v(2);
+}

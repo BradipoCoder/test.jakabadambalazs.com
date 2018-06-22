@@ -1,0 +1,52 @@
+# This file contains default .gitignore rules. To use it, copy it to .gitignore,
+# and it will cause files like your settings.php and user-uploaded files to be
+# excluded from Git version control. This is a common strategy to avoid
+# accidentally including private information in public repositories and patch
+# files.
+
+#Development IDE files
+/.idea
+
+# Ignore core when managing all of a project's dependencies with Composer
+# including Drupal core.
+core
+
+# Core's dependencies are managed with Composer.
+vendor
+
+# Contrib modules
+modules/contrib
+
+# Ignore configuration files that may contain sensitive information.
+sites/*/settings*.php
+sites/*/services*.yml
+
+# Ignore paths that contain user-generated content.
+sites/*/files
+sites/*/private
+
+# If you prefer to store your .gitignore file in the sites/ folder, comment
+# or delete the previous settings and uncomment the following ones, instead.
+
+# Ignore configuration files that may contain sensitive information.
+*/settings*.php
+
+# Ignore paths that contain user-generated content.
+*/files
+*/private
+
+#Ignore Core root files
+/.csslintrc
+/.editorconfig
+/.eslintignore
+/.eslintrc.json
+/.gitattributes
+/.ht.router.php
+/autoload.php
+/composer.lock
+/index.php
+/LICENSE.txt
+/README.txt
+/robots.txt
+/update.php
+/web.config

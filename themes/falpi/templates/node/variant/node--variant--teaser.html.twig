@@ -1,0 +1,34 @@
+{#
+/**
+ * Node Variant Teaser
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information: 
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    {{ content.field_code }}
+
+    <div class="variant-title">
+      {{ content.title }}  
+    </div>
+
+  </div>
+</div>

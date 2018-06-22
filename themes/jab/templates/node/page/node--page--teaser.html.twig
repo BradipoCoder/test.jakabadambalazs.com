@@ -1,0 +1,38 @@
+{#
+/**
+ * Node Page Teaser
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information: 
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+    'margin-b-1',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="sameh-teaser">
+      {{ content|without('field_subtitle') }}
+      <p class="small">
+        {{ content.field_subtitle.0 }}<br/>
+        <a href="{{ url }}" class="a-plus">
+          Approfondisci
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

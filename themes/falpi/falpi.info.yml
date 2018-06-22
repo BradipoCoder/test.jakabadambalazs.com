@@ -1,0 +1,26 @@
+core: 8.x
+type: theme
+base theme: bootstrap
+
+name: 'Falpi Theme'
+description: 'Tema Falpi'
+package: 'Bootstrap'
+
+regions:
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  help: 'Help'
+  sadmin: 'Simple admin'
+  content: 'Content'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+libraries:
+  - 'falpi/global-styling'
+  - 'falpi/bootstrap-scripts'
+  - 'falpi/fonts'
+
+ckeditor_stylesheets:
+  - css/ckeditor-base.css
+  - css/style.css

@@ -1,0 +1,73 @@
+/* less/sadmin.less */
+
+.block-sadmin-block{
+  position: relative;
+  z-index: 1001;
+}
+
+.wrapper-sadmin{
+  .clearfix();
+  //padding-top: 4px;
+  background: @gray-dark;
+}
+
+.block-sadmin-block{
+  .contextual{
+    top: 3px;
+    right: 80px;
+  }  
+}
+
+.sadmin-menu{
+  margin-left: -10px;
+  margin-right: -10px;
+  .clearfix();
+}
+
+.a-sadmin{
+  display: inline-block;
+  font-size: @font-size-small;
+  padding: 4px 10px 4px 10px;
+  border-right: 1px solid @gray;
+
+  @media (max-width: @screen-xs-max){
+    border: none; 
+  }
+
+  .color-and-hover(fade(#fff, 60%));
+
+  &.is-active{
+    .color-and-hover(#fff);
+  }
+
+  i{
+    font-size: inherit;
+    line-height: 17px;
+    position: relative;
+    top: 2px;
+  }
+}
+
+.a-sadmin-user-name{
+  padding: 4px 0px 4px 10px;  
+}
+
+.sadmin-menu-user,
+.sadmin-menu-menu{
+  @media (min-width: @screen-sm-min){
+    display: inline-block;
+    .a-sadmin:last-child{
+      border-right: none;    
+    }  
+  }
+}
+
+.sadmin-menu-user{
+  .a-sadmin{
+    border-right: none;
+    .color-and-hover(#fff);
+  }
+  @media (min-width: @screen-sm-min){
+    float: right;
+  }
+}

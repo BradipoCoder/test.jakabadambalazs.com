@@ -1,0 +1,225 @@
+/* less/typo.less */
+
+// ** MIXINS **
+// ------------
+ 
+.text-color(@color){
+  color: @color;
+  .link-color(@color);
+}
+
+.link-color(@color){
+  a{
+    .color-and-hover(@color); 
+  } 
+}
+
+.color-and-hover(@color){
+  color: @color;
+  &:hover,
+  &:focus,
+  &:active{
+    color: darken(@color,10%);
+  }  
+}
+
+// ** HEADINGS **
+// --------------
+
+.h1-big{
+  font-size: 42px;
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{
+  .link-color(@headings-color);
+
+  .text-primary{
+    .link-color(@brand-primary);  
+  }
+}
+
+h1, .h1{
+  .margin-b(1.5);
+}
+
+// h2, .h2{
+//   font-weight: @font-weight-semibold;
+// }
+
+h4, .h4{
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+// ** BOLD AND LINKS **
+// --------------------
+
+strong, b,
+.text-bold{
+  font-weight: @font-weight-bold;
+  .text-color(@gray-dark);  
+}
+
+.cke_editable,
+.field--name-field-copy,
+.field--name-body,
+.copy{
+  a{
+    font-weight: @font-weight-bold;
+    text-decoration: underline;
+
+    &:hover,
+    &:focus,
+    &:active{
+      text-decoration: underline;
+    }
+  }
+
+  a.btn{
+    text-decoration: none;
+
+    &:hover,
+    &:focus,
+    &:active{
+      text-decoration: none;
+    }
+  }
+}
+
+a{
+  .transition(all ease-in-out .2s);
+}
+
+a:hover,
+a:focus,
+a:active{
+  text-decoration: none;
+}
+
+// ** LABEL **
+// -----------
+
+label{
+  font-weight: @font-weight-base;
+}
+
+// ** NODE EDIT FORM **
+// --------------------
+
+.node-form{
+  label{
+    font-size: @font-size-base;
+    font-weight: @font-weight-base;
+  }
+
+  legend{
+    font-size: @font-size-base;
+    margin-bottom: 5px;
+    border-bottom: none;
+  }
+}
+
+// ** HR **
+// --------
+
+hr{
+  border-top: 1px solid @brand-primary;
+}
+
+// ** BLOCKQUOTE **
+// ----------------
+// * border-color: see variable.less:825
+
+blockquote{
+  .margin-v(1);
+  font-size: @font-size-large;
+}
+
+// ** LEAD **
+// ----------
+// * lead below sm . see type.less:62
+
+.lead{
+  font-size: ceil(@font-size-base * 1.44); // 26px
+  color: @gray-dark;
+  font-weight: @font-weight-base;
+}
+
+// ** SMALL **
+
+.small, small{
+  font-size: @font-size-small;
+}
+
+// ** NEGATIVE **
+// --------------
+
+.negative{
+  h1, h2, h3, h4, h5, h6,
+  .h1, .h2, .h3, .h4, .h5, .h6{
+    .text-color(#fff);
+  }
+
+  p, .p, i, label, .lead{
+    color: #fff;
+  }
+
+  .link-color(#fff);
+
+  .btn{
+    border-color: #fff;
+    background: none;
+    color: #fff;
+  }
+}
+
+// ** FOOTER **
+// ------------
+
+.footer-common-link{
+  color: @gray-light;
+
+  a{
+    .color-and-hover(#fff);
+  }
+}
+
+// ** TOOLTIP **
+// -------------
+
+// .tooltip{
+//   font-family: @font-family-monospace;
+//   &.top{
+//     margin-top:  -10px
+//   }
+// }
+
+// .tooltip-inner{
+//   border-radius: 0;
+// }
+
+// ** NAV BAR **
+// -------------
+
+.navbar-default{
+  .navbar-nav li a{
+    //text-transform: uppercase;
+    //font-weight: 600;
+    //font-size: @font-size-small;
+    .color-and-hover(@gray-darker);
+    
+    &.is-active{
+      font-weight: @font-weight-bold;
+      .color-and-hover(@brand-primary);
+    }
+  }
+}
+
+// ** LINK INSIDE COPY **
+// ----------------------
+
+// Use .field--field-name, to add this functionality
+// .copy{
+//   .link-color(@brand-primary);
+// }

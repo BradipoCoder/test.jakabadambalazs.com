@@ -1,0 +1,22 @@
+sameh:
+  version: 1.0.0
+  js:
+    /libraries/jquery.sameh/jquery.sameh.js: {}
+  dependencies:
+    - core/jquery
+    - sameh/resize
+    - sameh/imagesloaded
+
+resize:
+  version: 1.0.0
+  js:
+    /libraries/jquery.resize/jquery.resize.js: {}
+  dependencies:
+    - core/jquery
+
+imagesloaded:
+  version: 3.1.8
+  js:
+    /libraries/jquery.imagesloaded/jquery.imagesloaded.min.js: {}
+  dependencies:
+    - core/jquery  

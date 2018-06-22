@@ -1,0 +1,26 @@
+
+{#
+/**
+ * Block list
+ */
+#}
+
+<ul class="block-list">
+  {% for item in list %}
+  <li><span class="hover"></span>
+    <a href="{{ item.href }}" title="{{ item.title }}" {{item.attributes}}>
+      {{ item.title }}
+
+      {% if item.count and not item.green_circle %}
+        <span class="count">({{ item.count }})</span>
+      {% endif %}
+
+      {% if item.green_circle %}
+        <span class="green-circle--small">{{ item.count }}</span>
+      {% else %}
+        <i class="material-icons">keyboard_arrow_right</i>
+      {% endif %}
+    </a>
+  </li>
+  {% endfor %}
+</ul>

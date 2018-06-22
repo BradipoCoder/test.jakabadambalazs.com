@@ -1,0 +1,75 @@
+{#
+/**
+ * Archive Products Teaser
+ */
+#}
+
+{{ attach_library('sameh/sameh') }}
+
+<div class="archive-teaser">
+  <div class="row">
+    <div class="falpi-header falpi-header-products">
+      <div class="container negative">
+        <div class="falpi-header-content falpi-header-content-systems">
+          <div class="cover-line"></div>
+          <h1 class="h2 margin-b-025 margin-t-0">I prodotti Falpi</h1>
+          <p class="margin-b-05">Tessili, attrezzature e carrelli per la pulizia professionale</p>
+          
+          <div class="archive-more">
+            {{ content.more }}
+          </div>
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <div class="row row-card">
+    <div class="falpi-content falpi-content-products">
+      <div class="container">
+        <div class="card card-xs-spread put-back margin-b-2">
+          <div class="wrapper-sameh" data-items-selector=".sameh-teaser">
+            <div class="proteaser wrapper-sameh">
+              <div class="proteaser-type">
+                <div class="proteaser-type--item">
+                  {{ content.textile_title }}
+                  <div class="sameh">
+                    {{ content.textile }}
+                  </div>
+                </div>
+                <div class="proteaser-type--item">
+                  {{ content.tool_title }}
+                  <div class="sameh">
+                    {{ content.tool }}
+                  </div>
+                </div>
+                <div class="proteaser-type--item">  
+                  {{ content.cart_title }}
+                  <div class="sameh">
+                    {{ content.cart }}
+                  </div>
+                </div>
+              </div>
+
+              <div class="proteaser-eco negative">
+                <div class="proteaser-eco--item">
+                  {{ content.eco_title }}
+                </div>
+                <div class="proteaser-eco--item"> 
+                  <div class="sameh">
+                    {{ content.eco }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-below-card">
+    <div class="container margin-b-2">
+      {{ content.webform }}
+    </div>
+  </div>
+</div>

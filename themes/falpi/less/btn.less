@@ -1,0 +1,146 @@
+/* less/btn.less */
+
+// ** MIXINS **
+// ------------
+ 
+// Button variants 
+// bootstrap/less/mixins.less:495
+
+// ** BTN OUTLINE **
+// -----------------
+
+// .button-variant(@color; @background; @border) {
+//   color: @color;
+//   background: none;
+//   border-color: @border;
+//   .transition(all ease-in-out .2s);
+//   //text-transform: uppercase;
+//   //font-family: @headings-font-family;
+// 
+//   &:hover,
+//   &:focus,
+//   &:active,
+//   .open .dropdown-toggle& {
+//     color: darken(@color, 20%);
+//     background: none;
+//     border-color: darken(@border, 20%);
+//   }
+// 
+//   &.active{
+//     background: @color;
+//     color: #fff;
+//     border-color: @color;
+//   }
+// 
+//   &:active,
+//   &.active,
+//   .open .dropdown-toggle& {
+//     background-image: none;
+//   }
+//   &.disabled,
+//   &[disabled],
+//   fieldset[disabled] & {
+//     &,
+//     &:hover,
+//     &:focus,
+//     &:active,
+//     &.active {
+//       background-color: @background;
+//           border-color: @border;
+//     }
+//   }
+// 
+//   .badge {
+//     color: @background;
+//     background-color: @color;
+//   }
+// }
+
+// ** BTN **
+// ---------
+
+// Kill shadow
+.btn,
+.btn:active,
+.btn.active{
+  box-shadow: none;
+}
+
+.btn{
+  font-size: @font-size-h5;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  .padding-h(0.5);
+  .padding-v(0.25);
+
+  i{
+    position: relative;
+    top: 7px;
+    line-height: 0;
+  }
+}
+
+.btn-lg{
+  .padding-h(1);
+  .padding-v(0.7);
+}
+
+.btn-xs{
+  font-size: @font-size-extra-small;
+  .padding-h(0.4);
+  .padding-v(0.18);
+}
+
+.btn-circle{
+  padding: 0;
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  text-align: center;
+  i{
+    line-height: 55px;
+    font-size: 30px;
+    top: 0px;
+  }
+}
+
+.btn-ghost{
+  &.active,
+  &:hover,
+  &:focus{
+    background: @gray-lightest;
+  }
+}
+
+.tag{
+  background: @gray-dark;
+  padding: 5px 10px;
+  margin-right: 7px;
+  margin-bottom: 7px;
+  .color-and-hover(#fff);
+
+  font-size: @font-size-h5;
+  text-transform: uppercase;
+  letter-spacing: 1px; 
+}
+
+.tag-remove{
+  font-size: @font-size-h5;
+  line-height: @font-size-h5;
+  font-weight: @font-weight-bold;
+  text-transform: inherit;
+  .padding-h(0.4);
+  letter-spacing: inherit;
+
+  i{
+    font-size: 16px;
+    top: 4px;
+    margin-right: -4px;
+  }
+}
+
+// Kill border radius
+// .btn{
+//   .border-top-radius(0);
+//   .border-bottom-radius(0);
+// }

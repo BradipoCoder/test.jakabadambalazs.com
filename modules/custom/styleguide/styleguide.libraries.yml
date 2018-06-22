@@ -1,0 +1,6 @@
+styleguide:
+  js:
+    js/styleguide.js: {}
+  dependencies:
+    - core/jquery
+    - core/jquery.once

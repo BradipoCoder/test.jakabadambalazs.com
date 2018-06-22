@@ -1,0 +1,10 @@
+name: Same H
+type: module
+description: Libreria e funzionalità Same Height
+core: 8.x
+package: Mekit
+
+libraries:
+  - 'sameh/sameh'
+  - 'sameh/resize'
+  - 'sameh/imagesloaded'

@@ -1,0 +1,14 @@
+
+{#
+/**
+ * Thumbnails
+ */
+#}
+
+<div id="thumbs" class="thumbs">
+  {% for item in list %}
+    <div id="thumb-item-{{item.code}}" class="thumb--item" data-mcode="{{item.code}}">
+      {{ item.img}}
+    </div>
+  {% endfor %}
+</div>

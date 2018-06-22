@@ -1,0 +1,5 @@
+name: Field Formatter - Distance
+type: module
+description: Field Formatter for numeric fields to format the value as distance.
+core: 8.x
+package: Field Formatters

@@ -1,0 +1,30 @@
+{#
+/**
+ * Home Products
+ */
+#}
+
+{{ attach_library('sameh/sameh') }}
+
+<div class="home-products wrapper-sameh">
+  <div class="home-products-falpi">
+    <h5 class="text-gray">{{'We are Falpi'|trans}}</h5>
+    <p>{{'For over 30 years Falpi has designed products and systems for the professional cleaning: reliable solutions completely made in Italy in order to achieve the highest and the most eco-friendly performances.'|trans}}</p>
+  </div>
+  <div class="home-products-items">
+    <div class="home-products-item">
+      <h2 class="margin-t-0">
+        {{ content.products_more }}
+      </h2>
+      <p class="small sameh">{{'Cleaning textiles, equipment and trolleys completely made in Italy.'|trans}}</p>
+      {{ content.products }}
+    </div>
+    <div class="home-products-item">
+      <h2 class="margin-t-0">
+        {{ content.systems_more }}
+      </h2>
+      <p class="small sameh">{{'Solutions and procedures for the professional cleaning sector.'|trans}}</p>
+      {{ content.systems }}
+    </div>
+  </div>
+</div>

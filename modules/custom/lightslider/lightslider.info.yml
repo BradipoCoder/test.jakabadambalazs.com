@@ -1,0 +1,5 @@
+name: Light Slider
+type: module
+description: Light Slider support
+core: 8.x
+package: Mekit

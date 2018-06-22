@@ -1,0 +1,70 @@
+{#
+/**
+ * Node Award Teaser
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row">
+      <div class="container">
+        <div class="row margin-v-2">
+          <div class="col-md-6">
+            <div class="margin-md-r-2 margin-b-1">
+              {{ content.field_desc }}
+              {{ content.more }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            {{ content.field_image_hp }}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row row-award-teaser-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="box-teaser-date">
+              {{ content.box }}
+            </div>
+          </div>
+          <div class="col-md-6">
+            {% if show_form %}
+              <div class="award-teaser-form margin-md-l-2">
+                <div class="negative margin-b-15">
+                  <h2>{{ content.form_title}}</h2>
+                </div>
+                <form method="get" action="/node/5">
+                  <div class="margin-b-15">
+                    <input name="first_name" class="form-control margin-b-05" placeholder="First name"/>
+                    <input name="family_name" class="form-control" placeholder="Family name"/>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-lg">Next</button>
+                </form>
+              </div>
+            {% else %}
+              <div class="award-teaser-cta negative">
+                <a href="{{url}}" class="btn btn-primary btn-with-arrow btn-lg">The fashion award</a>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

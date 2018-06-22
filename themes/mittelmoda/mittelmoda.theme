@@ -1,0 +1,108 @@
+<?php
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+
+use Drupal\Core\Render\Element;
+
+function mittelmoda_preprocess_node(&$vars){
+
+  // $node = $vars['node'];
+  // $type = $node->getType();
+
+  //kint($vars);
+
+  // Override the drupal silly settings..
+  // $vars['content']['title']['#printed'] = FALSE;
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK_alter() for node templates.
+*/
+function mittelmoda_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  //kint($suggestions, 'suggestions');
+}
+
+function mittelmoda_theme($existing, $type, $theme, $path) {
+  return [
+    'mittelmoda_front' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'mittelmoda_counter' => [
+      'variables' => [
+        'content' => NULL,
+        'class' => 'default',
+      ]
+    ],
+    'magic_form' => [
+      'variables' => [
+        'webform' => NULL,
+        'id' => NULL,
+      ],
+    ],
+  ];
+}
+
+function mittelmoda_preprocess_paragraph__slide(&$vars){
+  $p = $vars['paragraph'];
+  //kint($vars);
+
+  $id = 'slider-' . $p->id();
+
+  $children = Element::children($vars['content']['field_imgs'], true);
+  foreach ($children as $key) {
+    $imgs[$key] = $vars['content']['field_imgs'][$key];
+  }
+
+  $slider = [
+    '#theme' => 'lightslider',
+    '#lsid' => $id,
+    '#content' => $imgs,
+  ];
+
+  $options = array(
+    'item' =>  1,
+    'mode' => 'slide',
+    'loop' => true,
+    'slideMargin' => 0,
+    'galleryMargin' => 0,
+    'slideMove' => 1,
+    'slideEndAnimation' => false,
+    'auto' => true,
+    'speed' => 2000,
+    'pause' => 10000,
+    //'controls' => false,
+    'prevHtml' => '<i class="material-icons">keyboard_arrow_left</i>',
+    'nextHtml' => '<i class="material-icons">keyboard_arrow_right</i>',
+    //responsive' => array(
+    // array(
+    //   'breakpoint' => 1192,
+    //   'settings' => array(
+    //     'item' => 3,
+    //     'slideMove' => 3,
+    //   ),
+    // ),
+    // array(
+    //   'breakpoint' => 768,
+    //   'settings' => array(
+    //     'item' => 2,
+    //     'slideMove' => 2,
+    //     //'pager' => false,
+    //   ),
+    // ),
+    //,
+  );
+
+  // Unfortunatily is not working in preprocess function
+  $slider['#attached']['drupalSettings']['lightslider'][$id] = $options;
+
+  $vars['content']['slider'] = $slider;
+  unset($vars['content']['field_imgs']);
+}
+
+

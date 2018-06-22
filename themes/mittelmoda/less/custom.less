@@ -1,0 +1,147 @@
+/* less/custom.less */
+
+// ** background and row stuff **
+// ------------------------------
+.row-cover{
+  position: relative;
+
+  .margin-b(1);
+  @media (min-width: @screen-sm-min){
+    .margin-b(2);
+  }
+
+  .field--name-field-image{
+    img{
+      width: 100%;
+    }
+  }
+}
+
+.row-dark{
+  background: @gray-dark;
+}
+
+.row-darker{
+  background: @gray-darker;
+}
+
+.row-light{
+  background: @gray-lightest;
+}
+
+// ** header and navbar **
+// -----------------------
+
+.navbar-default{
+  border: none;
+  margin-bottom: 0;
+}
+
+.header-logo{
+  max-width: 180px;
+  position: absolute;
+  top: 55px;
+  left: 20px;
+
+  @media (min-width: @screen-sm-min){
+    max-width: 258px;
+    top: 50px;
+  }
+}
+
+// ** BG **
+// --------
+
+//body{
+//  background: @gray-darker;
+//}
+
+.main-container{
+  background: #fff;
+}
+
+// ** CONTAINER **
+// ---------------
+
+.main-container{
+  .padding-b(2);
+}
+
+.page-node-type-webform,
+.page-node-type-page,
+.page-node-type-award,
+.path-frontpage{
+  .main-container{
+    padding-bottom: 0;
+  }
+}
+
+// ** tabs **
+// ----------
+
+.tabs--primary{
+  .margin-v(0.5);
+}
+
+// ** card **
+// ----------
+
+.card{
+  background: @gray-lightest;
+  .padding-h(1);
+  .padding-v(1);
+  @media (min-width: @screen-md-min){
+    .padding-h(2);
+    .padding-v(2);
+  }
+
+  h1, h2, h3, h4, h5{
+    &:first-child{
+      margin-top: 0;
+    }
+  }
+}
+
+// ** LOG IN **
+// ------------
+
+.user-login-form{
+  max-width: 750px;
+  margin-left: auto;
+  margin-right: auto;
+  .margin-v(2);
+}
+
+// ** PRIVACY **
+// -------------
+
+.form-item-privacy{
+  margin-top: 0;
+  label{
+    font-size: @font-size-small;
+    min-height: 20px;
+    color: #fff;
+  }
+
+  input#edit-privacy{
+    top: 6px !important;
+  }
+}
+
+#edit-privacy--description{
+  .link-color(#fff);
+}
+
+// ** FASHION AWARD **
+// ------------ margin fix
+.row.row-conts{
+  .field--name-field-ref-conts{
+    .margin-b-2{
+      margin-bottom: 0 !important;
+    }
+    .paragraph.paragraph--type--slide{
+      margin-bottom: 0 !important;
+    }
+  }
+}
+

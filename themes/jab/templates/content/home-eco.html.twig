@@ -1,0 +1,57 @@
+{#
+/**
+ * Home Eco
+ */
+#}
+
+{{ attach_library('jab/jquery.parallax') }}
+
+<div class="home-eco" data-parallax="scroll" data-image-src="{{content.image_path}}" data-speed="0.1" data-position-y="top">
+  <div class="home-eco-content bg-parallax negative">
+    <h5>{{'We are Eco-Friendly'|trans}}</h5>
+
+    <div class="eco-content-max-width">
+      <p>
+        {{'Falpi has always given a great value to the certification of its own products. This everyday commitment increases every year thanks to a ever-growing range of eco-friendly products.'|trans}}
+      </p>
+    </div>
+
+    <div class="home-eco-greens">
+      <div class="home-eco-green">
+        {{ content.cam }}
+        <ul class="block-list margin-t-1">
+          <li>
+            <span class="hover"></span>
+            <a href="{{content.cam_url}}">
+              {{'GPP (Green Public Procurement) products'|trans}}
+              <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="home-eco-green">
+        {{ content.ecolabel }}
+        <ul class="block-list margin-t-1">
+        <li>
+          <span class="hover"></span>
+          <a href="{{content.ecolabel_url}}">
+            {{'Certified textiles'|trans}}
+            <i class="material-icons">keyboard_arrow_right</i>
+          </a>
+        </li>
+      </div>
+      <div class="home-eco-green">
+        {{ content.epd }}
+        <ul class="block-list margin-t-1">
+          <li>
+            <span class="hover"></span>
+            <a href="{{content.epd_url}}">
+              {{'Certified trolleys'|trans}}
+              <i class="material-icons">keyboard_arrow_right</i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

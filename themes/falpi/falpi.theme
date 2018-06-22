@@ -1,0 +1,224 @@
+<?php
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+
+use Drupal\Core\Url;
+use Drupal\Core\Link;
+use Drupal\Core\Render\Markup;
+
+function falpi_theme($existing, $type, $theme, $path) {
+  return [
+    'home_cover' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_card' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_products' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_eco' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_eco' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_block' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    
+    'home_cart' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_textile' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'home_tools' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+    'green_circle' => [
+      'variables' => [
+        'number' => NULL,
+        'number_suffix' => NULL,
+        'desc' => NULL,
+        'sub' => NULL,
+        'url' => NULL,
+        'lang' => 'en',
+      ],
+    ],
+    'fabr_certification' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'variant_radio' => [
+      'variables' => [
+        'list' => NULL,
+      ],
+    ],
+    'magic_form' => [
+      'variables' => [
+        'webform' => NULL,
+        'subject' => NULL,
+        'id' => NULL,
+      ],
+    ],
+    'pagination_arrow' => [
+      'variables' => [
+        'prev_id' => NULL,
+        'prev_url' => NULL,
+        'prev_title' => NULL,
+        'next_id' => NULL,
+        'next_url' => NULL,
+        'next_title' => NULL,
+      ],
+    ],
+    'related_products' => [
+      'variables' => [
+        'content' => NULL,
+        'title' => NULL,
+      ],
+    ],
+    'block_list' => [
+      'variables' => [
+        'list' => NULL,
+      ],
+    ],
+    'footer_menu' => [
+      'variables' => [
+        'list' => NULL,
+        'catalog' => NULL,
+      ],
+    ],
+    'thumbs' => [
+      'variables' => [
+        'list' => NULL,
+      ],
+    ],
+    'catalab_frame' => [
+      'variables' => [
+        'url' => NULL,
+      ],
+    ],
+    'catalab_frame' => [
+      'variables' => [
+        'url' => NULL,
+      ],
+    ],
+    'language_dropdown' => [
+      'variables' => [
+        'list' => NULL,
+        'current' => NULL,
+      ],
+    ],
+    'access_dropdown' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+  ];
+}
+
+function falpi_preprocess_green_circle(&$vars){
+  $src = drupal_get_path('theme', 'falpi') . '/img/green-circle.svg';
+  $vars['circle']['#markup'] = '<img src="' . $src . '" class="img-green-circle"/>';
+}
+
+/**
+* Implements hook_theme_suggestions_HOOK_alter() for node templates.
+*/
+function falpi_theme_suggestions_node_alter(array &$suggestions, array $variables) {
+  //kint($suggestions, 'suggestions');
+}
+
+/**
+ * Implements hook_preprocess_user().
+ */
+function falpi_preprocess_user(&$variables) {
+  /** @var User $account */
+  $account = $variables['elements']['#user'];
+  $variables['username'] = $account->getDisplayName();
+}
+
+/**
+ * Aggiungo il base path alle immagini della tassonomia
+ * Utile per la generazione del PDF
+ */
+function falpi_preprocess_taxonomy_term(&$variables){
+  global $base_url;
+  $variables['base_url'] = $base_url;
+}
+
+/**
+ * Implement hook_preprocess_field()
+ * @param  [type] &$vars [description]
+ * @return [type]        [description]
+ */
+function falpi_preprocess_field(&$vars){
+  if ($vars['entity_type'] == 'paragraph'){
+    if ($vars['field_name'] == 'field_2img' || $vars['field_name'] == 'field_img'){
+      _falpi_add_label_to_image($vars);
+    }
+  }
+}
+
+function _falpi_add_label_to_image(&$vars){
+  foreach ($vars['items'] as $key => $item) {
+    $img = $item['content']['#item'];
+    $title = $img->get('title')->getValue();
+
+    if ($title !== ''){
+      $content['img'] = $item['content'];
+      $content['label'] = [
+        '#prefix' => '<div class="wrapper-img-label margin-v-05">',
+        '#suffix' => '</div>',
+        '#markup' => '<p class="img-label">' . $title . '</p>',
+      ];
+      $vars['items'][$key]['content'] = $content;
+    }
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter
+ * Aggiungo un link alla tassonomia delle schede tecniche
+ */
+function falpi_form_node_tech_edit_form_alter(&$form, $form_state, $form_id){
+  
+  $url = Url::fromRoute('entity.taxonomy_vocabulary.overview_form', [
+    'taxonomy_vocabulary' => 'tech',
+  ]);
+
+  $opt = [
+    'attributes' => [
+      'target' => '_blank',
+    ],
+  ];
+  $url->setOptions($opt);
+
+  $link = Link::fromTextAndUrl('Caratteristiche tecniche', $url);
+
+  $form['field_tech_1']['#prefix'] = '<div class="well small">Amministra e traduci le ' . $link->toString() . ' disponibili.</div>';
+}

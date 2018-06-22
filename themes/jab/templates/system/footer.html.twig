@@ -1,0 +1,48 @@
+<!-- Add you custom twig html here -->
+
+<div class="wrapper-footer">
+  <div class="logo wrapper-footer-logo">
+    <a href="/" title="{{ content.site_name }}">
+      {{ content.logo }}
+    </a>
+  </div>
+
+  <div class="footer-content text-center margin-b-05 small">
+
+    <div class="wrapper-footer-menu">
+      {{ content.menu }}
+    </div>
+
+    {{ content.text }}
+
+    <div class="wrapper-footer-social">
+      <ul class="footer-social">
+        {#<li>#}
+          {#<a href="https://www.linkedin.com/company/jakabadambalazs/" target="_blank">#}
+            {#<img src="/themes/jab/img/social/ico-in.svg"/>#}
+          {#</a>#}
+        {#</li>#}
+        <li>
+          <a href="https://www.facebook.com/jakabadambalazs" target="_blank">
+            <img src="/themes/jab/img/social/ico-fb.svg"/>
+          </a>
+        </li>
+        {#<li>#}
+          {#<a href="https://www.youtube.com/channel/xxx" target="_blank">#}
+            {#<img src="/themes/jab/img/social/ico-yt.svg"/>#}
+          {#</a>#}
+        {#</li>#}
+      </ul>
+    </div>
+
+    <hr>
+
+    <p class="footer-common-link">
+      <strong>JAB</strong>
+    </p>
+    <p class="footer-common-link">&copy; Copyright {{ content.created }}{{ content.year }} {{ content.site_name }}. All rights reserved
+      {#<a href="/cookie" title="Cookie Policy">Cookie Policy</a> |#}
+      {#<a href="/privacy" title="Privacy Policy">Privacy Policy</a>#}
+    </p>
+  </div>
+</div>

@@ -1,0 +1,11 @@
+
+kadmin.config_kadmin:
+  path: '/admin/config/kadmin'
+  defaults:
+    _form: '\Drupal\kadmin\Form\ConfigKadmin'
+    _title: 'K Admin Configuration'
+  requirements:
+    _permission: 'access administration pages'
+  options:
+    _admin_route: TRUE
+

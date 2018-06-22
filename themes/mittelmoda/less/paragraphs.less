@@ -1,0 +1,210 @@
+/* less/paragraphs.less */
+
+@side-width: 200px;
+@side-width-lg: 300px;
+
+.c-thin{
+  @media (min-width: @screen-md-min){
+    max-width: 870px;
+    margin-left: auto;
+    margin-right: auto; 
+  }  
+}
+
+.c-plain{
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    margin-left: @side-width;
+    margin-right: @side-width;
+  }
+
+  @media (min-width: @screen-lg-min){
+    margin-left: @side-width-lg;
+    margin-right: @side-width-lg;
+  }
+}
+
+.paragraph--type--chapter{
+  position: relative;
+  .margin-b(1.5);
+
+  .field--name-field-title-side{
+
+    &:after{
+      content: '';
+      display: block;
+      height: 2px;
+      background: @brand-primary;
+      width: 50px;
+      .margin-b(1);
+
+      @media (min-width: @screen-md-min){
+        margin-bottom: 0;
+        position: absolute;
+        top: 24px;
+        right: -75px;
+      }
+    }
+
+
+    @media (min-width: @screen-md-min){
+      position: absolute;
+      top: -10px;
+      left: 0;  
+      text-align: right; 
+    }
+
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      width: @side-width - 100px;
+    }
+
+    @media (min-width: @screen-lg-min){
+      width: @side-width-lg - 100px;
+    }
+  }
+
+  .field--name-field-body{
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @side-width;
+      margin-right: 0;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @side-width-lg;
+      margin-right: @side-width-lg;
+    }
+  }
+}
+
+.paragraph--type--copy{
+  .margin-b(1.5);
+  .field--name-field-body{
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @side-width;
+      margin-right: 0;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @side-width-lg;
+      margin-right: @side-width-lg;
+    }
+  }
+}
+
+.paragraph--type--box3{
+  .clearfix();
+  background: @gray-lightest;
+  .margin-b(1.5);
+
+  //.padding-v(0.5); 
+  //@media (min-width: @screen-sm-min){
+  //  .padding-v(1);  
+  //}
+
+  .field--item{
+    .padding-v(0.75); 
+    .padding-h(0.5);
+    @media (min-width: @screen-sm-min){
+      float: left;
+      width: 33.333333%;
+       
+    }
+    @media (min-width: @screen-md-min){
+      .padding-v(1.5); 
+      .padding-h(1.5);  
+    }
+
+    h1, h2, h3, h4, h5{
+      &:first-child{
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+.paragraph--type--box3n{
+  .margin-b(1.5);
+  .field--name-field-number-text{
+    .clearfix();
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @side-width;
+      margin-right: 0;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @side-width-lg;
+      margin-right: @side-width-lg;
+    }
+
+    .field--item{
+      .padding-b(1.5);
+      @media (min-width: @screen-sm-min){
+        float: left;
+        width: 33.333333%; 
+      }  
+      
+      > div{
+        text-align: center;
+      }
+    }
+
+    .double-field-first{
+      .h2;
+      .text-color(@brand-primary);
+      .margin-b(0.25);
+    }
+
+    .double-field-second{
+      font-size: @font-size-small;
+    }
+
+  }
+}
+
+.paragraph--type--img-text{
+  .clearfix();
+  position: relative;
+
+  @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+    margin-left: @side-width;
+    margin-right: 0;
+  }
+
+  @media (min-width: @screen-lg-min){
+    margin-left: @side-width-lg;
+    margin-right: @side-width-lg;
+  }
+
+  @media (min-width: @screen-md-min){
+    .field--name-field-body,
+    .field--name-field-img{
+      float: left;
+    }
+
+    .field--name-field-body{
+      width: 60%;
+    }
+
+    .field--name-field-img{
+      width: 40%;
+      img{
+        padding-right: 25px;
+      }
+    }
+  }
+}
+
+.paragraph--type--slide{
+  .margin-b(1.5);
+  .wrapper-lightslider{
+    @media (min-width: @screen-md-min) and (max-width: @screen-md-max) {
+      margin-left: @side-width - 50px;
+      margin-right: 0;
+    }
+
+    @media (min-width: @screen-lg-min){
+      margin-left: @side-width-lg - 50px;
+      margin-right: @side-width-lg - 50px;
+    }
+  }  
+}
+

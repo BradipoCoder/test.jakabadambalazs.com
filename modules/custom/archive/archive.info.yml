@@ -1,0 +1,5 @@
+name: Ajax Archive
+type: module
+description: Archivio ajax di nodi con filtro su categoria
+core: 8.x
+package: Falpi

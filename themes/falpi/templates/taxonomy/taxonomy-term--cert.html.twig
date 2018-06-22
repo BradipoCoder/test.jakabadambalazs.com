@@ -1,0 +1,34 @@
+{#
+/**
+ * Taxonomy Term Cert
+ */
+#}
+
+{%
+  set classes = [
+    'taxonomy-term-' ~ term.id,
+    'margin-b-025',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ vocabulary_name }}
+  {{ content.ttmenu }}
+
+  {{ title_prefix }}
+  
+  {% if page %}
+    <h2>{{ name }}</h2>
+  {% else %}
+    {{name}}
+  {% endif %}
+  
+  {{ title_suffix }}
+
+  {% if content.field_img.0 %}
+    <img src="{{ base_url }}{{ content.field_img.0 }}" class="img-responsive"/>
+  {% else %}
+    {{ content.description }}
+  {% endif %}
+</div>

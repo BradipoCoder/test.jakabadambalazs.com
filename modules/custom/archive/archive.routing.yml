@@ -1,0 +1,39 @@
+archive.archive_controller_products:
+  path: '/products'
+  defaults:
+    _controller: '\Drupal\archive\Controller\TeaserController::products'
+    _title: 'Products'
+  requirements:
+    _permission: 'access content'
+
+archive.archive_controller_systems:
+  path: '/systems'
+  defaults:
+    _controller: '\Drupal\archive\Controller\TeaserController::systems'
+    _title: 'Systems'
+  requirements:
+    _permission: 'access content'
+
+archive.archive_controller_archive:
+  path: '/products/archive'
+  defaults:
+    _controller: '\Drupal\archive\Controller\ArchiveController::archive'
+    _title: 'Products'
+  requirements:
+    _permission: 'access content'
+
+archive.ajax_controller_getdata:
+  path: '/archive/getdata'
+  defaults:
+    _controller: '\Drupal\archive\Controller\AjaxController::getdata'
+  methods:  [POST]
+  requirements:
+    _permission: 'access content'
+
+archive.controller_update_filter:
+  path: '/archive/update-filter.json'
+  defaults:
+    _controller: '\Drupal\archive\Controller\AjaxController::updateFilter'
+  methods:  [POST]
+  requirements:
+    _access: 'TRUE'  

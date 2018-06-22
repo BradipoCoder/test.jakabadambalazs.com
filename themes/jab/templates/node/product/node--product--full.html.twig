@@ -1,0 +1,95 @@
+{#
+/**
+ * Node Product Full
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+{{ attach_library('jab/jquery.scrollto') }}
+
+{{ content.pagination }}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row row-card">
+      <div class="container">
+        <div class="card card-xs-spread margin-b-2">
+          <div class="card-full-content">
+            <div class="wrapper-product-titles">
+              {{ content.title }}
+              {{ content.subtitle }}
+            </div>
+            <div class="row row-product-top">
+              <div class="col-md-6 col-md-push-6">
+                <div id="wrapper-img" class="wrapper-img">
+                  {{ content.img_head }}
+                  <div id="product-main-image" class="product-main-image {{main_img_class}}">
+                    {{ content.main }}
+                  </div>
+                </div>
+                {{ content.thumbs }}
+              </div>
+              <div class="col-md-6 col-md-pull-6">
+                <div class="margin-sm-r-2">
+                  {{ content.head }}
+
+                  {{ content.body }}
+
+                  {% if content.p_links %}
+                    <div class="margin-v-1">
+                      {{ content.p_links }}
+                    </div>
+                  {% endif %}
+
+                  {{ content.table }}
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              {% if content.details %}
+                <div class="col-md-6 margin-b-2">
+                  <div class="margin-sm-r-2">
+                    <h5 class="margin-b-1">{{'Technical features'|trans}}</h5>
+                    {{ content.details }}
+                  </div>
+                </div>
+              {% endif %}
+              <div class="col-md-6 margin-b-2">
+                <h5 class="margin-b-1">Codice prodotto</h5>
+                {{ content.variant }}
+
+                <div class="wrapper-cta-product margin-v-1">
+                  <a href="#magic-form-product-head" class="btn btn-primary scroll-to scroll-to-magic-form">
+                    {{'Get information'|trans}}
+                  </a>
+
+                  {{ content.config_link }}
+                </div>
+
+              </div>
+            </div>
+          </div>
+          {{ content.related }}
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-below-card">
+      <div class="container">
+        {{content.webform}}
+      </div>
+    </div>
+  </div>
+</div>

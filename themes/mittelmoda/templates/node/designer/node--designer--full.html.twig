@@ -1,0 +1,57 @@
+{#
+/**
+ * Node Template
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information: 
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row">
+      <div class="container margin-b-2">
+        <div class="row margin-b-1">
+          <div class="col-md-6">
+
+          </div>
+          <div class="col-md-6">
+            <div class="margin-md-l-1">
+              {{content.title}}   
+              {{content.field_country.0 }}
+              {{content.finalists }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="margin-md-r-1">
+              {{content.field_imgs}}
+            </div>  
+          </div>
+          <div class="col-md-6">
+            <div class="margin-md-l-1">
+              {{content.body}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{content.bottom_finalist}}
+  </div>
+</div>

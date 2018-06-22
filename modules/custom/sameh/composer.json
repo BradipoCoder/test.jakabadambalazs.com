@@ -1,0 +1,14 @@
+{
+  "name": "drupal/sameh",
+  "type": "drupal-module",
+  "description": "Libreria e funzionalità Same Height",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/sameh",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/sameh",
+    "source": "http://cgit.drupalcode.org/sameh"
+  },
+  "require": { }
+}

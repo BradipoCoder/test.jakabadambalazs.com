@@ -1,0 +1,78 @@
+/* mekit/less/mekit-mixins.less */
+
+// ** OPERATION **
+// ---------------
+
+.size(@value){
+  @size: floor(@line-height-computed * @value);
+}
+
+// ** MARGIN **
+// ------------
+
+.margin-r(@value){
+  .size(@value);
+  margin-right: @size;
+}
+
+.margin-l(@value){
+  .size(@value);
+  margin-left: @size;
+}
+
+.margin-h(@value){
+  .size(@value);
+  margin-right: @size;
+  margin-left: @size;
+}
+
+.margin-t(@value){
+  .size(@value);
+  margin-top: @size;
+}
+
+.margin-b(@value){
+  .size(@value);
+  margin-bottom: @size;
+}
+
+.margin-v(@value){
+  .size(@value);
+  margin-top: @size;
+  margin-bottom: @size;
+}
+
+// ** PADDING **
+// -------------
+
+.padding-r(@value){
+  .size(@value);
+  padding-right: @size;
+}
+
+.padding-l(@value){
+  .size(@value);
+  padding-left: @size;
+}
+
+.padding-h(@value){
+  .size(@value);
+  padding-right: @size;
+  padding-left: @size;
+}
+
+.padding-t(@value){
+  .size(@value);
+  padding-top: @size;
+}
+
+.padding-b(@value){
+  .size(@value);
+  padding-bottom: @size;
+}
+
+.padding-v(@value){
+  .size(@value);
+  padding-top: @size;
+  padding-bottom: @size;
+}

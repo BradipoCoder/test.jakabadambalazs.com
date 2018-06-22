@@ -1,0 +1,65 @@
+/* less/form.less */
+
+
+#edit-type--wrapper{
+  .margin-b(0.5);
+  legend{
+    display: none;
+  }
+  .form-type-checkbox{
+    margin-bottom: 0; 
+  }
+}
+
+#edit-ask--wrapper{
+  position: relative;
+  .margin-b(0.5);
+  
+  legend{
+    font-size: @font-size-small;
+    border: none;
+    margin: 0;
+    width: auto;
+    font-weight: @font-weight-bold;
+
+    @media (min-width: @screen-sm-min){
+      position: absolute;
+      top: 0;
+      left: 0;  
+    }
+  }
+
+  .fieldset-wrapper{
+    display: block;
+    @media (min-width: @screen-sm-min){
+      margin-left: 25%;
+    }
+  }
+
+  .form-type-checkbox{
+    margin-bottom: 0;
+    @media (min-width: @screen-sm-min){
+      margin: 0;
+      width: 32%;
+      display: block;
+      float: left;
+    }
+
+    label{
+      display: block;
+    }
+  }
+}
+
+.form-item-privacy{
+  label{
+    font-size: @font-size-small;
+  }
+}
+
+.form-type-checkbox{
+  .control-label{
+    font-size: @font-size-small;
+    line-height: 23px;
+  }
+}

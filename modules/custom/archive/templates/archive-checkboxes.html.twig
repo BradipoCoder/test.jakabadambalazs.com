@@ -1,0 +1,23 @@
+{#
+/**
+ * Archive Checkboxes
+ */
+#}
+
+<div id="filter-name-{{name}}" class="filter filter-checkboxes {{classes}}" data-filter-name="{{name}}" data-value="false" data-filter-title="{{title}}">
+  <h5>{{title}} <code class="hide">{{name}}</code></h5>
+  {% for item in items %}
+    <a href="#" id="filter-link-{{name}}-{{item.value}}" class="filter-link filter-link-checkbox filter-link-{{item.level}}" data-value="{{item.value}}" data-name="{{ item.name }}" data-filter-name="{{name}}">
+      <span class="f-square"><span class="f-check"></span></span> {{ item.name }} <code class="hide">{{item.value}}</code>
+    </a>
+    {% if item.children %}
+      <div class="filter-children filter-children-{{item.value}}">
+        {% for child in item.children %}
+          <a id="filter-link-{{name}}-{{child.value}}" href="#" class="filter-link filter-link-checkbox filter-link-{{child.level}}" data-value="{{child.value}}" data-name="{{ child.name }}" data-filter-name="{{name}}">
+            <span class="f-square"><span class="f-check"></span></span> {{ child.name }} <code class="hide">{{child.value}}</code>
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endfor %}
+</div>

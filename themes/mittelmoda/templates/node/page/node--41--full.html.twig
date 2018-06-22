@@ -1,0 +1,37 @@
+{#
+/**
+ * Node Page News
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information: 
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+
+    <div class="row row-page-news row-light">
+      <div class="container">
+        <div class="page-news-head margin-v-2">
+          {{content.title}}
+        </div>
+        {{content.view}}
+      </div>
+    </div>
+  </div>
+</div>

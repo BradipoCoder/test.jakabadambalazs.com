@@ -1,0 +1,48 @@
+/* less/lightslider.less */
+
+.wrapper-lightslider .lSSlideWrapper{
+  margin-bottom: 0;
+}
+
+.lSAction > a{
+  background-image: none;
+  opacity: 1;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  line-height: 40px;
+  text-align: center;
+
+  i{
+    line-height: 40px;
+  }
+}
+
+.lSPrev,
+.lSNext{
+  background: fade(#fff, 80%);
+  //border: 1px solid @gray-lighter;
+}
+
+.lSAction>.lSNext{
+  right: 0;
+}
+
+.lSAction>.lSPrev{
+  left: 0;
+}
+
+.lSSlideOuter .lSPager.lSpg>li a{
+  height: 10px;
+  width: 10px;
+  background-color: @gray-lighter;
+}
+
+.lSSlideOuter .lSPager.lSpg>li.active a,
+.lSSlideOuter .lSPager.lSpg>li:hover a{
+  background-color: @brand-primary;
+}
+
+.lSSlideWrapper{
+  .margin-b(1);
+}

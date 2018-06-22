@@ -1,0 +1,50 @@
+
+{#
+/**
+ * Footer Menu
+ */
+#}
+{{ attach_library('sameh/sameh') }}
+
+<div class="row row-footer-menu">
+  <div class="container">
+    <div class="footer-menu-head">
+      <div class="footer-menu-h-item">  
+        <h4 class="margin-b-025 margin-t-0">Desideri il catalogo Falpi?</h4>
+        <p class="small">Scaricalo in formato PDF oppure richiedi la tua copia</p>
+      </div>
+      <div class="footer-menu-h-item">
+        <p class="small">
+          <a href="/sites/default/files/catalog/falpi-ed28-en-small.pdf" target="_blank" class="a-download">Catalogo italiano Ed. 28</a><br/>
+          <a href="/sites/default/files/catalog/falpi-ed28-en-small.pdf" target="_blank" class="a-download">Catalogo inglese Ed. 28</a>
+        </p>
+      </div>
+      <div class="footer-menu-h-item">
+        {{catalog.more}}
+      </div>
+    </div>
+    <div class="footer-menu wrapper-sameh">
+      {% for item in list %}
+        <div class="footer-menu--item sameh">
+          <div class="footer-menu-group footer-menu-group--{{ item.key }}">
+            <h5>{{ item.title }}</h5>
+
+            <ul class="footer-menu-ul">
+              {% for sub in item.list %}
+                <li class="footer-menu-li">
+                  {{ sub.url}}
+                  
+                  {% if sub.sub %}
+                    <ul class="footer-menu-sub-sub">
+                      {{ sub.sub }}
+                    </ul>
+                  {% endif %}
+                </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>

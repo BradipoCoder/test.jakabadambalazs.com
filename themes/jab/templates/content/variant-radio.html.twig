@@ -1,0 +1,23 @@
+{#
+/**
+ * Variant Radio
+ */
+#}
+
+{{ attach_library('jab/variant-radio') }}
+
+<div class="wrapper-variant-radio">
+  <ul id="variant-radio" class="ul-variant-radio">
+    {% for item in list %}
+      <li class="li-variant">
+        <a href="#{{ item.code }}" id="variant-radio-{{item.m_code}}" class="a-variant-radio {{item.active}}" data-code="{{item.code}}" data-mcode="{{item.m_code}}" data-title="{{item.title}}">
+          <span class="f-circle {{item.checked}}">
+            <span class="f-check"></span>
+          </span>
+          <span class="li-variant__code">{{ item.code }}</span>
+          <span class="li-variant__title">{{ item.title }}</span>
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>

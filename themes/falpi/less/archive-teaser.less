@@ -1,0 +1,150 @@
+/* less/archive-teaser.less */
+
+
+// ** PROTEASER **
+// ---------------
+
+.proteaser{
+  .clearfix();
+}
+
+.proteaser-solution,
+.proteaser-system,
+.proteaser-type{
+  .clearfix();
+  @media (min-width: @screen-md-min){
+    float: left; 
+  }
+}
+
+.proteaser-solution{
+  .clearfix();
+  background: @gray-dark;
+  .padding-v(1);
+}
+
+.proteaser-eco{
+  .clearfix();
+  background: @brand-primary;
+  .padding-h(0.5);
+  .padding-v(1);
+
+  @media (min-width:  @screen-sm-min) and (max-width: @screen-sm-max){
+    .padding-h(0);
+  }
+
+  @media (min-width: @screen-md-min){
+    .padding-h(1);
+    .padding-b(2);
+    float: left; 
+    width: 25%;
+  }
+}
+
+.proteaser-type{
+  @media (min-width: @screen-md-min){
+    width: 75%;
+    .clearfix();
+  }
+}
+
+.proteaser-system{
+  .clearfix();
+}
+
+.proteaser-solution--item{
+  @media (min-width:  @screen-sm-min){
+    float: left;
+    width: 33.333333%;
+  }
+  h2{
+    .margin-b(1);
+  }
+  .block-list{
+    .margin-l(-0.5);
+    .margin-r(-0.5);
+  }
+}
+
+.proteaser-eco--item{
+  h2{
+    .margin-b(1);
+  }
+  .block-list{
+    .margin-l(-0.5);
+    .margin-r(-0.5);
+  }
+
+  @media (min-width: @screen-sm-min) and (max-width: @screen-sm-max){
+    float: left;
+    width: 33.333333%;
+    .padding-h(1);
+
+    &:first-child{
+      width: 66.666666%;
+    }
+  }  
+}
+
+.proteaser-solution--item{
+  .padding-h(0.5);
+  @media (min-width: @screen-sm-min){
+    .padding-h(1); 
+  }
+  .margin-b(1);
+
+  &:last-child{
+    margin-bottom: 0;
+  }
+}
+
+.proteaser-system--item,
+.proteaser-type--item{
+  .padding-h(0.5);
+  .padding-v(1);
+
+  .block-list{
+    .margin-l(-0.5);
+    .margin-r(-0.5);
+  }
+
+  @media (min-width: @screen-sm-min){
+    .padding-h(1);
+    .padding-b(2);
+    float: left;
+    width: 33.3333%;
+    border-right: 1px solid @border-default-color;
+
+    &:last-child{
+      border-right: none;
+    }    
+  }
+}
+
+// ** MORE **
+// ----------
+
+.archive-more{
+  @media (min-width: @screen-md-min){
+    position: absolute;
+    top: 0;
+    right: 0;
+    text-align: right;
+  }
+
+  a{
+    .margin-b(0.25);
+
+    &.small{
+      display: block;
+      margin-right: 15px;
+    }
+  }
+}
+
+// ** ICONS **
+// -----------
+
+.page-teaser-icon{
+  max-width: 80px;
+}

@@ -1,0 +1,14 @@
+{
+  "name": "drupal/styleguide",
+  "type": "drupal-module",
+  "description": "Style Guide per semplificare la temizzazione",
+  "keywords": ["Drupal"],
+  "license": "GPL-2.0+",
+  "homepage": "https://www.drupal.org/project/styleguide",
+  "minimum-stability": "dev",
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/styleguide",
+    "source": "http://cgit.drupalcode.org/styleguide"
+  },
+  "require": { }
+}

@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Contains lightslider.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function lightslider_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the lightslider module.
+    case 'help.page.lightslider':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Light Slider support') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function lightslider_theme() {
+  return [
+    'lightslider' => [
+      'variables' => [
+        'content' => NULL,
+        'lsid' => NULL
+      ]
+    ],
+  ];
+}
+
+function lightslider_theme_suggestions_lightslider_alter(array &$suggestions, array $variables){
+  if (!empty($variables['lsid'])) {
+    $suggestions[] = 'lightslider__' . $variables['lsid'];
+
+  }
+}
+
+/**
+ * Preprocess theme function
+ */
+// function lightslider_preprocess_lightslider($vars){
+//   $options = $vars['options'];
+//   $lsid = $vars['lsid'];
+//   $vars['#attached']['drupalSettings']['lightslider'][$lsid] = $options;
+// }

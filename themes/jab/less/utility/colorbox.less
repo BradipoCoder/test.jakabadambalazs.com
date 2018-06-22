@@ -1,0 +1,31 @@
+/* less/colorbox.less */
+
+#cboxCurrent{
+  font-size: 14px;
+  bottom: 0;
+}
+
+#cboxTitle{
+  font-size: @font-size-small;
+}
+
+.cbox-item{
+  a.colorbox{
+    display: block;
+    position: relative;
+    &:after{
+      .material-icons('zoom_in');
+      position: absolute;
+      bottom: 10px;
+      right: 15px;
+      color: @gray-light;
+      font-size: 30px;
+    }    
+  }  
+}
+
+a.cboxElement{
+  &:focus{
+    outline: none;
+  } 
+}

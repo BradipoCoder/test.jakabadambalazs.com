@@ -1,0 +1,388 @@
+
+// 1 cm ~ 59 px (facciamo 55?)
+// px = cm * 55 px/cm
+
+@cm-to-pix:  50px;
+
+// @a4-width: 792px; // 794px - 96 DPI
+// @a4-height: 1121px; // 1123px - 96 DPI
+
+@a4-width: 1240px;  // 150 DPI
+@a4-height: 1754px; // 150 DPI
+
+@letter-spacing-sm-print: -1pt;
+
+@page {
+  margin: 0px;
+}
+body { margin: 0px; }
+
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  &:before,
+  &:after{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;  
+  }
+}
+
+.paper{
+  //position: relative;
+}
+
+.tech-header{
+  margin-bottom: 35px;
+}
+
+.print-row{
+  .clearfix();
+  margin-left: floor(-0.1 * @cm-to-pix);
+  margin-right: floor(-0.1 * @cm-to-pix);
+
+  .print-col{
+    float: left;
+    width: 50%;
+    padding-left: floor(0.1 * @cm-to-pix);
+    padding-right: floor(0.1 * @cm-to-pix);
+  }
+}
+
+img{
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+// ** TYPE **
+// ----------
+
+@scale-font: 0.7;
+
+body{
+  font-family: 'Roboto', sans-serif;
+  //font-family: DejaVu Sans, Helvetica, Arial, sans-serif;
+  font-size: @font-size-base * @scale-font;
+  color: @gray;
+  font-weight: @font-weight-base;
+}
+
+//footer{
+//  position: fixed; bottom: 0px; left: 0px; right: 0px; background-color: lightblue; height: 50px;
+//}
+
+.p-large{
+  font-size: floor(@font-size-base * @scale-font * 1.2);
+}
+
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6{
+  font-family: 'Roboto', sans-serif;
+  font-weight: @font-weight-bold;
+  margin: 0;
+  color: @gray-darker;
+}
+
+h1, .h1{
+  //font-size: floor(@font-size-h1 * @scale-font);
+  font-size: 35px;
+  line-height: 38px;
+}
+
+h2, .h2{
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 35px;  
+}
+
+h2, .h2,
+h4, .h4{
+  font-weight: @font-weight-base;
+}
+
+h3, .h3{
+  font-weight: @font-weight-base;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+h5, .h5{
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+
+strong, b{
+  font-weight: @font-weight-bold;
+
+  color: @gray-darker;
+}
+
+hr{
+  border-top: 1px solid @gray-lighter;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+
+.text-justify{
+  text-align: justify;
+}
+
+// ** TECH HEAD OVERRIDE **
+// ------------------------
+
+.tech-header{
+  .clearfix();
+  position: relative;
+  z-index: 1;
+}
+
+.wrapper-tech-logo{
+  width: 3.2 * @cm-to-pix;
+  img{
+    width: 100%;
+  }
+}
+
+.wrapper-cert-logo{
+  float: right;
+  margin-right: 10px;
+  img{
+    width: 100%;
+  }
+}
+
+.wrapper-head-certs{
+  position: absolute;
+  width: 500px;
+  height: 2 * @cm-to-pix;
+  top: 0;
+  right: -10px;
+}
+
+.wrapper-cert-logo-cam{
+  width: 2 * @cm-to-pix;
+}
+
+.wrapper-cert-logo-epd{
+  max-width: 4 * @cm-to-pix;
+  position: relative;
+  top: 14px;
+}
+
+.wrapper-cert-logo-ecolabel{
+  width: 1.97 * @cm-to-pix;  
+}
+
+// ** TECH DESC **
+// ---------------
+
+.tech-desc{
+  z-index: 0;
+  margin-bottom: 10px;
+}
+
+.wrapper-img{
+  text-align: center;
+  //img{
+  //  max-height: 400px;
+  //}
+}
+
+// ** TECH MIDDLE **
+// -----------------
+
+.tech-middle{
+  .clearfix();
+  margin-bottom: 4px;
+}
+
+.tech-middle-head{
+  position: relative;
+  height: 22px;
+
+  .field--name-field-ref-iso9001edition{
+    width: 50%;
+    position: absolute;
+    top: -2px;
+    right: 0;
+  }
+}
+
+.field--name-field-ref-variant{
+  display: block;
+  .clearfix();
+  margin-left: -5px;
+  margin-right: -5px;
+
+  > .field--item{
+    width: 50%;
+    float: left;
+    padding: 0 5px;
+    margin-bottom: 3px;
+  }
+
+  .variant-title{
+    float: left;
+  }
+
+  .content{
+    .clearfix();
+  }
+}
+
+.field--name-field-code{
+  float: left;
+  min-width: 64px;
+  font-weight: @font-weight-bold;
+
+  color: @gray-darker;
+  margin-right: 5px;
+}
+
+// ** TECH LOW **
+// --------------
+
+.wrapper-fabr-cert{
+  .clearfix();
+  margin-top: 5px;
+
+  p{
+    margin-top: 0;
+    margin-bottom: 9px;
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .fabr-cert{
+    width: 33.33%;
+    float: left;
+    min-height: 1px;
+    position: relative;
+    text-align: center;
+
+    img{
+      width: 2.4 * @cm-to-pix;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 5px;
+    }
+  } 
+}
+
+.tech-low{
+  .field--name-field-ref-cert{
+    .clearfix();
+    margin-left: -5px;
+    margin-right: -5px;
+    margin-bottom: 10px;
+
+    > .field--item{
+      width: 33.33%;
+      float: left;
+      padding-left: 5px;
+      padding-right: 5px;
+
+      .field--name-name{
+        font-weight: @font-weight-bold;
+        text-align: center;
+        color: @gray-darker;
+        margin-bottom: 7px;
+      }
+
+      p{
+        margin-top: 0;
+      }
+
+      .field--name-description{
+        text-align: center; 
+      }
+    }
+  }
+}
+
+.field--name-field-ref-cert{
+  .taxonomy-term-10{
+    img{
+      max-width: 60px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+// ** Caratteristiche tecniche **
+// ------------------------------
+
+.tech-tech{
+  page-break-inside: avoid;
+}
+
+.wrapper-tech-title{
+  margin-top: 10px;
+  padding: 10px 0;
+  background: @gray-lightest;
+  text-align: center;
+  margin-bottom: 15px;
+
+  h5{
+    margin: 0;
+  }
+
+  .field--name-field-ref-iso9001edition{
+    display: inline;
+  }
+}
+
+// ** NUOVI **
+// -----------
+
+// Nuovi
+.field--name-field-tech-1, 
+.field--name-field-tech-2{
+  .field--item{
+    .clearfix();
+    padding: 7px 0;
+    border-bottom: 1px solid @border-default-color;  
+  }
+  .field--item:last-child{
+    border-bottom: none;
+  }
+
+  .tt-term-value,
+  .tt-term-label{
+    float: left;
+    width: 50%;
+  }
+
+  .tt-term-label{
+    font-weight: @font-weight-bold;
+    color: @gray-darker;
+  }
+}
+
+// ** FOOTER **
+// ------------
+
+.footer{
+  padding-top: 30px;
+}
+
+.p-footer{
+  text-align: center;
+}
+// ** SPACING **
+// -------------
+
+.spacing-m{
+  margin-bottom: 0.5 * @cm-to-pix; 
+}
+
+.spacing-l{
+  margin-bottom: 1 * @cm-to-pix; 
+}

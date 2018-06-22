@@ -1,0 +1,16 @@
+{#
+/**
+ * Mittelmoda Counter
+ */
+#}
+
+{{ attach_library('mittelmoda/award') }}
+
+<div id="award-countdown-{{class}}" class="mittelmoda-counter mittelmoda-counter-{{class}} hide" data-date="{{ content.date }}">
+  <div class="details">
+    {{ content.details }}
+  </div>
+  <div class="counter counter--numbers">
+    {{ content.counter }}
+  </div>
+</div>

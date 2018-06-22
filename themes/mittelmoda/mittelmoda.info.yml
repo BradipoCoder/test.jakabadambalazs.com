@@ -1,0 +1,26 @@
+core: 8.x
+type: theme
+base theme: bootstrap
+
+name: 'MittelModa Theme'
+description: 'Tema per MittelModa'
+package: 'Bootstrap'
+
+regions:
+  navigation: 'Navigation'
+  navigation_collapsible: 'Navigation (Collapsible)'
+  help: 'Help'
+  sadmin: 'Simple admin'
+  content: 'Content'
+  footer: 'Footer'
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+
+libraries:
+  - 'mittelmoda/global-styling'
+  - 'mittelmoda/bootstrap-scripts'
+  - 'mittelmoda/fonts'
+
+ckeditor_stylesheets:
+  - css/ckeditor-base.css
+  - css/style.css

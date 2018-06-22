@@ -1,0 +1,12 @@
+{#
+/**
+ * Field Node Title
+ * Sovrascritto per usare un div attorno al titolo
+ */
+#}
+
+<div{{ attributes }}>
+  {%- for item in items -%}
+    {{ item.content }}
+  {%- endfor -%}
+</div>

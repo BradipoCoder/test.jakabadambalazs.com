@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains footer.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function footer_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the footer module.
+    case 'help.page.footer':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Custom footer') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function footer_theme() {
+  return [
+    'footer' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+  ];
+}

@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains styleguide.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function styleguide_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the styleguide module.
+    case 'help.page.styleguide':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Style Guide per semplificare la temizzazione') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function styleguide_theme() {
+  return [
+    'styleguide' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+  ];
+}

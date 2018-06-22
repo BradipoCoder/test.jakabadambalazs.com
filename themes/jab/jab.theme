@@ -1,0 +1,17 @@
+<?php
+/**
+ * @file
+ * Bootstrap sub-theme.
+ *
+ * Place your custom PHP code in this file.
+ */
+
+/**
+ * Implements hook_preprocess_user().
+ */
+function jab_preprocess_user(&$variables) {
+  /** @var \Drupal\user\Entity\User $account */
+  $account = $variables['elements']['#user'];
+  $variables['username'] = $account->getDisplayName();
+}
+

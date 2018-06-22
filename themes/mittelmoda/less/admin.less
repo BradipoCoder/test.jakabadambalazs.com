@@ -1,0 +1,76 @@
+/* less/admin.less */
+
+.linkit-ui-autocomplete{
+  z-index: 10000;
+}
+
+.node-form{
+  .margin-b(2);
+}
+
+.cke_editable{
+  background: #fff; // !important;
+}
+
+ul.action-links{
+  list-style: none;
+  padding: 0;
+  .margin-b(0.5);
+  li{
+    display: inline-block;
+  }
+}
+
+// ** WEBFORM ADMIN **
+// -------------------
+
+.webform-form ul.action-links{
+  .margin-b(0.5);
+}
+
+#edit-search--description{
+  display: none;
+}
+
+.filter-wrapper{
+  height: auto;
+  .filter-help{
+    margin-top: 0;
+    font-size: @font-size-small;
+  }
+}
+
+// ** TABLE ADMIN **
+// ------------
+
+th,
+td{
+  &.checkbox{
+    display: table-cell;
+    margin: 0;
+  }
+}
+
+td.checkbox{
+  .file-display{
+    position: inherit;
+    margin: 0;
+  }
+}
+
+tr.draggable{
+  .tabledrag-handle{
+    padding: 7px 5px;
+    font-size: @font-size-small;
+  }
+}
+
+.tabledrag-toggle-weight{
+  font-size: 7px !important;
+}
+
+.fieldset-wrapper{
+  .description{
+    font-size: @font-size-small;
+  }
+}

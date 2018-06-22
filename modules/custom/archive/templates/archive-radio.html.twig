@@ -1,0 +1,14 @@
+{#
+/**
+ * Archive RAdio
+ */
+#}
+
+<div id="filter-name-{{name}}" class="filter filter-radio" data-filter-name="{{name}}" data-value="false">
+  <h5>{{title}}</h5>
+  {% for item in items %}
+    <a hraf="#" class="filter-link filter-link-radio filter-link-{{item.class}}" data-value="{{item.value}}" data-filter-name="{{name}}">
+      <span class="f-circle"><span class="f-check"></span></span> {{ item.name }}
+    </a>
+  {% endfor %}
+</div>

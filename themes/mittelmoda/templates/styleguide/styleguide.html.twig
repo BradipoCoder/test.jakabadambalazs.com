@@ -1,0 +1,136 @@
+<!-- Add you custom twig html here -->
+
+{{ attach_library('styleguide/styleguide') }}
+
+<div class="wrapper-styleguide">
+  <div class="row">
+    <div class="container">
+      <div class="sg-wrapper sg-palette">
+        <div class="sg-side">
+          <p class="small">palette</p>
+        </div>
+        <div class="sg-content">
+          <div class="sg-colors">
+            <span class="sg-color sg-color-primary">primary</span>
+            <span class="sg-color sg-color-gray-darker">gray-darker</span>
+            <span class="sg-color sg-color-gray-dark">gray-dark</span>
+            <span class="sg-color sg-color-gray">gray</span>
+            <span class="sg-color sg-color-gray-light">gray-light</span>
+            <span class="sg-color sg-color-gray-lighter">gray-lighter</span>
+            <span class="sg-color sg-color-gray-lightest">gray-lightest</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="sg-wrapper sg-border-default">
+        <div class="sg-side">
+          <p class="small">border-default</p>
+        </div>
+        <div class="sg-content">
+          <hr class="margin-t-05 sg-border">
+          <code>Use @border-default-color</code>
+        </div>
+      </div>
+
+      <div class="sg-wrapper sg-headings">
+        <div class="sg-side">
+          <p class="small">headings</p>
+        </div>
+        <div class="sg-content">
+          <h1 class="h1-big margin-t-0">H1 <span class="text-primary">BIG</span> – {{ content.title }}</h1>
+          <h1>H1 – {{ content.title }}</h1>
+          <h2>H2 – {{ content.title }}</h2>
+          <h3>H3 – {{ content.title }}</h3>
+          <h4>H4 – {{ content.title }}</h4>
+          <h5>H5 – {{ content.title }}</h5>
+        </div>
+      </div>
+
+      <div class="sg-wrapper sg-copy">
+        <div class="sg-side">
+          <p class="small">copy</p>
+        </div>
+        <div class="sg-content copy">
+          <p class="lead">
+            Lead – Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit.<br/>
+            Quisque lobortis elementum augue, non ultricies mi luctus vel.
+          </p>
+          <p>
+            Copy – Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit.<br/>
+            Quisque <strong>lobortis elementum</strong> augue, <em>non ultricies mi</em> luctus vel.
+          </p>
+          <p class="small">
+            Copy small – Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br/>
+            Quisque lobortis elementum augue, non ultricies mi luctus vel.
+          </p>
+        </div>
+      </div>
+
+      <div class="sg-wrapper sg-buttons">
+        <div class="sg-side">
+          <p class="small">buttons</p>
+        </div>
+        <div class="sg-content">
+          <div class="sg-buttons-wrapper">
+            <div class="row">
+              <div class="col-md-3">
+                <a href="#" class="btn btn-primary btn-lg">Btn primary</a> 
+              </div>
+              <div class="col-md-3">
+                <a href="#" class="btn btn-default btn-lg">Btn default</a> 
+              </div>
+              <div class="col-md-6">
+                <a href="#" class="big-cta-link">
+                  <span class="big-cta--content negative">
+                    <span class="h2">Be part of the Fashion Awars</span>
+                    <span class="h4">Join the competition</span>
+                  </span>
+                  <span class="btn btn-white btn-lg btn-arrow"></span>
+                </a> 
+              </div>
+            </div>
+            <div class="row margin-v-1">
+              <div class="col-md-3">
+                <a href="#" class="btn btn-ghost btn-lg btn-with-arrow">Btn ghost</a>
+              </div>
+              <div class="col-md-3">
+                <a href="#" class="btn btn-ghost btn-lg btn-arrow"></a> 
+              </div>
+              <div class="col-md-3">
+                <a href="#" class="btn btn-primary btn-lg btn-arrow"></a> 
+              </div>
+            </div>
+          </div> 
+        </div>
+      </div>
+
+      <div class="sg-wrapper sg-negative">
+        <div class="sg-side">
+          <p class="small">negative</p>
+        </div>
+        <div class="sg-content">
+          <div class="negative sg-negative-bg">
+            <div class="row margin-b-2">
+              <div class="col-md-3">
+                <a href="#" class="btn btn-primary">Btn primary</a> 
+              </div>
+              <div class="col-md-3">
+                <a href="#" class="btn btn-default">Btn default</a> 
+              </div>
+              <div class="col-md-3">
+                <a href="#" class="btn btn-ghost">Btn ghost</a> 
+              </div>
+            </div>
+
+            <p>
+              Copy – Lorem ipsum <a href="#">dolor</a> sit amet, consectetur adipiscing elit.<br/>
+              Quisque <strong>lobortis elementum</strong> augue, <em>non ultricies mi</em> luctus vel.
+            </p>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

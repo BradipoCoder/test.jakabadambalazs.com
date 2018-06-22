@@ -1,0 +1,58 @@
+/* less/family.less */
+
+// ** FAMILY FULL **
+// -----------------
+
+.family-full-content{
+  .clearfix();
+  .padding-h(0.5);
+  .padding-t(1);
+
+  @media (min-width: @screen-sm-min){
+    .padding-h(2);
+    .padding-t(1.5); 
+  }
+}
+
+@family-title-width: 120px;
+
+.family-detail{
+  position: relative;
+  .clearfix();
+  border-bottom: 1px solid @border-default-color;
+
+  &:first-child{
+    border-top: 1px solid @border-default-color;  
+  }
+
+  .family-detail__title{
+    padding: 15px 15px 5px 15px;
+  
+    @media (min-width: @screen-sm-min){
+      padding: 20px;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+  }
+
+  .family-detail__content{
+    padding: 5px 15px 15px 15px;
+
+    @media (min-width: @screen-sm-min){
+      padding: 20px;
+      margin-left: @family-title-width;
+    }
+  }
+
+  .family-detail__title{
+    width: @family-title-width;
+
+    h5{
+      margin: 0;
+      line-height: 25px;
+      color: @gray-light;
+    }
+  }
+}
+

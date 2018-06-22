@@ -1,0 +1,5 @@
+name: Favicons
+type: module
+description: Add Favicons to the website using Real Favicon Generator
+core: 8.x
+package: Mekit

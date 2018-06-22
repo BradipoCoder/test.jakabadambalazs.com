@@ -1,0 +1,19 @@
+{#
+/**
+ * Green Circle
+ */
+#}
+
+{{ attach_library('jab/jquery.circleprogress') }}
+
+<div class="green-circle vc text-center negative">
+  <div class="animated-circle" data-href="{{url}}"></div>
+  <h2 class="h1 text-green"><span class="animated-number" data-number="{{ number }}">0</span>{{number_suffix}}</h2>
+  {% if lang == 'en' %}
+    <h4 class="margin-b-0 margin-t-0">{{ sub }}</h4>
+    <p class="green-circle-desc">{{ desc }}</p>
+  {% else %}
+    <p class="green-circle-desc margin-b-025">{{ desc }}</p>
+    <h4 class="margin-b-0 margin-t-0">{{ sub }}</h4>
+  {% endif %}
+</div>

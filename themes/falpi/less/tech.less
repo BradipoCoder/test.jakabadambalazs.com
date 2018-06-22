@@ -1,0 +1,429 @@
+/* less/tech.less */
+
+//body.page-node-type-tech{
+//  background: @gray-lightest;
+//}
+
+.wrapper-tech-bg{
+  background: @gray-lightest;
+  .padding-t(1);
+  .padding-b(2);
+}
+
+.paper{
+  position: relative;
+  background: #fff;
+  border: 1px solid @border-default-color;
+  .padding-h(1.5);
+  .padding-t(1);
+  .padding-b(4);
+  .box-shadow(0px 3px 8px 0px rgba(0, 0, 0, 0.4));
+
+  max-width: 900px;
+  min-height: 1270px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.paper-width{
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+// ** TECH FULL **
+// ---------------
+
+.paper{
+
+  h1{
+    margin-top: 0;
+    font-weight: @font-weight-bold;
+  }
+
+  .field--name-field-subtitle{
+    .margin-t(-0.25);
+    .margin-b(1.5);
+  }
+
+  .field--label{
+    font-size: floor((@font-size-h5 * @resize-plus));
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    .margin-b(0.25);
+    .text-color(@gray-darker);
+    font-weight: @font-weight-bold;
+  }
+
+  .field--name-field-ref-variant{
+    .clearfix();
+    margin-left: -5px;
+    margin-right: -5px;
+
+    > .field--item{
+      width: 50%;
+      float: left;
+      padding-right: 5px;
+      padding-left: 5px;
+    }
+  }
+
+  .field--name-field-code{
+    float: left;
+    min-width: 64px;
+    margin-right: 5px;
+    font-weight: @font-weight-bold; 
+    color: @gray-darker;
+  }
+
+  .variant-title{
+    float: left;
+  }
+
+  .wrapper-img-overflow{
+    overflow: hidden;
+  }
+
+  .wrapper-img{
+    img{
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+}
+
+.tech-low{
+  .field--name-field-ref-cert{
+    .clearfix();
+    margin-left: -5px;
+    margin-right: -5px;
+
+    > .field--item{
+      width: 33.33%;
+      float: left;
+      padding-left: 5px;
+      padding-right: 5px;
+
+      .field--name-name{
+        font-weight: @font-weight-bold;
+        color: @gray-darker;
+        .margin-b(0.15);
+        text-align: center;
+      }
+
+      .field--name-description{
+        text-align: center; 
+      }
+    }
+  }
+}
+
+.wrapper-field-ref-cert{
+  .taxonomy-term-10{
+    img{
+      max-width: 60px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+  }
+
+  .taxonomy-term-11{
+    .field--name-name{
+      letter-spacing: @letter-spacing-sm;
+    }
+  }
+}
+
+// ** FABR TECH **
+// ---------------
+
+.wrapper-fabr-cert{
+  .clearfix();
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-top: 5px;
+
+  p{
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 7px !important;
+    line-height: 14px;
+  }
+
+  .fabr-cert{
+    width: 33.33%;
+    float: left;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+
+    img{
+      width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+      margin-bottom: 5px;
+    }
+  } 
+}
+
+// ** PRINT BTN **
+// ---------------
+
+.wrapper-tech-links{
+  margin-left: -5px;
+  margin-right: -5px;
+
+  > .btn,
+  > .btn-group{
+    margin: 0 5px;
+  }
+
+  i{
+    position: relative;
+    top: 5px;
+    font-size: 18px;
+  }
+
+  .btn-download{
+    padding-right: 12px;
+    padding-left: 10px;
+  }
+
+  @media (min-width: @screen-sm-min){
+    text-align: right;  
+  }
+}
+
+// ** TYPO INSIDE PAPER **
+// -----------------------
+
+@resize: 0.7;
+@resize-plus: 0.8;
+
+.paper{
+  h1, .h1{
+    font-size: floor((@font-size-h1 * @resize));
+  }
+  h2, .h2{
+    font-size: floor((@font-size-h2 * @resize));
+  }
+  h3, .h3{
+    font-size: floor((@font-size-h3 * @resize));
+  }
+  h4, .h4{
+    font-size: floor((@font-size-h4 * @resize));
+  }
+  h5, .h5{
+    font-size: floor((@font-size-h5 * @resize-plus));
+    .margin-b(0.25);
+  }
+
+  font-size: floor((@font-size-small * @resize));
+  p{
+    .margin-b(0.15);
+  }
+
+  .p-large{
+    font-size: floor((@font-size-base * @resize));  
+  }
+
+  hr.safe{
+    margin-top: 0;
+    .margin-b(0.25);
+  }
+}
+
+// ** TECH HEAD **
+// ---------------
+
+.tech-header{
+  position: relative;
+  z-index: 1;
+  margin-bottom: 25px;
+}
+
+.tech-desc{
+  position: relative;
+  z-index: 0;
+}
+
+.wrapper-head-certs{
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.wrapper-tech-logo{
+  max-width: 150px;
+  img{
+    width: 100%;
+  }
+}
+
+.wrapper-cert-logo{
+  float: right;
+  margin-right: 10px;
+  &:first-child{
+    margin-right: 0;
+  }
+}
+
+.wrapper-cert-logo-epd{
+  max-width: 155px;
+  img{
+    margin-top: 10px;
+  }
+}
+
+.wrapper-cert-logo-ecolabel{
+  img{
+    max-width: 78px;   
+  } 
+}
+
+.wrapper-cert-logo-cam{
+  width: 80px;
+  img{
+    width: 100%;
+  }
+}
+
+// ** Caratteristiche tecniche **
+// ------------------------------
+
+.wrapper-tech-title{
+  padding: 10px 0;
+  background: @gray-lightest;
+  text-align: center;
+  .margin-b(0.5);
+  h5{
+    margin: 0;
+  }
+
+  .field--name-field-ref-iso9001edition{
+    display: inline;
+  }
+}
+
+// Vecchi campi
+.field--name-field-tech-car,
+.field--name-field-tech-car2{
+  .field--item{
+    .clearfix();
+    padding: 7px 0;
+    border-bottom: 1px solid @border-default-color;
+  }
+
+  .field--item:last-child{
+    border-bottom: none;
+  }
+}
+
+.double-field-second,
+.double-field-first{
+  float: left;
+  width: 50%;
+}
+
+.double-field-first{
+  font-weight: @font-weight-bold;
+}
+
+.double-field-unformatted-list{
+  .field--item{
+    .clearfix();
+  }
+}
+
+// Nuovi
+.field--name-field-tech-1, 
+.field--name-field-tech-2{
+  .field--item{
+    .clearfix();
+    padding: 7px 0;
+    border-bottom: 1px solid @border-default-color;  
+  }
+  .field--item:last-child{
+    border-bottom: none;
+  }
+
+  .tt-term-value,
+  .tt-term-label{
+    float: left;
+    width: 50%;
+  }
+
+  .tt-term-label{
+    font-weight: @font-weight-bold;
+    color: @gray-darker;
+  }
+}
+
+// ** FOOTER **
+// ------------
+
+.tech-footer{
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  left: 0;
+
+  p{
+    margin-bottom: 0;
+  }
+}
+
+// ** ADMIN **
+// -----------
+
+// Da eliminare
+.double-field-elements{
+  .clearfix();
+  > .form-item{
+    float: left;
+    margin-right: 10px;
+  }
+}
+
+#edit-group-tech--content{
+  .clearfix();
+  .field--name-field-tech-car,
+  .field--name-field-tech-car2{
+    float: left;
+    width: 50%;
+  }
+}
+
+// Nuovi
+#edit-group-tech--content{
+  .clearfix();
+  .field--type-entity-reference-text{
+    float: left;
+    width: 50%;
+
+    .form-type-textarea,
+    .form-type-entity-autocomplete{
+      label{
+        display: none;
+      }
+      float: left;
+      width: 50%;
+      padding-right: 5px;
+    }
+
+  }
+}
+
+// ** SPACING **
+// -------------
+
+.spacing-m{
+  .margin-b(1);
+}
+
+.spacing-l{
+  .margin-b(2);
+}
+

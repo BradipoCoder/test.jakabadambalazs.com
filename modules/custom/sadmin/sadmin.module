@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * @file
+ * Contains sadmin.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function sadmin_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the sadmin module.
+    case 'help.page.sadmin':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Amministrazione semplificata per utenti non amministratori') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function sadmin_theme() {
+  return [
+    'sadmin' => [
+      'variables' => [
+        'content' => NULL,
+      ]
+    ],
+  ];
+}

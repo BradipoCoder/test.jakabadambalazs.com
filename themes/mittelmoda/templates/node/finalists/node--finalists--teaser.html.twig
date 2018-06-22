@@ -1,0 +1,37 @@
+{#
+/**
+ * Node Finalists Teaser
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row">
+      <div class="container margin-b-2">
+        <div class="header-finalists-teaser margin-b-15">
+          <h2>Young fashion designers</h2>
+
+          <a href="{{url}}" class="btn btn-with-arrow btn-ghost">
+            View all</a>
+        </div>
+        <div class="row row-finalists">
+          {{content}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

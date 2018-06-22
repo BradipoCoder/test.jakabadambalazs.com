@@ -1,0 +1,13 @@
+{#
+/**
+ * Light Slider
+ */
+#}
+
+{{ attach_library('lightslider/light-slider') }}
+
+<div class="wrapper-lightslider wrapper-lightslider-{{lsid}} hide">
+  <div class="lightslider lightslider-{{lsid}}" data-lsid="{{lsid}}">
+    {{content}}
+  </div>
+</div>

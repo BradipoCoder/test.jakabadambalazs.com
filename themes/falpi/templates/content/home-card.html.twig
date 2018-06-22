@@ -1,0 +1,24 @@
+{#
+/**
+ * Home Big Card
+ * https://github.com/dirkgroenen/jQuery-viewport-checker
+ */
+#}
+
+{{ attach_library('falpi/viewport') }}
+
+<div class="row row-block row-card">
+  <div class="wrapper-home-block">
+    <div class="container">
+      <div class="card card-transparent card-xs-spread">
+        {{content|without('webform')}}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row row-below-card">
+  <div class="container">
+    {{content.webform}}
+  </div>
+</div>

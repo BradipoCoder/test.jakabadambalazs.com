@@ -1,0 +1,133 @@
+{#
+/**
+ * Node Tech PDF
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information:
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="paper">
+
+      <div class="tech-header">
+        {{ content.head.logo }}
+        {{ content.head.cert }}
+      </div>
+
+      <div class="tech-desc {{ content.spacing_class }}">
+        <div class="print-row">
+          <div class="print-col">
+            {{ content.title }}
+            {{ content.my_title }}
+
+            {{ content.field_subtitle }}
+
+            {% if not content.field_subtitle.0 %}
+              &nbsp;
+            {% endif %}
+            <div class="p-large text-justify">
+              {{ content.body }}
+              <p>
+                {{ 'For further information:'|trans }} <strong>info@jakabadambalazs.com – jakabadambalazs.com</strong>
+              </p>
+            </div>
+          </div>
+          <div class="print-col">
+            <div class="wrapper-img-overflow" style="{{ content.wrapper_img_style }}">
+              <div class="wrapper-img" style="{{ content.img_style }}">
+                {% if content.field_imgs.0 %}
+                  {{ content.field_imgs }}
+                {% else %}
+                  {{ content.image }}
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-middle {{ content.spacing_class }}">
+        <div class="print-row">
+          <div class="print-col">
+            <div class="wrapper-tech-title">
+              <h5>{{ 'Applicable standards'|trans }}</h5>
+            </div>
+            {{ content.field_ref_rules }}
+          </div>
+          <div class="print-col">
+            <div class="wrapper-tech-title">
+              <h5>{{ 'Product code'|trans }}</h5>
+            </div>
+
+            {% if show_product_code %}
+              {{ content.field_code }}
+            {% endif %}
+
+            {{ content.field_ref_variant }}
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-low {{ content.spacing_class }}">
+        <div class="print-row">
+          <div class="print-col">
+            <div class="wrapper-tech-title">
+              <h5>{{ 'Manufacturer certifications'|trans }}</h5>
+            </div>
+            {{ content.fabr_cert }}
+          </div>
+          <div class="print-col">
+            <div class="wrapper-tech-title">
+              <h5>{{ 'Product certifications'|trans }}</h5>
+            </div>
+            {{ content.field_ref_cert }}
+          </div>
+        </div>
+      </div>
+
+      <div class="tech-tech">
+        <div class="wrapper-tech-title">
+          <h5>{{ 'Technical features'|trans }}</h5>
+        </div>
+        <div class="print-row">
+          <div class="print-col">
+            {{ content.field_tech_1 }}
+            {#{ content.field_tech_car }#}
+          </div>
+          <div class="print-col">
+            {{ content.field_tech_2 }}
+            {#{ content.field_tech_car2 }#}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{#
+<div class="tech-footer">
+  <p>
+    <strong>Falpi Srl</strong> - Via Diagonale, 120 - Trivero (BI).<br/>
+    {% if falpi_product %}
+      L’articolo è interamente fabbricato in Italia nello stabilimento di Trivero (BI) certificato secondo la norma SA8000:2008.
+     {% endif %}
+  </p>
+</div>
+#}

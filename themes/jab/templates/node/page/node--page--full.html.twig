@@ -1,0 +1,50 @@
+{#
+/**
+ * Node Page Full
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+{{ attach_library('jab/jquery.scrollto') }}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row row-card">
+      <div class="container">
+
+        {{ content.ttmenu }}
+
+        <div class="card card-xs-spread margin-b-2">
+          {{content.tabs}}
+
+          <div class="card-full-content">
+            {{content|without('tabs', 'ttmenu', 'footer_menu', 'webform')}}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {% if content.webform %}
+      <div class="row row-below-card">
+        <div class="container">
+          {{ content.webform }}
+        </div>
+      </div>
+    {% endif %}
+
+    {#{ content }#}
+  </div>
+</div>

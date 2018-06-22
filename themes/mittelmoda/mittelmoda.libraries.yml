@@ -1,0 +1,64 @@
+global-styling:
+  css:
+    theme:
+      css/style.css: {}
+
+bootstrap-scripts:
+  js:
+    bootstrap/js/affix.js: {}
+    bootstrap/js/alert.js: {}
+    bootstrap/js/button.js: {}
+    bootstrap/js/carousel.js: {}
+    bootstrap/js/collapse.js: {}
+    bootstrap/js/dropdown.js: {}
+    bootstrap/js/modal.js: {}
+    bootstrap/js/tooltip.js: {}
+    bootstrap/js/popover.js: {}
+    bootstrap/js/scrollspy.js: {}
+    bootstrap/js/tab.js: {}
+    bootstrap/js/transition.js: {}
+
+fonts:
+  css:
+    theme:
+      https://fonts.googleapis.com/css?family=Lato:400,400i,700,700i: { type: external }
+      https://fonts.googleapis.com/icon?family=Material+Icons: { type: external }
+
+jquery.countdown:
+  js:
+    js/jquery.countdown/jquery.countdown.min.js: {}
+  dependencies:
+    - core/jquery
+
+jquery.easing:
+  js:
+    js/jquery.easing/jquery.easing.1.3.js: {}
+  dependencies:
+    - core/jquery
+
+award:
+  js:
+    js/award.js: {}
+  dependencies:
+    - mittelmoda/jquery.countdown
+    - mittelmoda/jquery.easing
+    - core/jquery.once
+
+magic-form:
+  js:
+    js/magic-form.js: {}
+  dependencies:
+    - core/jquery
+    - mittelmoda/jquery.easing
+    - mittelmoda/jquery.scrollto
+
+jquery.scrollto:
+  js:
+    js/jquery.scrollto/jquery.scrollto.js: {}
+  dependencies:
+    - core/jquery
+    - mittelmoda/jquery.easing
+
+cookies:
+  js:
+    js/cookies/js.cookie.js: {}

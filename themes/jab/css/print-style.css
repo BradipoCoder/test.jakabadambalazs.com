@@ -1,0 +1,347 @@
+@page {
+  margin: 0px;
+}
+body {
+  margin: 0px;
+}
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.tech-header {
+  margin-bottom: 35px;
+}
+.print-row {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.print-row:before,
+.print-row:after {
+  content: " ";
+  display: table;
+}
+.print-row:after {
+  clear: both;
+}
+.print-row .print-col {
+  float: left;
+  width: 50%;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+body {
+  font-family: 'Roboto', sans-serif;
+  font-size: 12.6px;
+  color: #4C525E;
+  font-weight: 400;
+}
+.p-large {
+  font-size: 15px;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  margin: 0;
+  color: #2D333C;
+}
+h1,
+.h1 {
+  font-size: 35px;
+  line-height: 38px;
+}
+h2,
+.h2 {
+  font-size: 20px;
+  margin-top: 5px;
+  margin-bottom: 35px;
+}
+h2,
+.h2,
+h4,
+.h4 {
+  font-weight: 400;
+}
+h3,
+.h3 {
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+h5,
+.h5 {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 7px;
+}
+strong,
+b {
+  font-weight: 500;
+  color: #2D333C;
+}
+hr {
+  border-top: 1px solid #DCE0E5;
+  margin-top: 0;
+  margin-bottom: 8px;
+}
+.text-justify {
+  text-align: justify;
+}
+.tech-header {
+  position: relative;
+  z-index: 1;
+}
+.tech-header:before,
+.tech-header:after {
+  content: " ";
+  display: table;
+}
+.tech-header:after {
+  clear: both;
+}
+.wrapper-tech-logo {
+  width: 160px;
+}
+.wrapper-tech-logo img {
+  width: 100%;
+}
+.wrapper-cert-logo {
+  float: right;
+  margin-right: 10px;
+}
+.wrapper-cert-logo img {
+  width: 100%;
+}
+.wrapper-head-certs {
+  position: absolute;
+  width: 500px;
+  height: 100px;
+  top: 0;
+  right: -10px;
+}
+.wrapper-cert-logo-cam {
+  width: 100px;
+}
+.wrapper-cert-logo-epd {
+  max-width: 200px;
+  position: relative;
+  top: 14px;
+}
+.wrapper-cert-logo-ecolabel {
+  width: 98.5px;
+}
+.tech-desc {
+  z-index: 0;
+  margin-bottom: 10px;
+}
+.wrapper-img {
+  text-align: center;
+}
+.tech-middle {
+  margin-bottom: 4px;
+}
+.tech-middle:before,
+.tech-middle:after {
+  content: " ";
+  display: table;
+}
+.tech-middle:after {
+  clear: both;
+}
+.tech-middle-head {
+  position: relative;
+  height: 22px;
+}
+.tech-middle-head .field--name-field-ref-iso9001edition {
+  width: 50%;
+  position: absolute;
+  top: -2px;
+  right: 0;
+}
+.field--name-field-ref-variant {
+  display: block;
+  margin-left: -5px;
+  margin-right: -5px;
+}
+.field--name-field-ref-variant:before,
+.field--name-field-ref-variant:after {
+  content: " ";
+  display: table;
+}
+.field--name-field-ref-variant:after {
+  clear: both;
+}
+.field--name-field-ref-variant > .field--item {
+  width: 50%;
+  float: left;
+  padding: 0 5px;
+  margin-bottom: 3px;
+}
+.field--name-field-ref-variant .variant-title {
+  float: left;
+}
+.field--name-field-ref-variant .content:before,
+.field--name-field-ref-variant .content:after {
+  content: " ";
+  display: table;
+}
+.field--name-field-ref-variant .content:after {
+  clear: both;
+}
+.field--name-field-code {
+  float: left;
+  min-width: 64px;
+  font-weight: 500;
+  color: #2D333C;
+  margin-right: 5px;
+}
+.wrapper-fabr-cert {
+  margin-top: 5px;
+}
+.wrapper-fabr-cert:before,
+.wrapper-fabr-cert:after {
+  content: " ";
+  display: table;
+}
+.wrapper-fabr-cert:after {
+  clear: both;
+}
+.wrapper-fabr-cert p {
+  margin-top: 0;
+  margin-bottom: 9px;
+  max-width: 100px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wrapper-fabr-cert .fabr-cert {
+  width: 33.33%;
+  float: left;
+  min-height: 1px;
+  position: relative;
+  text-align: center;
+}
+.wrapper-fabr-cert .fabr-cert img {
+  width: 120px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 5px;
+}
+.tech-low .field--name-field-ref-cert {
+  margin-left: -5px;
+  margin-right: -5px;
+  margin-bottom: 10px;
+}
+.tech-low .field--name-field-ref-cert:before,
+.tech-low .field--name-field-ref-cert:after {
+  content: " ";
+  display: table;
+}
+.tech-low .field--name-field-ref-cert:after {
+  clear: both;
+}
+.tech-low .field--name-field-ref-cert > .field--item {
+  width: 33.33%;
+  float: left;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.tech-low .field--name-field-ref-cert > .field--item .field--name-name {
+  font-weight: 500;
+  text-align: center;
+  color: #2D333C;
+  margin-bottom: 7px;
+}
+.tech-low .field--name-field-ref-cert > .field--item p {
+  margin-top: 0;
+}
+.tech-low .field--name-field-ref-cert > .field--item .field--name-description {
+  text-align: center;
+}
+.field--name-field-ref-cert .taxonomy-term-10 img {
+  max-width: 60px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.tech-tech {
+  page-break-inside: avoid;
+}
+.wrapper-tech-title {
+  margin-top: 10px;
+  padding: 10px 0;
+  background: #F4F4F4;
+  text-align: center;
+  margin-bottom: 15px;
+}
+.wrapper-tech-title h5 {
+  margin: 0;
+}
+.wrapper-tech-title .field--name-field-ref-iso9001edition {
+  display: inline;
+}
+.field--name-field-tech-1 .field--item,
+.field--name-field-tech-2 .field--item {
+  padding: 7px 0;
+  border-bottom: 1px solid #DCE0E5;
+}
+.field--name-field-tech-1 .field--item:before,
+.field--name-field-tech-2 .field--item:before,
+.field--name-field-tech-1 .field--item:after,
+.field--name-field-tech-2 .field--item:after {
+  content: " ";
+  display: table;
+}
+.field--name-field-tech-1 .field--item:after,
+.field--name-field-tech-2 .field--item:after {
+  clear: both;
+}
+.field--name-field-tech-1 .field--item:last-child,
+.field--name-field-tech-2 .field--item:last-child {
+  border-bottom: none;
+}
+.field--name-field-tech-1 .tt-term-value,
+.field--name-field-tech-2 .tt-term-value,
+.field--name-field-tech-1 .tt-term-label,
+.field--name-field-tech-2 .tt-term-label {
+  float: left;
+  width: 50%;
+}
+.field--name-field-tech-1 .tt-term-label,
+.field--name-field-tech-2 .tt-term-label {
+  font-weight: 500;
+  color: #2D333C;
+}
+.footer {
+  padding-top: 30px;
+}
+.p-footer {
+  text-align: center;
+}
+.spacing-m {
+  margin-bottom: 25px;
+}
+.spacing-l {
+  margin-bottom: 50px;
+}

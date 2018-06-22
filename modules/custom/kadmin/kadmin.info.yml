@@ -1,0 +1,5 @@
+name: K Admin menu
+type: module
+description: K Admin menu for drupal sites
+core: 8.x
+package: Mekit

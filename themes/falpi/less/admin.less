@@ -1,0 +1,172 @@
+/* less/admin.less */
+
+.well-inline-form{
+  .clearfix();
+  position: relative;
+
+  .form-wrapper{
+    @media (min-width: @screen-sm-min){
+      float: left;
+      max-width: 30%;
+      margin-right: 10px;
+      margin-bottom: 0;
+
+      #edit-field-id-mekit-0-value--description{
+        position: absolute;
+        top: 19px;
+        right: 15px;
+      }  
+    }
+
+    .form-inline{
+      .form-control{
+        display: block;
+      }
+      .control-label{
+        vertical-align: inherit;
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+// ** Form di editing del prodotto **
+// ** Categorie affiancate
+// ----------------------------------
+.wrapper-category-grid{
+  .clearfix();
+
+  > .form-wrapper{
+    float: left;
+    width: 33.33333%;
+    padding-right: 40px;
+  }
+}
+
+.translation-entity-all-languages{
+  font-size: 12px;
+}
+
+.img-help-catalab{
+  max-width: 150px;
+}
+
+.draggable{
+  .glyphicon-move{
+    font-size: 15px;
+    top: -4px;
+    margin-right: 5px;
+  }
+}
+
+.wrapper-img-margin{
+  .panel-body{
+    .clearfix();
+  }
+
+  .field--widget-number{
+    float: left;
+    width: 25%;
+    padding-right: 10px;
+    input{
+      width: 100%;
+    }
+  }
+}
+
+// ** WHITE BACKGROUND IN EDIT **
+// ------------------------------
+
+.tab-content,
+.cke_editable{
+  background: #fff;
+}
+
+
+.nav-tabs.vertical-tabs-list > li.active > a,
+.nav-tabs.vertical-tabs-list > li.active > a:hover,
+.nav-tabs.vertical-tabs-list > li.active > a:focus{
+  background: #fff;
+}
+
+// ** CSV IMPORT **
+// ----------------
+.wrapper-csv-table{
+  .disabled{
+    .opacity(0.5);
+  }
+}
+
+.wrapper-csv-explore{
+  .wrapper-actions{
+    a{
+      margin: 0 5px;
+    }
+  }
+}
+
+// ** Show row weights fix **
+// --------------------------
+
+.taxonomy-overview-vocabularies,
+.entity-subqueue-form,
+.taxonomy-overview-terms{
+  position: relative;
+}
+
+.tabledrag-toggle-weight{
+  font-size: 10px !important;
+}
+
+// ** ONLINE USER **
+// -----------------
+
+.view-id-who_s_online{
+  text-align: center;
+
+  .view-header{
+    color: @gray-light;
+  }
+
+  .item-list{
+    ul{
+      list-style: none;
+    }
+
+    li{
+      margin: 0 5px;
+      display: inline-block;
+    }
+  }
+}
+
+// ** Linkit autocomplete **
+// -------------------------
+
+.linkit-ui-autocomplete{
+  z-index: 10000;
+}
+
+// ** ORDINAMENTO PRODOTTI **
+// --------------------------
+
+.entity-subqueue-form{
+  .form-control{
+    padding: 0 10px;
+    font-size: 14px;
+    height: 30px;
+  }
+
+  .input-group-addon{
+    font-size: 13px;
+  }
+
+  .table > thead > tr > td,
+  .table > tbody > tr > td{
+    padding: 4px;
+  }
+
+  .tabledrag-handle{
+    padding: 11px 0 0 0;
+  }
+}

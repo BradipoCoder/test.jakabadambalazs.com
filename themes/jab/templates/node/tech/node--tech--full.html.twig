@@ -1,0 +1,158 @@
+{#
+/**
+ * Node Template
+ * use {{ kint(content)}} to inspect content variable
+ * use {{ kint(_context) }} to inspect every variable passed to this file
+ * for more information:
+ * https://www.drupal.org/node/1906780
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row">
+      <div class="wrapper-tech-bg">
+        <div class="container">
+
+          <div class="paper-width">
+            <div class="row">
+              <div class="col-sm-6">
+                {{ content.ttmenu }}
+              </div>
+              <div class="col-sm-6">
+                {{ content.print_links }}
+              </div>
+            </div>
+          </div>
+
+          <div class="paper">
+
+            <div class="tech-header">
+              {{ content.head.logo }}
+              {{ content.head.cert }}
+            </div>
+
+            <div class="tech-desc margin-b-05 {{ content.spacing_class }}">
+              <div class="row">
+                <div class="col-sm-6">
+                  {{ content.title }}
+                  {{ content.my_title }}
+
+                  {{ content.field_subtitle }}
+
+                  {% if not content.field_subtitle.0 %}
+                    &nbsp;
+                  {% endif %}
+                  <div class="p-large text-justify">
+                    {{ content.body }}
+                    <p>
+                      {{ 'For further information:'|trans }} <strong>info@jakabadambalazs.com – jakabadambalazs.com</strong>
+                    </p>
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="wrapper-img-overflow" style="{{ content.wrapper_img_style }}">
+                    <div class="wrapper-img" style="{{ content.img_style }}">
+                      {% if content.field_imgs.0 %}
+                        {{ content.field_imgs }}
+                      {% else %}
+                        {{ content.image }}
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tech-middle margin-b-05 {{ content.spacing_class }}">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="wrapper-tech-title">
+                    <h5>{{ 'Applicable standards'|trans }}</h5>
+                  </div>
+                  {{ content.field_ref_rules }}
+                </div>
+                <div class="col-sm-6">
+                  <div class="wrapper-tech-title">
+                    <h5>{{ 'Product code'|trans }}</h5>
+                  </div>
+                  {% if show_product_code %}
+                    {{ content.field_code }}
+                  {% endif %}
+
+                  {{ content.field_ref_variant }}
+                </div>
+              </div>
+            </div>
+
+            <div class="tech-low margin-b-05 {{ content.spacing_class }}">
+              <div class="row">
+                <div class="col-sm-6">
+                  <div class="wrapper-tech-title">
+                    <h5>{{ 'Manufacturer certifications'|trans }}</h5>
+                  </div>
+                  {{ content.fabr_cert }}
+                </div>
+                <div class="col-sm-6">
+                  <div class="wrapper-tech-title">
+                    <h5>{{ 'Product certifications'|trans }}</h5>
+                  </div>
+                  {{ content.field_ref_cert }}
+                </div>
+              </div>
+            </div>
+
+            <div class="tech-tech margin-b-05">
+              <div class="wrapper-tech-title">
+                <h5>{{ 'Technical features'|trans }}</h5>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  {{ content.field_tech_1 }}
+                  {#{ content.field_tech_car }#}
+                </div>
+                <div class="col-sm-6">
+                  {{ content.field_tech_2 }}
+                  {#{ content.field_tech_car2 }#}
+                </div>
+              </div>
+            </div>
+
+            <div class="tech-footer text-center">
+              <p>
+                {% if falpi_product %}
+                  {{ 'Technical sheet Mod. 7.14 - Ed. 28 edited by the manufacturer on the'|trans }} {{ content.edit_date }}
+                {% else %}
+                  {{ 'Technical sheet Mod. 7.14 - Ed. 28 edited on the'|trans }} {{ content.edit_date }}
+                {% endif %}
+
+                {% if falpi_product %}
+                  <br/>{{ 'The product is completely made in Italy in the plant located in Trivero (BI) and it is certified according SA8000:2014 standard'|trans }}
+                {% else %}
+                  <br/>{{ 'The product is completely made in Italy'|trans }}
+                {% endif %}
+                {{ content.cam }}
+
+                <br/><strong>Falpi Srl</strong> - Via Diagonale, 120 - Trivero (BI) - t +39 015 738 77 77 - f +39 015 738 82 26
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

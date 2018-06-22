@@ -1,0 +1,12 @@
+archive-filter:
+  version: 1.0
+  js:
+    js/archive-filter.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+    - core/jquery.ui.autocomplete
+    - falpi/jquery.simplePagination
+    - falpi/cookies
+    - falpi/clipboard

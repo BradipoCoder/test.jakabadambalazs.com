@@ -1,0 +1,151 @@
+/* less/btn.less */
+
+// ** MIXINS **
+// ------------
+ 
+// Button variants 
+// bootstrap/less/mixins.less:495
+
+// ** BTN OUTLINE **
+// -----------------
+
+// .button-variant(@color; @background; @border) {
+//   color: @color;
+//   background: none;
+//   border-color: @border;
+//   .transition(all ease-in-out .2s);
+//   //text-transform: uppercase;
+//   //font-family: @headings-font-family;
+// 
+//   &:hover,
+//   &:focus,
+//   &:active,
+//   .open .dropdown-toggle& {
+//     color: darken(@color, 20%);
+//     background: none;
+//     border-color: darken(@border, 20%);
+//   }
+// 
+//   &.active{
+//     background: @color;
+//     color: #fff;
+//     border-color: @color;
+//   }
+// 
+//   &:active,
+//   &.active,
+//   .open .dropdown-toggle& {
+//     background-image: none;
+//   }
+//   &.disabled,
+//   &[disabled],
+//   fieldset[disabled] & {
+//     &,
+//     &:hover,
+//     &:focus,
+//     &:active,
+//     &.active {
+//       background-color: @background;
+//           border-color: @border;
+//     }
+//   }
+// 
+//   .badge {
+//     color: @background;
+//     background-color: @color;
+//   }
+// }
+
+// ** BTN **
+// ---------
+
+// Kill shadow
+.btn,
+.btn:active,
+.btn.active{
+  box-shadow: none;
+}
+
+// Kill border radius
+.btn{
+  font-size: @font-size-h4;
+  font-weight: @font-weight-bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  .border-top-radius(0);
+  .border-bottom-radius(0);
+}
+
+.btn-ghost{
+  .color-and-hover(@brand-primary);
+}
+
+.btn-with-arrow{
+  &:after{
+    position: relative;
+    top: 5px;
+    margin-left: 5px;
+    .material-icons('arrow_forward');
+    line-height: 0px;
+  }
+}
+
+.btn-arrow{
+  &:after{
+    .material-icons('arrow_forward');
+    line-height: 5px;
+    position: relative;
+    font-size: 30px;
+    top: 9px;
+    margin-left: -5px;
+    margin-right: -5px;
+  }  
+}
+
+.btn-download{
+  &:before{
+    .material-icons('vertical_align_bottom');
+    line-height: 5px;
+    position: relative;
+    font-size: 20px;
+    top: 3px;
+    left: -5px;
+  }  
+}
+
+.btn-white{
+  color: @brand-primary;
+  background: #fff;
+  border-color: #fff;
+}
+
+.big-cta-link{
+  position: relative;
+  display: block;
+  background: @brand-primary;
+  .padding-h(1);
+  .padding-v(1);
+  @media(min-width: @screen-sm-min){
+    .padding-h(2);
+    .padding-v(2);  
+  }
+
+  span{
+    display: block;
+  }
+
+  .h2{
+    margin-top: 0;
+  }
+
+  .btn{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
+}
+
+.btn-cutted{
+  padding-left: 0;
+  padding-right: 0;
+}

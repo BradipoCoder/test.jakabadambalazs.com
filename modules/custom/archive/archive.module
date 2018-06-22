@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * Contains archive.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function archive_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the archive module.
+    case 'help.page.archive':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Archivio ajax di nodi con filtro su categoria') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function archive_theme() {
+  return [
+    'archive' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'archive_bundle_select' => [
+      'variables' => [
+        'term' => NULL,
+        'name' => NULL,
+        'options' => NULL,
+        'select' => NULL,
+      ],
+    ],
+    'archive_checkboxes' => [
+      'variables' => [
+        'items' => NULL,
+        'name' => NULL,
+        'title' => NULL,
+        'classes' => false,
+      ],
+    ],
+    'archive_radio' => [
+      'variables' => [
+        'items' => NULL,
+        'name' => NULL,
+        'title' => NULL,
+        'classes' => false,
+      ],
+    ],
+    'archive_products' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ],
+    'archive_systems' => [
+      'variables' => [
+        'content' => NULL,
+      ],
+    ]
+  ];
+}

@@ -1,0 +1,34 @@
+<?php
+
+/**
+ * @file
+ * Contains sameh.module.
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function sameh_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the sameh module.
+    case 'help.page.sameh':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Libreria e funzionalità Same Height') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+/**
+ * Questo modulo non fa nulla di per se.
+ * Posizionare jquery.imagesloaded, jquery.resize, jquery.sameh in /libraries/
+ * per caricare la libreria si può fare:
+ *   $data['#attached']['library'][] = 'sameh/sameh'; // in un render array
+ *   {{ attach_library('sameh/sameh') }}              // in un file twig
+ *
+ * Si possono usare le classi css .wrapper-sameh (genitore) e .sameh (div che devono essere alti uguali)
+ */

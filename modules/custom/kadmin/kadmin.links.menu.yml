@@ -1,0 +1,7 @@
+kadmin.config_kadmin:
+  title: 'K Admin Menu configuration'
+  route_name: kadmin.config_kadmin
+  description: 'K Admin Menu configuration'
+  parent: system.admin_config_system
+  weight: 99
+

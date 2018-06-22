@@ -1,0 +1,28 @@
+{#
+/**
+ * Home Cover
+ */
+#}
+
+{{ attach_library('jab/jquery.vide') }}
+{{ attach_library('jab/home') }}
+
+<div class="row row-cover">
+  <div class="wrapper-home-cover"
+      data-vide-bg="{{ content.videopath }}"
+      data-vide-options="posterType: jpg, position: 50% 50%">
+    <div class="wrapper-over-video"></div>
+    <div class="container home-container negative">
+      <div class="margin-md-h-2 margin-lg-h-4 home-head">
+        <span class="cover-line"></span>
+        <h1 class="h1-big margin-t-0 margin-b-025 text-green">{{ content.title }}</h1>
+        <h2 class="h1-big margin-t-0">{{ content.sub }}</h2>
+        <div class="wrapper-more margin-b-1">
+          <a href="#" class="btn btn-default btn-lg" id="home-play">
+            <i class="material-icons">play_arrow</i> {{'Discover Kubi Pro'|trans}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,5 @@
+name: Style Guide
+type: module
+description: Style Guide per semplificare la temizzazione
+core: 8.x
+package: Mekit

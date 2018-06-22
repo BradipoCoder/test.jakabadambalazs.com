@@ -1,0 +1,25 @@
+{#
+/**
+ * Home Textile
+ */
+#}
+
+{{ attach_library('falpi/jquery.parallax') }}
+
+<div class="wrapper-home-textile bg-parallax" data-parallax="scroll" data-image-src="{{content.image_path}}" data-speed="0.1">
+  <div class="wrapper-home-textile-copy negative">
+    <h5>Produzione tessile</h5>
+    <h1 class="margin-t-0">
+      <a href="{{content.main_path}}">  
+        Nei prodotti tessili abbiamo espresso tutta la nostra tradizione di azienda biellese”
+      </a>
+    </h1>
+    <p>
+      Prodotti tessili tecnologicamente all’avanguardia, interamente fabbricati in Italia secondo principi di qualità produttiva e valorizzazione della manodopera locale specializzata.
+    </p>
+    <a href="{{content.main_path}}" class="btn btn-default btn-circle margin-t-1">
+      <i class="material-icons">keyboard_arrow_right</i>
+    </a>
+  </div>  
+  {{ content.green_circle }}
+</div>

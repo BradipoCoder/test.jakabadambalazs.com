@@ -1,0 +1,43 @@
+{#
+/**
+ * Home Cart
+ */
+#}
+
+{{ attach_library('jab/jquery.parallax') }}
+
+<div class="wrapper-home-products bg-parallax" data-parallax="scroll" data-image-src="{{content.image_path}}" data-speed="0.1">
+  <div class="wrapper-home-products-copy negative">
+    <h5>Produzione carrelli</h5>
+    <h1 class="margin-t-0">
+      <a href="{{content.main_path}}">
+        I carrelli Falpi: progettati per durare a lungo
+      </a>
+    </h1>
+    <p>
+      Una gamma estesa e articolata, a partire dai modelli a due secchi con lavaggio tradizionale,
+      fino alla linea esclusiva per il settore alberghiero e ai più complessi carrelli di servizio,
+      particolarmente apprezzati nel mondo ospedaliero.
+    </p>
+    <a href="{{content.main_path}}" class="btn btn-default btn-circle margin-t-1">
+      <i class="material-icons">keyboard_arrow_right</i>
+    </a>
+  </div>
+  {{ content.green_circle }}
+</div>
+<div class="wrapper-cart-list">
+  <span class="vertical-line"></span>
+  <div class="margin-xs-h-1 margin-v-4">
+    <div class="row">
+      <div class="col-md-4">
+        {{ content.product_list.a }}
+      </div>
+      <div class="col-md-4">
+        {{ content.product_list.b }}
+      </div>
+      <div class="col-md-4">
+        {{ content.product_list.c }}
+      </div>
+    </div>
+  </div>
+</div>

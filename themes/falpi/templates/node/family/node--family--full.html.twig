@@ -1,0 +1,83 @@
+{#
+/**
+ * Node Family Full
+ */
+#}
+{%
+  set classes = [
+    'node-' ~ node.bundle|clean_class,
+    node.isPromoted() ? 'is-promoted',
+    node.isSticky() ? 'is-sticky',
+    not node.isPublished() ? 'is-unpublished',
+    view_mode ? view_mode|clean_class,
+    'clearfix',
+  ]
+%}
+
+{{ attach_library('falpi/jquery.scrollto') }}
+
+<div{{ attributes.addClass(classes) }}>
+
+  {{ title_prefix }}
+  {{ title_suffix }}
+
+  <div{{ content_attributes.addClass('content') }}>
+    <div class="row">
+      <div class="container">
+        {{ content.ttmenu }}
+        <div class="card card-xs-spread margin-b-2">
+          <div class="card-full-content">
+            {{ content.pagination }}
+            {{ content.title }}
+            {{ content.field_subtitle }}
+
+            {{ content.field_img }}
+
+            <div class="row margin-v-2">
+              <div class="col-md-6">
+                <div class="margin-md-r-1">
+                  {{ content.body }}
+                </div>
+              </div>
+              <div class="col-md-6">
+
+                {% if details %}
+                  <div class="family-details">
+                    <div class="family-detail">
+                      <div class="family-detail__title">
+                        <h5>Ambito</h5>
+                      </div>
+                      <div class="family-detail__content">  
+                        {{ content.where }}
+                      </div>
+                    </div>
+                    <div class="family-detail">
+                      <div class="family-detail__title">
+                        <h5>Impieghi</h5>
+                      </div>  
+                      <div class="family-detail__content">  
+                        {{ content.places }}
+                      </div>
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div class="margin-v-1">
+                  <a href="#magic-form-family-head" class="btn btn-default scroll-to scroll-to-magic-form">
+                    Chiedi informazioni
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {{ content.products }}
+          
+        </div>
+        {{ content.webform }} 
+      </div>
+    </div>
+    
+    {#{ content }#}
+  </div>
+</div>

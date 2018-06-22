@@ -1,0 +1,30 @@
+light-slider:
+  version: 1.0
+  js:
+    js/light-slider.js: {}
+  dependencies:
+    - core/drupalSettings
+    - core/jquery
+    - core/jquery.once
+    - lightslider/imagesloaded
+    - lightslider/lightslider-lib
+
+imagesloaded:
+  version: 3.1.8
+  js:
+    /libraries/jquery.imagesloaded/jquery.imagesloaded.min.js: {}
+  dependencies:
+    - core/jquery
+
+lightslider-lib:
+  version: 1.1.6
+  js:
+    /libraries/jquery.lightslider/js/lightslider.min.js: {}
+  css:
+    theme:
+      /libraries/jquery.lightslider/css/lightslider.min.css: {}
+  dependencies:
+    - core/jquery
+
+
+

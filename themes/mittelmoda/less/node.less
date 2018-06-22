@@ -1,0 +1,130 @@
+/* less/node.less */
+
+.node-webform.full{
+  .c-thin{
+    .margin-t(1);
+    @media(min-width: @screen-md-min){
+      .margin-t(3);
+    }
+  }
+}
+
+/**
+ * Sponsor
+ */
+.node-sponsor.teaser{
+  .field--name-field-image{
+    max-width: 150px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/**
+ * Designer
+ */
+.node-designer.full{
+  .field--name-field-imgs{
+    .field--item{
+      .margin-b(0.5);
+    }   
+  }
+}
+
+.designer-teaser--text{
+  .transition(all ease-in-out .4s);
+  .opacity(0);
+  display: block;
+  position: absolute;
+  width: 100%;
+  top: 50%;
+  left: 0;
+  margin-top: -55px;
+}
+
+.designer-teaser--more{
+  display: block;
+  .margin-t(1.5);
+}
+
+.node-designer.teaser{
+  .wrapper-over{
+    .transition(all ease-in-out .2s);
+    &:hover{
+      background: fade(@brand-primary, 60%);
+
+      .designer-teaser--text{
+        .opacity(1);
+      }
+      
+    }
+  }
+}
+
+
+/**
+ * Finalists
+ */
+
+.header-finalists-teaser{
+  position: relative;
+  @media(min-width: @screen-sm-min){
+    .btn{
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+    h2{
+      margin-right: 50px;
+    }
+  }
+}
+
+/**
+ * Node News teaser
+ */
+.node-news.teaser{
+
+  .content{
+    max-width: 1050px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    background: #fff;
+    //min-height: 264px;
+    //.clearfix();  
+  }
+
+  //.field--name-field-image{
+  //  max-width: 50%;
+  //  position: absolute;
+  //  top: 0;
+  //  left: 0;
+  //}
+
+  .news-teaser-content{
+    //margin-left: 50%;
+    .padding-h(1.5);
+    .padding-v(1);
+
+    h2{
+      margin-top: 0;
+    }
+  }
+}
+
+/**
+ * Node News Child
+ */
+
+.news-child-content{
+  background: #fff;
+  .padding-h(0.75);
+  .padding-v(0.5); 
+  @media (min-width: @screen-sm-min){
+    .padding-h(1.5);
+    .padding-v(1);  
+  }
+}
+
+

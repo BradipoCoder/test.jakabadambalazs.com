@@ -1,0 +1,8 @@
+
+styleguide.style_guide_controller_styleguide:
+  path: '/styleguide'
+  defaults:
+    _controller: '\Drupal\styleguide\Controller\StyleGuideController::styleguide'
+    _title: 'Style Guide'
+  requirements:
+    _permission: 'access content'

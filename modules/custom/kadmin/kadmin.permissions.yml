@@ -1,0 +1,4 @@
+
+access kadmin:
+  title: 'Access K Admin menu'
+  description: 'Allow access to the K Admin menu'

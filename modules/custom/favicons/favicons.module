@@ -1,0 +1,131 @@
+<?php
+
+/**
+ * @file
+ * Contains favicons.module.
+ *
+ * https://realfavicongenerator.net/favicon_checker#.Wjkt-1Q-eCU
+ * Usare questo link per controllare la favicon
+ *
+ * nella root del sito:
+ * - browserconfig.xml
+ * - apple-touch-icon.png
+ * - android-chrome-192x192.png
+ * - android-chrome-512x512.png
+ * - mstile-150x150.png
+ * 
+ * Modificare il colore a riga 86
+ * Spostare alcuni file nella root del sito
+ * Modificare i percorsi
+ * Rimuovere le due favicon nei temi (default e amministrazione)
+ * 
+ */
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+
+/**
+ * Implements hook_preprocess_html()
+ */
+function favicons_preprocess_html(&$vars){
+  //kint($vars);
+
+  $xuacompatible = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'http-equiv' => 'x-ua-compatible',
+      'content' => 'ie=edge',
+    ],
+  ];
+  
+  $list = _favicons_get_list();
+
+  foreach ($list as $key => $item) {
+    $name = $key;
+    $vars['page']['#attached']['html_head'][] = [$item, $name];
+  }
+}
+
+function _favicons_get_list(){
+
+  $config = \Drupal::config('system.theme');    
+  $default_theme = $config->get('default');
+
+  global $base_url;
+  $path = $base_url . '/' . drupal_get_path('theme', $default_theme) . '/favicons';
+
+  $list['apple_touch_icon'] = [
+    '#tag' => 'link',
+    '#attributes' => [
+      'rel' => 'apple-touch-icon',
+      'sizes' => '180x180',
+      'href' => $path . '/apple-touch-icon.png',
+    ], 
+  ];
+
+  $list['favicon32'] = [
+    '#tag' => 'link',
+    '#attributes' => [
+      'rel' => 'icon',
+      'type' => 'image/png',
+      'sizes' => '32x32',
+      'href' => $path . '/favicon-32x32.png',
+    ], 
+  ];
+
+  $list['favicon16'] = [
+    '#tag' => 'link',
+    '#attributes' => [
+      'rel' => 'icon',
+      'type' => 'image/png',
+      'sizes' => '16x16',
+      'href' => $path . '/favicon-16x16.png',
+    ], 
+  ];
+
+  $list['manifest_json'] = [
+    '#tag' => 'link',
+    '#attributes' => [
+      'rel' => 'manifest',
+      'href' => $path . '/manifest.json',
+    ], 
+  ];
+
+  // TO DO - settings color
+  $list['mask_icon'] = [
+    '#tag' => 'link',
+    '#attributes' => [
+      'rel' => 'mask-icon',
+      'href' => $path . '/safari-pinned-tab.svg',
+      'color' => '#ffffff',
+    ], 
+  ];
+
+  $list['theme_color'] = [
+    '#tag' => 'meta',
+    '#attributes' => [
+      'name' => 'theme-color',
+      'content' => '#ffffff',
+    ], 
+  ];
+
+  return $list;
+}
+
+/**
+ * Implements hook_help().
+ */
+function favicons_help($route_name, RouteMatchInterface $route_match) {
+  switch ($route_name) {
+    // Main module help for the favicons module.
+    case 'help.page.favicons':
+      $output = '';
+      $output .= '<h3>' . t('About') . '</h3>';
+      $output .= '<p>' . t('Add Favicons to the website using Real Favicon Generator') . '</p>';
+      return $output;
+
+    default:
+  }
+}
+
+

@@ -1,0 +1,9 @@
+kadmin-lib:
+  version: VERSION
+  css:
+    theme:
+      css/basic.css: {}
+  js:
+    js/kadmin.js: {}
+  dependencies:
+    - core/jquery

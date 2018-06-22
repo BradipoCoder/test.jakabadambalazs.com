@@ -1,0 +1,96 @@
+{#
+/**
+ * Archive Template
+ */
+#}
+
+{{ attach_library('archive/archive-filter') }}
+{{ attach_library('falpi/jquery.scrollto') }}
+
+<div id="wrapper-archive" class="wrapper-archive" data-get="{{ content.get_data }}" data-alias="{{ content.alias }}">
+  <div class="row">
+    <div class="falpi-header falpi-header-archive {{content.header.class}}">
+      <div class="container negative">
+        <div class="falpi-header-content falpi-header-content-archive">
+          <div class="cover-line"></div>
+          <h1 id="archive-title" class="h2 margin-b-025 margin-t-0">
+            <span class="all">{{'All products'|trans}}</span>
+            <span class="filtered hide">{{'Your search'|trans}} <span id="query-head-label" class="query-head-label"></span></span>
+            <span id="archive-count" class="archive-count hide text-green"><span></span> {{'results'|trans}}</span>
+          </h1>
+
+          <div class="archive-head-sub">
+            <p id="archive-sub">{{ content.header.subtitle }}</p>
+            <ul id="tag-remove-list" class="tag-remove-list"></ul>
+          </div>
+
+          <div class="wrapper-developer hide">
+            <i id="copy-url" class="material-icons">link</i>
+          </div>
+
+        </div>
+      </div>  
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="falpi-content">
+      <div class="container">
+        <div id="card-archive" class="card card-xs-spread put-back margin-b-4">
+          <div class="wrapper-head-archive">
+            <div class="wrapper-archive-reset">
+              <a href="#" id="archive-reset" class="small archive-reset">
+                {{'Reset <span class="hidden-xs">the filters</span>'|trans}}</span> <i class="material-icons">refresh</i>
+              </a>
+            </div>
+            <div class="wrapper-archive-mobile-toggle">
+              <a href="#" id="archive-mobile-toggle" class="h5 filter-toggle">
+                <span id="active-filters" class="active-filters"></span> {{'Filters'|trans}} <i class="material-icons">filter_list</i> 
+              </a>
+            </div>
+            <div class="wrapper-archive-search">
+              <div class="archive-search-content">
+                <div class="input-group">
+                  <input id="archive-search" class="form-control" placeholder="{{'Search by code or keyword'|trans}}">
+                </div>
+                <a href="#" id="archive-search-lens" class="archive-search-lens">
+                  <i class="material-icons">search</i>
+                </a>
+                <a href="#" id="archive-search-remove" class="archive-search-remove hide">
+                  <i class="material-icons">close</i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div id="main-archive" class="wrapper-main-archive">
+            <div id="wrapper-archive-filters" class="wrapper-archive-filters">
+              {{ content.filter }}
+              <div id="archive-query" data-value="false" class="hide"></div>
+              <a href="#" id="archive-mobile-close" class="archive-mobile-close"><i class="material-icons">keyboard_arrow_up</i></a>
+              <span class="ajax-waiting-over"><span class="loader hidden-md hidden-lg"></span></span>
+            </div>
+            <div id="wrapper-archive-results" class="wrapper-archive-results">
+              <div id="ajax-archive-destination" class="wrapper-products">
+                {{ content.products }}
+              </div>
+              <div id="archive-no-results" class="archive-no-results hide">
+                <p><strong>{{'No matches found'|trans}}</strong></p>
+                <ul class="ul-done">
+                  <li>{{'Please <strong>check the spelling</strong>'|trans}}</li>
+                  <li>{{'Try with different or <strong>more generic keywords</strong>'|trans}}</li>
+                  <li>{{'Cancel or <strong>reset the filters</strong> you set'|trans}}</li>
+                </ul>
+                <a id="archive-reset-empty" href="#" class="btn btn-info btn-xs">{{'Reset the filters'|trans}}</a>
+              </div>
+              <div id="archive-pagination" class="archive-pagination" data-per-page="{{ content.per_page }}" data-active-page="1">
+
+              </div>
+              <span class="ajax-waiting-over"><span class="loader"></span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

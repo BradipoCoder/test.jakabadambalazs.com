@@ -1,0 +1,239 @@
+/* less/pagination.less */
+
+// ** PAGINATION STATIC **
+// -----------------------
+
+.pagination-arrow{
+  position: absolute;
+  top: 110px;
+  left: 0;
+  width: 100%;
+  min-height: 40px;
+  z-index: 10;
+
+  @media (max-width: @screen-sm-max){
+    display: none;
+  }
+}
+
+.user-logged-in{
+  .pagination-arrow{
+    top: 135px;
+  }
+
+  &.kadmin-open{
+    .pagination-arrow{
+      top: 165px;
+    }
+  }
+}
+
+.pagination-arrow__link{
+  position: absolute;
+  top: 0;
+  width: 40px;
+  height: 40px;
+  .border-top-radius(100%);
+  .border-bottom-radius(100%);
+  border: 1px solid @border-default-color;
+  background: #fff;
+
+  line-height: 40px;
+  text-align: center;
+  i{
+    line-height: inherit;
+    font-size: 26px;
+  }
+
+  .color-and-hover(@gray-light);
+}
+
+.pagination-arrow__prev{
+  left: 10px;
+}
+
+.pagination-arrow__next{
+  right: 10px;
+}
+
+// ** PAGINATION ARCHIVE **
+// ------------------------
+
+@pagination-size: 60px;
+
+.archive-pagination{
+  position: absolute;
+  width: 100%;
+  bottom: -1px;
+  left: 0;
+  border-top: 1px solid @border-default-color;
+  border-bottom: 1px solid @border-default-color;
+  height: @pagination-size + 2;
+  display: none;
+
+  &.p-active{
+    display: block;
+  }
+
+  ul{
+    text-align: center;
+    list-style: none;
+    position: relative;
+    margin-bottom: 0;
+    padding: 0;
+  }
+
+  li{
+    display: inline-block;
+
+    &.li-arrow{
+      position: absolute;
+      top: 0;  
+    }
+    
+
+    &.li-arrow-prev{
+      left: 0;
+      border-right: 1px solid @border-default-color;
+    }
+
+    &.li-arrow-next{
+      right: 0;
+      border-left: 1px solid @border-default-color;
+    }
+
+    &.li-item{
+      border-left: 1px solid @border-default-color;
+      @media (max-width: @screen-sm-max){
+        display: none;
+        &.active{
+          display: inline-block;
+          border-left: none;
+          border-right: none;
+          .current{
+            background: none;
+            color: @gray-light;
+          }
+        }
+      }
+    }
+
+    &.li-item-last{
+      border-right: 1px solid @border-default-color; 
+    }
+
+    .ellipse,
+    .current,
+    .page-link{
+      display: block;
+      width: @pagination-size;
+      height: @pagination-size;
+      text-align: center;
+      line-height: @pagination-size;
+    }
+
+    a{
+      &:hover,
+      &:active,
+      &:focus{
+        background: @gray-lightest;
+      }
+    }
+
+    &.active .current{
+      background: @gray-darker;
+      color: #fff;  
+    }
+
+    i{
+      line-height: @pagination-size;
+    }
+  }
+}
+
+// ** PAGINATION SLIDER **
+// -----------------------
+
+.lSSlideOuter{
+  position: relative;
+}
+
+.lSSlideOuter .lSPager.lSpg{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: @pagination-size;
+  border-bottom: 1px solid @border-default-color;
+
+  li{
+    line-height: @pagination-size;  
+  }
+
+  &>li{
+
+    a{
+      border: 1px solid @gray-light;
+      background: none;
+
+    }
+
+    &:hover{
+      a{
+        background: @gray-darker; 
+      }
+    }
+
+    &.active{
+      a{
+        background: @gray-darker;
+      }
+    }
+  }
+  
+  width: 100%;
+}
+
+.lSSlideOuter.noPager .lSPager.lSpg{
+  display: none;
+}
+
+.lSSlideWrapper{
+  padding-bottom: @pagination-size;
+  margin-bottom: -1px;
+}
+
+.noPager{
+  .lSSlideWrapper{
+    padding-bottom: 0; 
+  }
+}
+
+.lSAction{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  height: @pagination-size;
+
+  a{
+    height: @pagination-size;
+    width: @pagination-size;
+    text-align: center;
+    top: 0;
+    margin-top: 0;
+  }
+
+  i{
+    line-height: @pagination-size;  
+  }
+}
+
+.lSAction>.lSPrev{
+  left: 0;
+  border-right: 1px solid @border-default-color;
+}
+
+.lSAction>.lSNext{
+  right: 0;
+  border-left: 1px solid @border-default-color;
+}

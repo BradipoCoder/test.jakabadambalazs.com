@@ -1,0 +1,17 @@
+{#
+/**
+ * Magic Form
+ */
+#}
+{{ attach_library('falpi/magic-form') }}
+
+<div id="{{ id }}" class="magic-form">
+  <span class="vertical-line"></span>
+  <div id="{{id}}-head" class="magic-form__head text-center margin-b-2">
+    <h3 class="margin-b-025">{{'Get information'|trans}}</h3>
+    <p>{{ subject }}</p>
+  </div>
+  <div class="magic-form__form margin-b-1">
+    {{ webform }}
+  </div>
+</div>
