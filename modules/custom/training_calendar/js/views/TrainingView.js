@@ -34,7 +34,10 @@
 
         promptForNewTitle: function () {
             let title = prompt("Please enter a new title", this.model.get("title"));
-            this.model.set("title", title);
+            this.model.set("title", title, {silent : true});
+
+            //let newDistance = this.model.get("field_total_distance") + 100;
+            //this.model.set("field_total_distance", newDistance, {silent : true});
         }
     });
 

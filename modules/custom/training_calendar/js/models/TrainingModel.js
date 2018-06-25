@@ -48,33 +48,40 @@
 
             /** @type {string} */
             "field_training_type": "",
+
+            /** @type {string} */
+            "created": "",
+
+            /** @type {string} */
+            "changed": "",
         },
 
         url: function () {
             let id = this.get(this.idAttribute);
-            return "https://tests.jakabadambalazs.com/node/" + encodeURIComponent(id) + "?_format=hal_json";
+            return Drupal.url("node/" + encodeURIComponent(id));
         },
 
         save: function (attrs, options) {
+            let self = this;
             options = options || {};
             options.patch = true;
             options.wait = true;
 
+            /*NOT WORKING: https://stackoverflow.com/questions/9892717/why-does-my-backbone-model-haschanged-always-return-false*/
+            //let changedKeys = _.keys(this.changedAttributes());
 
+            let changedKeys = _.keys(this.defaults);
+            console.log("CHANGED-KEYS: ", changedKeys);
 
-            attrs = {
-                "type": [
-                    {
-                        "target_id": "tr_run"
-                    }
-                ],
-                "title": [
-                    {
-                        "value": this.get("title"),
-                        "lang": "en"
-                    }
-                ]
-            };
+            attrs = {};
+            _.each(changedKeys, function (key) {
+                attrs[key] = [{"value": self.get(key)}];
+            });
+            delete attrs["field_training_type"];
+
+            attrs["type"] = [{"target_id": this.get("type")}];
+
+            console.log("ATTRS-2-SAVE:  ", attrs);
 
 
             // Proxy the call to the original save function
@@ -94,10 +101,13 @@
                     if (first) {
                         if (_.has(first, "value")) {
                             answer[key] = first["value"];
+                        } else if(_.has(first, "target_id")) {
+                            //node type
+                            answer[key] = first["target_id"];
                         }
                     }
                 } else {
-                    //extraKeys[key] = value;
+                    extraKeys[key] = value;
                 }
             });
 
@@ -106,12 +116,18 @@
             //console.log("PARSED: ", answer);
 
             return answer;
-        }
+        },
+
+        /**
+        get: function (attr) {
+            let val = Backbone.Model.prototype.get.call(this, attr);
+            return val;
+        },*/
     });
 
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
-        url: 'https://tests.jakabadambalazs.com/rest/trainings-listing?_format=hal_json',
+        url: Drupal.url('rest/trainings-listing'),
     });
 
 })(Backbone, Drupal, drupalSettings, _);

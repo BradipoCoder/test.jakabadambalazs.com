@@ -10,7 +10,6 @@
         let self = this;
         options = options || {};
 
-
         Drupal.trainingCalendar.getCsrfToken(function (csrfToken) {
             let headers = _.has(options, "headers") ? options.headers : {};
 
@@ -30,9 +29,23 @@
         }, method);
     };
 
+    //------------------------------------------------------------------------------------------Backbone override - SYNC
+    Backbone._ajax = Backbone.ajax;
+    Backbone.ajax = function()
+    {
+        let url = arguments[0].url;
+        let re = new RegExp("[^?]*\?_format=hal_json$");
+        if(!re.test(url))
+        {
+            arguments[0].url = url + "?_format=hal_json";
+        }
+
+        //console.log("AJAX-OPT: ", arguments);
+        return Backbone._ajax.apply(this, arguments);
+    };
 
 
-
+    //------------------------------------------------------------------------------------------------------------Drupal
     Drupal.trainingCalendar = Drupal.trainingCalendar || {
         models: {},
         views: {}
@@ -57,7 +70,7 @@
      * @todo: bleeeehh!
      */
     Drupal.trainingCalendar.getCsrfToken = function (callback, method) {
-        let requireTokenMethods = ["post", "patch"];
+        let requireTokenMethods = ["create", "update", "patch"];
         if(_.contains(requireTokenMethods, method))
         {
             $.get(Drupal.url('session/token'))
