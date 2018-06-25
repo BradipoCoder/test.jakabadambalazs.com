@@ -50,9 +50,17 @@
             "field_training_type": "",
         },
 
+        url: function () {
+            let id = this.get(this.idAttribute);
+            return "https://tests.jakabadambalazs.com/node/" + encodeURIComponent(id) + "?_format=hal_json";
+        },
+
         save: function (attrs, options) {
             options = options || {};
             options.patch = true;
+            options.wait = true;
+
+
 
             attrs = {
                 "type": [
@@ -68,50 +76,10 @@
                 ]
             };
 
+
             // Proxy the call to the original save function
             Backbone.Model.prototype.save.call(this, attrs, options);
-
         },
-
-        url: function () {
-            let id = this.get(this.idAttribute);
-            return "https://tests.jakabadambalazs.com/node/" + encodeURIComponent(id) + "?_format=hal_json";
-        },
-
-        /*
-        get: function(attr) {
-            let answer = false;
-
-            if(_.has(this.attributes, attr)){
-                let thisAttribute = this.attributes[attr];
-                let thisAttributeFirstElement = _.first(thisAttribute);
-                if(_.has(thisAttributeFirstElement, "value")){
-                    answer = thisAttributeFirstElement["value"];
-                }
-            }
-
-            console.log("GET["+attr+"]: " + answer);
-
-            return answer;
-            //return this.attributes[attr];
-        },
-
-        toRenderJSON: function(options) {
-            //let c = _.clone(this.attributes);
-            let json = _.mapObject(this.attributes, function(val, key)
-            {
-                let answer = null;
-                let first = _.first(val);
-                if(first){
-                    if(_.has(first, "value")){
-                        answer = first["value"];
-                    }
-                }
-                return answer;
-            });
-
-            return json;
-        },*/
 
         // **parse** converts a response into the hash of attributes to be `set` on
         // the model. The default implementation is just to pass the response along.

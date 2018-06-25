@@ -24,7 +24,7 @@
             return this;
         },
 
-        doFunkyStuff: function onNextClick(event) {
+        doFunkyStuff: function(event) {
             //this.model.doSomething();
             this.promptForNewTitle();
             this.model.save();
@@ -34,7 +34,7 @@
 
         promptForNewTitle: function () {
             let title = prompt("Please enter a new title", this.model.get("title"));
-            this.model.set({title: title});
+            this.model.set("title", title);
         }
     });
 
