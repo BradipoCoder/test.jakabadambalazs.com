@@ -1,6 +1,9 @@
 <?php
 
 use Drupal\Core\Routing\RouteMatchInterface;
+use \Drupal\Core\Form\FormStateInterface;
+use \Drupal\Core\TempStore\PrivateTempStoreFactory;
+use \Drupal\Core\TempStore\PrivateTempStore;
 
 /**
  * @param string $route_name
@@ -31,18 +34,14 @@ function training_calendar_page_attachments_alter(array &$page)
     return;
   }
 
-  //--------------------------------------------------------TEMPORARY SOLUTION FOR ME
-  /** @var \Drupal\user\UserInterface $currentUser */
-  $currentUser = \Drupal::currentUser();
-  $username = $currentUser->getAccountName();
+  //@todo: check if we are on the correct url
 
-  if($username == "jakabadambalazs")
-  {
-    //@todo: check if we are on the correct url
-    $usrPwd = 'jakabadambalazs:T5]h*!jk-8Yj+JW#IiI#,yjactU,7sJD';
-    $userhash = base64_encode($usrPwd);
-    $page['#attached']['drupalSettings']['training_calendar']['userhash'] = $userhash;
-  }
+  //@this is for basic auth - let's implement oauth2
+  $username = "AAA";
+  $password = "BBB";
+  $usrPwd = $username . ':' . $password;
+  $userhash = base64_encode($usrPwd);
+  $page['#attached']['drupalSettings']['training_calendar']['userhash'] = $userhash;
 }
 
 /**

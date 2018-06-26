@@ -10,18 +10,10 @@ namespace Drupal\training_calendar\Controller;
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\HttpFoundation\Cookie;
 use Drupal\Core\Entity\EntityTypeManager;
-use Drupal\Core\Entity\Query\QueryFactory;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
-use Drupal\Core\Render\Markup;
 
-use Drupal\archive\Query\ArchiveQuery;
-use Drupal\archive\Data\ArchiveData;
-use Drupal\archive\Data\LinkTeaserData;
-use Drupal\archive\Data\LinkCount;
 
 class TrainingCalendarController extends ControllerBase
 {
