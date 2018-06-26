@@ -70,6 +70,11 @@
             /*NOT WORKING: https://stackoverflow.com/questions/9892717/why-does-my-backbone-model-haschanged-always-return-false*/
             //let changedKeys = _.keys(this.changedAttributes());
 
+            /**
+             * We need to extend backbone's model definition and create a custom array of "dirty" fields
+             */
+
+
             let changedKeys = _.keys(this.defaults);
             console.log("CHANGED-KEYS: ", changedKeys);
 
