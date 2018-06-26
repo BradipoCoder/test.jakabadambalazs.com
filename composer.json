@@ -8,7 +8,8 @@
         "wikimedia/composer-merge-plugin": "^1.4"
     },
     "replace": {
-        "drupal/core": "^8.5"
+        "drupal/core": "^8.5",
+        "drupal/coder": "*"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
