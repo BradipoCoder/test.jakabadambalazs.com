@@ -9,6 +9,7 @@ namespace Drupal\training_calendar\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\HttpFoundation\Cookie;
 use Drupal\Core\Entity\EntityTypeManager;
@@ -56,9 +57,15 @@ class TrainingCalendarController extends ControllerBase
   }
 
   /**
-   * @return array
+   * @return array|RedirectResponse
    */
-  public function calendar() {
+  public function calendar()
+  {
+    if (!\Drupal::currentUser()->hasPermission('tc_access'))
+    {
+      return $this->redirect('user.page');
+    }
+
     $data = [
       '#theme' => 'training_calendar_calendar',
       '#content' => [

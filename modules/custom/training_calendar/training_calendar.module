@@ -26,11 +26,23 @@ function training_calendar_help($route_name, RouteMatchInterface $route_match) {
  */
 function training_calendar_page_attachments_alter(array &$page)
 {
-  //@todo: check if we are on the correct url
-  $usrPwd = 'jakabadambalazs:T5]h*!jk-8Yj+JW#IiI#,yjactU,7sJD';
-  $userhash = base64_encode($usrPwd);
-  $page['#attached']['drupalSettings']['training_calendar']['userhash'] = $userhash;
+  if (!\Drupal::currentUser()->hasPermission('tc_access'))
+  {
+    return;
+  }
 
+  //--------------------------------------------------------TEMPORARY SOLUTION FOR ME
+  /** @var \Drupal\user\UserInterface $currentUser */
+  $currentUser = \Drupal::currentUser();
+  $username = $currentUser->getAccountName();
+
+  if($username == "jakabadambalazs")
+  {
+    //@todo: check if we are on the correct url
+    $usrPwd = 'jakabadambalazs:T5]h*!jk-8Yj+JW#IiI#,yjactU,7sJD';
+    $userhash = base64_encode($usrPwd);
+    $page['#attached']['drupalSettings']['training_calendar']['userhash'] = $userhash;
+  }
 }
 
 /**
