@@ -1,0 +1,6 @@
+services:
+  #D8 Core services: https://api.drupal.org/api/drupal/core%21core.services.yml/8.2.x
+  training_calendar.oauth2.token_manager:
+    class: Drupal\training_calendar\Oauth2\TokenManager
+    arguments: ['@request_stack']
+

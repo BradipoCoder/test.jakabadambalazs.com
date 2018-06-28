@@ -1,9 +1,11 @@
 <?php
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use \Drupal\Core\Form\FormStateInterface;
-use \Drupal\Core\TempStore\PrivateTempStoreFactory;
-use \Drupal\Core\TempStore\PrivateTempStore;
+use Drupal\training_calendar\Oauth2\TokenManager;
+use Drupal\user\Entity\User;
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Drupal\Core\TempStore\PrivateTempStore;
 
 /**
  * @param string $route_name
@@ -20,17 +22,15 @@ function training_calendar_help($route_name, RouteMatchInterface $route_match) {
       return $output;
 
     default:
-      return null;
+      return NULL;
   }
 }
 
 /**
  * @param array $page
  */
-function training_calendar_page_attachments_alter(array &$page)
-{
-  if (!\Drupal::currentUser()->hasPermission('tc_access'))
-  {
+function training_calendar_page_attachments_alter(array &$page) {
+  if (!\Drupal::currentUser()->hasPermission('tc_access')) {
     return;
   }
 
@@ -57,4 +57,24 @@ function training_calendar_theme() {
       ],
     ],
   ];
+}
+
+/**
+ * Implements hook_user_login()
+ *
+ * @param User $account
+ */
+function training_calendar_user_login(User $account) {
+  /** @var TokenManager $tm */
+  $tm = \Drupal::service('training_calendar.oauth2.token_manager');
+
+  try {
+    $tm->authenticate();
+  } catch(\Exception $e) {
+    \Drupal::logger('training_calendar')
+      ->critical(
+        'Authentication error: @message',
+        ['@message' => $e->getMessage()]
+      );
+  }
 }
