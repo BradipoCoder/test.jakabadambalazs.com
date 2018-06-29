@@ -1,12 +1,19 @@
 training-calendar:
   version: 1.0
   js:
+    # Contrib
+    /libraries/moment/moment.min.js: {}
+    /libraries/fullcalendar/fullcalendar.min.js: {}
     # CORE Application
     js/training-calendar.js: {}
     # Models
     js/models/TrainingModel.js: {}
     # Views
     js/views/TrainingView.js: {}
+  css:
+    theme:
+      # Contrib
+      /libraries/fullcalendar/fullcalendar.css: {}
   dependencies:
     - core/drupal
     - core/drupalSettings
@@ -15,4 +22,5 @@ training-calendar:
     - core/jquery.once
     - core/matchmedia
     - core/matchmedia.addListener
+
 
