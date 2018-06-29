@@ -8,3 +8,4 @@ services:
       - '@simple_oauth.repositories.user'
       - '@simple_oauth.repositories.refresh_token'
       - '@config.factory'
+      - '@tempstore.private'

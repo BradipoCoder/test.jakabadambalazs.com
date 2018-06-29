@@ -15,6 +15,7 @@ use Drupal\simple_oauth\Plugin\Oauth2GrantManagerInterface;
 
 use GuzzleHttp\Psr7\ServerRequest;
 use Psr\Http\Message\ServerRequestInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 use Symfony\Component\HttpFoundation\Response;
 use GuzzleHttp\Psr7\Response as GuzzleResponse;
@@ -24,7 +25,8 @@ use \League\OAuth2\Server\Grant\PasswordGrant;
 use \Drupal\simple_oauth\Repositories\RefreshTokenRepository;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
-
+use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Drupal\Core\TempStore\PrivateTempStore;
 
 /**
  * Class TokenManager
@@ -47,6 +49,9 @@ class TokenManager {
   /** @var ConfigFactoryInterface */
   protected $configFactory;
 
+  /** @var PrivateTempStoreFactory */
+  protected $tempStoreFactory;
+
   /**
    * TokenManager constructor.
    *
@@ -55,13 +60,20 @@ class TokenManager {
    * @param UserRepository $userRepository
    * @param RefreshTokenRepository $refreshTokenRepository
    * @param ConfigFactoryInterface $configFactory
+   * @param PrivateTempStoreFactory $tempStoreFactory
    */
-  public function __construct(RequestStack $requestStack, Oauth2GrantManager $grantManager, UserRepository $userRepository, RefreshTokenRepository $refreshTokenRepository, ConfigFactoryInterface $configFactory) {
+  public function __construct(RequestStack $requestStack,
+                              Oauth2GrantManager $grantManager,
+                              UserRepository $userRepository,
+                              RefreshTokenRepository $refreshTokenRepository,
+                              ConfigFactoryInterface $configFactory,
+                              PrivateTempStoreFactory $tempStoreFactory) {
     $this->requestStack = $requestStack;
     $this->grantManager = $grantManager;
     $this->userRepository = $userRepository;
     $this->refreshTokenRepository = $refreshTokenRepository;
     $this->configFactory = $configFactory;
+    $this->tempStoreFactory = $tempStoreFactory;
   }
 
 
@@ -69,10 +81,13 @@ class TokenManager {
    * Intercept credentials, obtain tokens through auth2 authentication and
    * register them in session
    *
+   * @todo: use DrupalAccountGrant [create it] instead of PasswordGrant!
+   *
+   * @see http://oauth2.thephpleague.com/authorization-server/resource-owner-password-credentials-grant/
+   *
    * @throws \Exception
    */
-  public function authenticate()
-  {
+  public function authenticate() {
     //Oauth2 App defined in /admin/config/services/consumer
     $client_id = "6578f259-aca8-4a41-87fd-4992753f574c";
     $client_secret = "TrainingCalendarApp2018";
@@ -82,9 +97,8 @@ class TokenManager {
     $accessTokenExpiration = new \DateInterval(sprintf('PT%dS', $simple_oauth_settings->get('access_token_expiration')));
     $refreshTokenExpiration = new \DateInterval(sprintf('PT%dS', $simple_oauth_settings->get('refresh_token_expiration')));
 
-    /** @var  \Symfony\Component\HttpFoundation\Request $request */
+    /** @var  Request $request */
     $request = $this->requestStack->getCurrentRequest();
-
     $username = $request->get('name');
     $password = $request->get('pass');
     $grant_type = $request->get('grant_type', 'password');
@@ -108,49 +122,38 @@ class TokenManager {
     $serverRequest = ServerRequest::fromGlobals();
     $serverRequest = $serverRequest->withParsedBody(
       [
-        "grant_type" =>     $grant_type,
-        "client_id" =>      $client_id,
-        "client_secret" =>  $client_secret,
-        "scope" =>          $scope,
-        "username" =>       $username,
-        "password" =>       $password
+        "grant_type" => $grant_type,
+        "client_id" => $client_id,
+        "client_secret" => $client_secret,
+        "scope" => $scope,
+        "username" => $username,
+        "password" => $password
       ]
     );
-    $parsedBody = $serverRequest->getParsedBody();
 
 
+    $authServerResponse = $authServer->respondToAccessTokenRequest($serverRequest, new GuzzleResponse());
+    $authServerResponse->getBody()->rewind();
+    $tokenData = $authServerResponse->getBody()->getContents();
+    $authServerResponse->getBody()->close();
 
-    $error = false;
-    $tokenData = false;
 
-    try
-    {
-
-      $authServerResponse = $authServer->respondToAccessTokenRequest($serverRequest, new GuzzleResponse());
-      $authServerResponse->getBody()->rewind();
-      $tokenData = $authServerResponse->getBody()->getContents();
-      $authServerResponse->getBody()->close();
-    } catch(\Exception $e)
-    {
-      $error = [
-        "message" => $e->getMessage()
-      ];
-    }
-
-    if($tokenData)
-    {
+    if ($tokenData) {
       $tokenData = json_decode($tokenData);
+
+      /** @var PrivateTempStore $privateSessionStorage */
+      $privateSessionStorage = $this->tempStoreFactory->get("training_calendar");
+      $privateSessionStorage->set("oauth_token_data", $tokenData);
     }
 
-
+    /*
     dpm(
       [
-        "error" => $error,
         "grant_type" => $grant_type,
         "intercepted_credentials" => [$username, $password],
-        "parsed_body" => $parsedBody,
         "TOKENDATA" => $tokenData
       ]
     );
+    */
   }
 }

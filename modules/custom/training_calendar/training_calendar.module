@@ -36,12 +36,17 @@ function training_calendar_page_attachments_alter(array &$page) {
 
   //@todo: check if we are on the correct url
 
-  //@this is for basic auth - let's implement oauth2
-  $username = "AAA";
-  $password = "BBB";
-  $usrPwd = $username . ':' . $password;
-  $userhash = base64_encode($usrPwd);
-  $page['#attached']['drupalSettings']['training_calendar']['userhash'] = $userhash;
+  /** @var PrivateTempStoreFactory $privateTempStore */
+  $tempStoreFactory = \Drupal::service("tempstore.private");
+  /** @var PrivateTempStore $privateSessionStorage */
+  $privateSessionStorage = $tempStoreFactory->get("training_calendar");
+  $tokenData = $privateSessionStorage->get("oauth_token_data");
+
+  //Attach oauth2 tokens to DrupalSettings
+  if ($tokenData)
+  {
+    $page['#attached']['drupalSettings']['training_calendar']['oauth_token_data'] = $tokenData;
+  }
 }
 
 /**
@@ -66,14 +71,14 @@ function training_calendar_theme() {
  */
 function training_calendar_user_login(User $account) {
   /** @var TokenManager $tm */
-  $tm = \Drupal::service('training_calendar.oauth2.token_manager');
+  $tokenManager = \Drupal::service('training_calendar.oauth2.token_manager');
 
   try {
-    $tm->authenticate();
+    $tokenManager->authenticate();
   } catch(\Exception $e) {
     \Drupal::logger('training_calendar')
       ->critical(
-        'Authentication error: @message',
+        'TokenManager authentication error: @message',
         ['@message' => $e->getMessage()]
       );
   }
