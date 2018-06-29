@@ -10,11 +10,13 @@
         let self = this;
         options = options || {};
 
+
+
         Drupal.trainingCalendar.getCsrfToken(function (csrfToken) {
             let headers = _.has(options, "headers") ? options.headers : {};
 
             headers = _.extend(headers, {
-                'Content-Type' : 'application/json',
+                'Accept' : 'application/hal+json',
                 'Authorization' : 'Basic ' + Drupal.trainingCalendar.getUserhash(),
             });
 
@@ -56,18 +58,20 @@
             console.log("TRAINING CALENDAR...");
 
 
-            /*
+
             let TrainingCalendarApp = new Drupal.trainingCalendar.TrainingList({
                 collection: new Drupal.trainingCalendar.TrainingModels
             });
-            */
 
+
+            /*
             $('#training-calendar').fullCalendar({
                 weekends: true,
                 defaultView: 'month',
                 showNonCurrentDates: true,
                 weekNumbers: true,
             });
+            */
 
 
         }

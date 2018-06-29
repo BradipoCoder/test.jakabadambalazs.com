@@ -9,6 +9,7 @@ namespace Drupal\training_calendar\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Entity\EntityTypeManager;
 use Drupal\Core\Url;
@@ -70,5 +71,34 @@ class TrainingCalendarController extends ControllerBase
     return $data;
   }
 
+  /**
+   * @return JsonResponse
+   */
+  public function ping()
+  {
+    if (!\Drupal::currentUser()->hasPermission('tc_access'))
+    {
+      return $this->returnUnauthorizedResponse();
+    }
 
+    $currentUser = \Drupal::currentUser();
+    $currentUser->getAccountName();
+
+    $data = [
+      "account_name" => $currentUser->getAccountName(),
+    ];
+
+    return new JsonResponse($data);
+  }
+
+  /**
+   * @return JsonResponse
+   */
+  protected function returnUnauthorizedResponse()
+  {
+    if (!\Drupal::currentUser()->hasPermission('tc_access'))
+    {
+      return new JsonResponse(["message"=>"unauthorized"], 403);
+    }
+  }
 }

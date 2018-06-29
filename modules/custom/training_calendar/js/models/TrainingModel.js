@@ -130,9 +130,12 @@
         },*/
     });
 
+    //------------------------------------------------------------------------------------------------------------------
+    //----------------------------------------------------------------------------------------------------COLLECTION ---
+    //------------------------------------------------------------------------------------------------------------------
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
-        url: Drupal.url('rest/trainings-listing'),
+        url: Drupal.url('rest/trainings'),
     });
 
 })(Backbone, Drupal, drupalSettings, _);
