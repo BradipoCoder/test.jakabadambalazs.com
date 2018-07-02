@@ -4,12 +4,22 @@ training-calendar:
     # Contrib
     /libraries/moment/moment.min.js: {}
     /libraries/fullcalendar/fullcalendar.min.js: {}
+
     # CORE Application
     js/training-calendar.js: {}
+
+    # CORE Utilities
+    js/utilities/drupal-settings-manager.js: {}
+    js/utilities/communication-manager.js: {}
+    js/utilities/token-manager.js: {}
+
+
     # Models
     js/models/TrainingModel.js: {}
+
     # Views
     js/views/TrainingView.js: {}
+
   css:
     theme:
       # Contrib
