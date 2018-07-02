@@ -78,14 +78,21 @@ class TrainingCalendarController extends ControllerBase
   {
     if (!\Drupal::currentUser()->hasPermission('tc_access'))
     {
-      return $this->returnUnauthorizedResponse();
+      return $this->getUnauthorizedJsonResponse();
     }
 
     $currentUser = \Drupal::currentUser();
-    $currentUser->getAccountName();
+    $now = new \DateTime('now', new \DateTimeZone($currentUser->getTimeZone()));
 
     $data = [
-      "account_name" => $currentUser->getAccountName(),
+      "account_info" => [
+        "account_name" => $currentUser->getAccountName(),
+        "display_name" => $currentUser->getDisplayName(),
+        "account_id" => $currentUser->getAccount()->id(),
+      ],
+      "system_info" => [
+        "server_time" => $now
+      ],
     ];
 
     return new JsonResponse($data);
@@ -94,11 +101,16 @@ class TrainingCalendarController extends ControllerBase
   /**
    * @return JsonResponse
    */
-  protected function returnUnauthorizedResponse()
+  protected function getUnauthorizedJsonResponse()
   {
-    if (!\Drupal::currentUser()->hasPermission('tc_access'))
-    {
-      return new JsonResponse(["message"=>"unauthorized"], 403);
-    }
+    return new JsonResponse(
+      [
+        "message"=>"unauthorized"
+      ]
+      , 403
+      , [
+
+      ]
+    );
   }
 }
