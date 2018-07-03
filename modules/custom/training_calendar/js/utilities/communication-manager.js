@@ -60,15 +60,13 @@
             let refresh_token = Drupal.trainingCalendar.Utilities.TokenManager.refresh_token;
             //@todo: check if refresh_token is not null - otherwise bail out and redirect user to login
             $.ajax({
-                url: Drupal.url("oauth/token"),
+                url: Drupal.url("training_calendar/rest/refresh_tokens"),
                 type: 'POST',
                 headers: {
                     "Content-Type": "application/x-www-form-urlencoded",
                 },
                 data: {
                     grant_type: "refresh_token",
-                    client_id: "6578f259-aca8-4a41-87fd-4992753f574c",
-                    client_secret: "TrainingCalendarApp2018",
                     refresh_token: refresh_token,
                 },
                 beforeSend: function(xhr)
@@ -81,14 +79,10 @@
                 },
                 error: function(xhr)
                 {
-                    let statusCode = xhr.status;
-                    if(statusCode == 401) {
-                        console.log("Invalid request("+statusCode+")! " + xhr.responseJSON.message);//xhr.responseJSON.message
-                        Drupal.trainingCalendar.Utilities.TokenManager.refresh_token = null;
-                        //@todo: this refresh token is probably expired! User needs to re-login!
-                    } else {
-                        console.log("Unknown error("+statusCode+")! ", xhr.responseJSON);//xhr.responseJSON.message
-                    }
+                    console.log("Invalid request("+ xhr.status +")! " + xhr.responseJSON.message);//xhr.responseJSON.message
+                    Drupal.trainingCalendar.Utilities.TokenManager.refresh_token = null;
+                    //This refresh token is probably expired! User needs to re-login!
+                    window.location.href = Drupal.url("user/logout");
                 },
             }).done(function(data)
             {

@@ -50,6 +50,8 @@ class TrainingCalendarController extends ControllerBase
   }
 
   /**
+   * path: /training_calendar
+   *
    * @return array|RedirectResponse
    */
   public function calendar()
@@ -72,6 +74,31 @@ class TrainingCalendarController extends ControllerBase
   }
 
   /**
+   * path: /training_calendar/rest/refresh_tokens
+   *
+   * @return JsonResponse
+   */
+  public function refreshTokens()
+  {
+    /** @var \Drupal\training_calendar\Oauth2\TokenManager $tokenManager */
+    $tokenManager = \Drupal::service("training_calendar.oauth2.token_manager");
+    try{
+      $data = $tokenManager->getFreshTokens();
+      $data->status = 200;
+    } catch(\Exception $e)
+    {
+      $data = new \stdClass();
+      $data->message = $e->getMessage();
+      $data->status = 400;
+    }
+
+    return new JsonResponse($data, $data->status);
+  }
+
+
+  /**
+   * path: /training_calendar/rest/ping
+   *
    * @return JsonResponse
    */
   public function ping()

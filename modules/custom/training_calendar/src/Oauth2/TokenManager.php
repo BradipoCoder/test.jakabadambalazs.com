@@ -8,6 +8,7 @@
 namespace Drupal\training_calendar\Oauth2;
 
 use Drupal\simple_oauth\Repositories\UserRepository;
+use League\OAuth2\Server\Grant\RefreshTokenGrant;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 use Drupal\simple_oauth\Plugin\Oauth2GrantManager;
@@ -34,7 +35,11 @@ use Drupal\Core\TempStore\PrivateTempStore;
  * @package Drupal\training_calendar\Oauth2
  */
 class TokenManager {
-  /** @var RequestStack */
+  //Oauth2 App defined in /admin/config/services/consumer
+  const CLIENT_ID = "6578f259-aca8-4a41-87fd-4992753f574c";
+  const CLIENT_SECRET = "TrainingCalendarApp2018";
+
+    /** @var RequestStack */
   protected $requestStack;
 
   /** @var  Oauth2GrantManagerInterface */
@@ -76,6 +81,72 @@ class TokenManager {
     $this->tempStoreFactory = $tempStoreFactory;
   }
 
+  /**
+   * @return \stdClass
+   * @throws \Exception
+   */
+  public function getFreshTokens()
+  {
+    $answer = new \stdClass();
+    $answer->message = "Unavailable";
+
+    //Get expiration times from simple oauth
+    $simple_oauth_settings = $this->configFactory->get('simple_oauth.settings');
+    $accessTokenExpiration = new \DateInterval(sprintf('PT%dS', $simple_oauth_settings->get('access_token_expiration')));
+    $refreshTokenExpiration = new \DateInterval(sprintf('PT%dS', $simple_oauth_settings->get('refresh_token_expiration')));
+
+    /** @var  Request $request */
+    $request = $this->requestStack->getCurrentRequest();
+    $grant_type = $request->get('grant_type');
+    $refresh_token = $request->get('refresh_token');
+
+    if ($grant_type != "refresh_token") {
+      throw new \Exception("Bad request! Grant type must be refresh_token.");
+    }
+
+    if (!$refresh_token) {
+      throw new \Exception("Bad request! A refresh_token must be supplied.");
+    }
+
+    $authServer = $this->grantManager->getAuthorizationServer($grant_type);
+
+    // Refresh Token Grant
+    $grant = new RefreshTokenGrant($this->refreshTokenRepository);
+    $grant->setRefreshTokenTTL($refreshTokenExpiration);
+
+    // Enable Grant on Auth Server
+    $authServer->enableGrantType($grant, $accessTokenExpiration);
+
+    //ServerRequest compatible with authServer
+    $serverRequest = ServerRequest::fromGlobals();
+    $serverRequest = $serverRequest->withParsedBody(
+      [
+        "grant_type" => $grant_type,
+        "client_id" => self::CLIENT_ID,
+        "client_secret" => self::CLIENT_SECRET,
+        "refresh_token" => $refresh_token,
+      ]
+    );
+
+    // Get the response and the Token data
+    $authServerResponse = $authServer->respondToAccessTokenRequest($serverRequest, new GuzzleResponse());
+    $authServerResponse->getBody()->rewind();
+    $tokenData = $authServerResponse->getBody()->getContents();
+    $authServerResponse->getBody()->close();
+
+    // Store the tokens in the session
+    if ($tokenData) {
+      $tokenData = json_decode($tokenData);
+
+      /** @var PrivateTempStore $privateSessionStorage */
+      $privateSessionStorage = $this->tempStoreFactory->get("training_calendar");
+      $privateSessionStorage->set("oauth_token_data", $tokenData);
+
+      $answer = $tokenData;
+    }
+
+    return $answer;
+  }
 
   /**
    * Intercept credentials, obtain tokens through auth2 authentication and
@@ -88,10 +159,6 @@ class TokenManager {
    * @throws \Exception
    */
   public function authenticate() {
-    //Oauth2 App defined in /admin/config/services/consumer
-    $client_id = "6578f259-aca8-4a41-87fd-4992753f574c";
-    $client_secret = "TrainingCalendarApp2018";
-
     //Get expiration times from simple oauth
     $simple_oauth_settings = $this->configFactory->get('simple_oauth.settings');
     $accessTokenExpiration = new \DateInterval(sprintf('PT%dS', $simple_oauth_settings->get('access_token_expiration')));
@@ -110,12 +177,11 @@ class TokenManager {
 
     $authServer = $this->grantManager->getAuthorizationServer($grant_type);
 
-
     // Password Grant
     $grant = new PasswordGrant($this->userRepository, $this->refreshTokenRepository);
     $grant->setRefreshTokenTTL($refreshTokenExpiration);
 
-    //Enable Grant on Auth Server
+    // Enable Grant on Auth Server
     $authServer->enableGrantType($grant, $accessTokenExpiration);
 
     //ServerRequest compatible with authServer
@@ -123,21 +189,21 @@ class TokenManager {
     $serverRequest = $serverRequest->withParsedBody(
       [
         "grant_type" => $grant_type,
-        "client_id" => $client_id,
-        "client_secret" => $client_secret,
+        "client_id" => self::CLIENT_ID,
+        "client_secret" => self::CLIENT_SECRET,
         "scope" => $scope,
         "username" => $username,
         "password" => $password
       ]
     );
 
-
+    // Get the response and the Token data
     $authServerResponse = $authServer->respondToAccessTokenRequest($serverRequest, new GuzzleResponse());
     $authServerResponse->getBody()->rewind();
     $tokenData = $authServerResponse->getBody()->getContents();
     $authServerResponse->getBody()->close();
 
-
+    // Store the tokens in the session
     if ($tokenData) {
       $tokenData = json_decode($tokenData);
 
