@@ -24,12 +24,30 @@
         {
             console.log("Starting trainingCalendar...");
 
-            Drupal.trainingCalendar.Utilities.DrupalSettingsManager.init();
-            Drupal.trainingCalendar.Utilities.CommunicationManager.init();
-            Drupal.trainingCalendar.Utilities.TokenManager.init();
+            let classesToInit = [
+                Drupal.trainingCalendar.Utilities.DrupalSettingsManager.init,
+                Drupal.trainingCalendar.Utilities.CommunicationManager.init,
+                Drupal.trainingCalendar.Utilities.TokenManager.init
+            ];
 
+            Promise.reduce(classesToInit, function(accumulator, initMethod)
+            {
+                /** @type {Promise<any>} initPromise */
+                let initPromise = initMethod.call();
+                initPromise.then(function(initMessage) {
+                    if(initMessage)
+                    {
+                        console.log(initMessage);
+                    }
+                }).catch(function(e) {
+                    console.error(e);
+                });
+                return initPromise;
+            }, null).then(function()
+            {
+                console.log("Training Calendar is initialized and ready for use.");
+            });
 
-            console.log("trainingCalendar initialized.");
             /*
             let TrainingCalendarApp = new Drupal.trainingCalendar.TrainingList({
                 collection: new Drupal.trainingCalendar.TrainingModels
@@ -44,11 +62,6 @@
                 weekNumbers: true,
             });
             */
-
-            // let s1 = Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data.token_type");
-            // console.log("S1: " + s1);
-            // let s2 = Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("path.currentLanguage");
-            // console.log("S2: " + s2);
         },
 
         /**

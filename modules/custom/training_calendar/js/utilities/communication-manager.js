@@ -11,9 +11,18 @@
      */
     Drupal.trainingCalendar.Utilities.CommunicationManager = {
 
+        /**
+         * Initialize
+         * @return {Promise<any>}
+         */
         init: function()
         {
-            console.log("CommunicationManager initialized.");
+            return new Promise(function(resolve)
+            {
+                let self = Drupal.trainingCalendar.Utilities.CommunicationManager;
+                //init
+                resolve("CommunicationManager initialized.");
+            });
         },
 
         /*

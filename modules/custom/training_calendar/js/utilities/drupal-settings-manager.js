@@ -1,7 +1,7 @@
 /**
  * @file
  */
-(function (drupalSettings, _) {
+(function (Drupal, drupalSettings, _) {
     /**
      * Utility class for drupalSettings
      *
@@ -10,12 +10,21 @@
     Drupal.trainingCalendar.Utilities.DrupalSettingsManager = {
         ds: null,
 
+        /**
+         * Initialize
+         * @return {Promise<any>}
+         */
         init: function()
         {
-            if(!_.isUndefined(drupalSettings)) {
-                this.ds = drupalSettings;
-            }
-            console.log("DrupalSettingsManager initialized.");
+            return new Promise(function(resolve)
+            {
+                let self = Drupal.trainingCalendar.Utilities.DrupalSettingsManager;
+                //init
+                if(!_.isUndefined(drupalSettings)) {
+                    self.ds = drupalSettings;
+                }
+                resolve("DrupalSettingsManager initialized.");
+            });
         },
 
         /**
@@ -46,4 +55,4 @@
         }
 
     };
-})(drupalSettings, _);
+})(Drupal, drupalSettings, _);

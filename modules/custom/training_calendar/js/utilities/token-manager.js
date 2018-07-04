@@ -1,7 +1,7 @@
 /**
  * @file
  */
-(function(_)
+(function(Drupal, _)
 {
     /**
      * Utility class for managing access and refresh tokens
@@ -30,11 +30,11 @@
         {
             return new Promise(function(resolve)
             {
-                this.registerNewTokens(Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data"));
-                this.handleTokenRefresh().then(function()
+                let self = Drupal.trainingCalendar.Utilities.TokenManager;
+                self.registerNewTokens(Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data"));
+                self.handleTokenRefresh().then(function()
                 {
-                    console.log("TokenManager initialized.");
-                    resolve();
+                    resolve("TokenManager initialized.");
                 });
             });
         },
@@ -61,7 +61,7 @@
                 }).then(function(xhr)
                 {
                     let serverResponse = !_.isUndefined(xhr["responseJSON"]) ? xhr["responseJSON"] : xhr;
-                    console.info("XHR OK[" + xhr.status + "]", xhr);
+                    //console.info("XHR OK[" + xhr.status + "]", xhr);
                     self.registerNewTokens(serverResponse);
                     resolve();
                 }).catch(function(xhr)
@@ -116,4 +116,4 @@
             this.updateNewTokenRefreshTimeout();
         }
     };
-})(_);
+})(Drupal, _);
