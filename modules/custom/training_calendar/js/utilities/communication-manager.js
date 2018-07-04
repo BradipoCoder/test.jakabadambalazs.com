@@ -16,12 +16,12 @@
             console.log("CommunicationManager initialized.");
         },
 
+        /*
         ping: function()
         {
             let self = this;
             let token_type = Drupal.trainingCalendar.Utilities.TokenManager.token_type;
             let access_token = Drupal.trainingCalendar.Utilities.TokenManager.access_token;
-            //@todo: check if access_token is not null - otherwise try right away with refresh token
             $.ajax({
                 url: Drupal.url("training_calendar/rest/ping"),
                 headers: {
@@ -53,43 +53,30 @@
                 }
             });
         },
+        */
 
-        refreshAccessToken: function()
+        /**
+         * Main (generic) request method
+         * @param {{}} settings
+         */
+        request: function(settings)
         {
-            let self = this;
-            let refresh_token = Drupal.trainingCalendar.Utilities.TokenManager.refresh_token;
-            //@todo: check if refresh_token is not null - otherwise bail out and redirect user to login
-            $.ajax({
-                url: Drupal.url("training_calendar/rest/refresh_tokens"),
-                type: 'POST',
-                headers: {
-                    "Content-Type": "application/x-www-form-urlencoded",
-                },
-                data: {
-                    grant_type: "refresh_token",
-                    refresh_token: refresh_token,
-                },
-                beforeSend: function(xhr)
-                {
-                    //return false;
-                },
-                timeout: function(xhr)
-                {
-                    //return false;
-                },
-                error: function(xhr)
-                {
-                    console.log("Invalid request("+ xhr.status +")! " + xhr.responseJSON.message);//xhr.responseJSON.message
-                    Drupal.trainingCalendar.Utilities.TokenManager.refresh_token = null;
-                    //This refresh token is probably expired! User needs to re-login!
-                    window.location.href = Drupal.url("user/logout");
-                },
-            }).done(function(data)
+            if(_.isUndefined(settings["complete"]))
             {
-                Drupal.trainingCalendar.Utilities.TokenManager.registerNewTokens(data);
-            });
-        }
+                console.error("No complete callback is defined in ajax settings!");
+            }
 
+            let defaults = {
+                async:      true,
+                cache:      false,
+                dataType:   "json",
+                timeout:    30 * 1000,
+            };
+
+            settings = _.extend(defaults, settings);
+
+            $.ajax(settings);
+        }
     };
 
     //------------------------------------------------------------------------------------------Backbone override - SYNC

@@ -14,36 +14,73 @@
         access_token: null,
         refresh_token: null,
 
+        /**
+         * Subtract this many seconds from the expires_in
+         * @type {int}
+         */
+        timeout_margin_seconds: 30,
+
         token_refresh_timeout: null,
 
 
         init: function()
         {
             this.registerNewTokens(Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data"));
-            this.handleTokenRefresh(this);
+            this.handleTokenRefresh();
 
             console.log("TokenManager initialized.");
         },
 
 
+        /**
+         * Refresh tokens
+         */
+        handleTokenRefresh: function()
+        {
+            let self = Drupal.trainingCalendar.Utilities.TokenManager;
+
+            Drupal.trainingCalendar.Utilities.CommunicationManager.request({
+                url: Drupal.url("training_calendar/rest/refresh_tokens"),
+                method: 'POST',
+                data: {
+                    grant_type: "refresh_token",
+                    refresh_token: self.refresh_token,
+                },
+                complete: function(xhr, status)
+                {
+                    let serverResponse = !_.isUndefined(xhr["responseJSON"]) ? xhr["responseJSON"] : xhr;
+                    switch(status) {
+                        case "success":
+                        case "notmodified":
+                            self.registerNewTokens(serverResponse);
+                            break;
+                        case "error":
+                        case "abort":
+                        case "parsererror":
+                        case "nocontent":
+                        case "timeout":
+                            console.log("Token refresh error", serverResponse);
+                            self.refresh_token = null;
+                            window.location.href = Drupal.url("user/logout");
+                            break;
+                        default:
+                            console.error("UNKNOWN STATUS:", status);
+                    }
+                }
+            });
+        },
 
         updateNewTokenRefreshTimeout: function()
         {
-            if(!_.isNull(this.token_refresh_timeout)){
+            if(!_.isNull(this.token_refresh_timeout)) {
                 clearTimeout(this.token_refresh_timeout);
                 this.token_refresh_timeout = null;
             }
 
-            let timeout_in = (this.expires_in - 30) * 1000;
-
-            console.log("SET TIMEOUT HANDLE: " + timeout_in);
+            let timeout_in = (this.expires_in - this.timeout_margin_seconds) * 1000;
+            //console.log("NEXT TOKEN REFRESH(sec): " + timeout_in/1000);
 
             this.token_refresh_timeout = setTimeout(this.handleTokenRefresh, timeout_in, this);
-        },
-
-        handleTokenRefresh: function(self) {
-            console.log("HANDLE START");
-            Drupal.trainingCalendar.Utilities.CommunicationManager.refreshAccessToken();
         },
 
         /**
@@ -73,7 +110,9 @@
             this.access_token = data.access_token;
             this.refresh_token = data.refresh_token;
 
-            this.updateNewTokenRefreshTimeout(this);
+            //console.log("Tokens registered");
+
+            this.updateNewTokenRefreshTimeout();
         }
     };
 })(_);
