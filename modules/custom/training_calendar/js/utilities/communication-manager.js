@@ -57,25 +57,51 @@
 
         /**
          * Main (generic) request method
+         *
          * @param {{}} settings
+         * @return {Promise<any>}
          */
         request: function(settings)
         {
-            if(_.isUndefined(settings["complete"]))
+            return new Promise(function(resolve, reject)
             {
-                console.error("No complete callback is defined in ajax settings!");
-            }
+                if(!_.isUndefined(settings["complete"]))
+                {
+                    return reject({
+                        status: "BAD",
+                        error: "Remove complete callback from ajax settings!"
+                    });
+                }
 
-            let defaults = {
-                async:      true,
-                cache:      false,
-                dataType:   "json",
-                timeout:    30 * 1000,
-            };
+                let defaults = {
+                    async: true,
+                    cache: false,
+                    dataType: "json",
+                    timeout: 30 * 1000,
+                    complete: function(xhr, status)
+                    {
 
-            settings = _.extend(defaults, settings);
+                        switch(status) {
+                            case "success":
+                            case "notmodified":
+                                resolve(xhr);
+                                break;
+                            case "error":
+                            case "abort":
+                            case "parsererror":
+                            case "nocontent":
+                            case "timeout":
+                                reject(xhr);
+                                break;
+                            default:
+                                console.error("XHR UNKNOWN STATUS:", status);
+                        }
+                    }
+                };
+                settings = _.extend(defaults, settings);
 
-            $.ajax(settings);
+                $.ajax(settings);
+            });
         }
     };
 

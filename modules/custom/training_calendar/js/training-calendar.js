@@ -29,9 +29,6 @@
             Drupal.trainingCalendar.Utilities.TokenManager.init();
 
 
-
-
-
             console.log("trainingCalendar initialized.");
             /*
             let TrainingCalendarApp = new Drupal.trainingCalendar.TrainingList({

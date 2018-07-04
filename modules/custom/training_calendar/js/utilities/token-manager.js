@@ -22,51 +22,54 @@
 
         token_refresh_timeout: null,
 
-
+        /**
+         * Initialize
+         * @return {Promise<any>}
+         */
         init: function()
         {
-            this.registerNewTokens(Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data"));
-            this.handleTokenRefresh();
-
-            console.log("TokenManager initialized.");
+            return new Promise(function(resolve)
+            {
+                this.registerNewTokens(Drupal.trainingCalendar.Utilities.DrupalSettingsManager.getDrupalSettingsValue("training_calendar.oauth_token_data"));
+                this.handleTokenRefresh().then(function()
+                {
+                    console.log("TokenManager initialized.");
+                    resolve();
+                });
+            });
         },
 
 
         /**
          * Refresh tokens
+         *
+         * @return {Promise<any>}
          */
         handleTokenRefresh: function()
         {
-            let self = Drupal.trainingCalendar.Utilities.TokenManager;
+            return new Promise(function(resolve)
+            {
+                let self = Drupal.trainingCalendar.Utilities.TokenManager;
 
-            Drupal.trainingCalendar.Utilities.CommunicationManager.request({
-                url: Drupal.url("training_calendar/rest/refresh_tokens"),
-                method: 'POST',
-                data: {
-                    grant_type: "refresh_token",
-                    refresh_token: self.refresh_token,
-                },
-                complete: function(xhr, status)
+                Drupal.trainingCalendar.Utilities.CommunicationManager.request({
+                    url: Drupal.url("training_calendar/rest/refresh_tokens"),
+                    method: 'POST',
+                    data: {
+                        grant_type: "refresh_token",
+                        refresh_token: self.refresh_token,
+                    },
+                }).then(function(xhr)
                 {
                     let serverResponse = !_.isUndefined(xhr["responseJSON"]) ? xhr["responseJSON"] : xhr;
-                    switch(status) {
-                        case "success":
-                        case "notmodified":
-                            self.registerNewTokens(serverResponse);
-                            break;
-                        case "error":
-                        case "abort":
-                        case "parsererror":
-                        case "nocontent":
-                        case "timeout":
-                            console.log("Token refresh error", serverResponse);
-                            self.refresh_token = null;
-                            window.location.href = Drupal.url("user/logout");
-                            break;
-                        default:
-                            console.error("UNKNOWN STATUS:", status);
-                    }
-                }
+                    console.info("XHR OK[" + xhr.status + "]", xhr);
+                    self.registerNewTokens(serverResponse);
+                    resolve();
+                }).catch(function(xhr)
+                {
+                    console.error("XHR ERROR(" + xhr.status + "):", xhr);
+                    self.refresh_token = null;
+                    window.location.href = Drupal.url("user/logout");
+                });
             });
         },
 
@@ -80,7 +83,7 @@
             let timeout_in = (this.expires_in - this.timeout_margin_seconds) * 1000;
             //console.log("NEXT TOKEN REFRESH(sec): " + timeout_in/1000);
 
-            this.token_refresh_timeout = setTimeout(this.handleTokenRefresh, timeout_in, this);
+            this.token_refresh_timeout = setTimeout(this.handleTokenRefresh, timeout_in);
         },
 
         /**
@@ -109,8 +112,6 @@
             this.expires_in = data.expires_in;
             this.access_token = data.access_token;
             this.refresh_token = data.refresh_token;
-
-            //console.log("Tokens registered");
 
             this.updateNewTokenRefreshTimeout();
         }

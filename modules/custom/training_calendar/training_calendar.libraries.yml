@@ -3,6 +3,7 @@ training-calendar:
   js:
     # Contrib
     /libraries/moment/moment.min.js: {}
+    /libraries/bluebird/bluebird.min.js: {}
     /libraries/fullcalendar/fullcalendar.min.js: {}
 
     # CORE Application
