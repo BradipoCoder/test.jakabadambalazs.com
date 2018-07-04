@@ -21,6 +21,8 @@
             {
                 let self = Drupal.trainingCalendar.Utilities.CommunicationManager;
                 //init
+
+                //
                 resolve("CommunicationManager initialized.");
             });
         },

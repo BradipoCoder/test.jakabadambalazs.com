@@ -46,6 +46,7 @@
             }, null).then(function()
             {
                 console.log("Training Calendar is initialized and ready for use.");
+                $('.training-calendar-overlay').delay(500).fadeOut(500);
             });
 
             /*
@@ -103,15 +104,6 @@
             }
             return answer;
         },
-
-
-        /**
-         *
-         * @param {string|Array} name
-         * @param {*} default_value
-         * @return {*}
-         */
-
     };
 
     //--------------------------------------------------------------------------------------------------------------INIT

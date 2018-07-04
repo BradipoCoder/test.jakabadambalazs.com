@@ -9414,14 +9414,20 @@ blockquote {
 }
 /* less/footer.less */
 .wrapper-footer {
-  padding-top: 28px;
-  padding-bottom: 28px;
+  /*.padding-v(1);*/
+}
+.wrapper-footer footer.footer {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border: none;
 }
 .wrapper-footer-logo {
   margin-left: auto;
   margin-right: auto;
   max-width: 110px;
-  margin-bottom: 28px;
+  /*.margin-b(1);*/
 }
 .footer-content p {
   color: rgba(255, 255, 255, 0.7);
@@ -9734,7 +9740,7 @@ blockquote {
   margin-top: 56px;
 }
 .main-container {
-  min-height: 500px;
+  min-height: 300px;
   margin-top: 56px;
 }
 .path-catalab .main-container,

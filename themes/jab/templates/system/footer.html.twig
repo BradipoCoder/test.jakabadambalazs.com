@@ -1,19 +1,20 @@
 <!-- Add you custom twig html here -->
 
 <div class="wrapper-footer">
-  <div class="logo wrapper-footer-logo">
-    <a href="/" title="{{ content.site_name }}">
-      {{ content.logo }}
-    </a>
-  </div>
 
-  <div class="footer-content text-center margin-b-05 small">
+  {#<div class="logo wrapper-footer-logo">#}
+    {#<a href="/" title="{{ content.site_name }}">#}
+      {#{{ content.logo }}#}
+    {#</a>#}
+  {#</div>#}
 
-    <div class="wrapper-footer-menu">
-      {{ content.menu }}
-    </div>
+  <div class="footer-content text-center small">
 
-    {{ content.text }}
+    {#<div class="wrapper-footer-menu">#}
+      {#{{ content.menu }}#}
+    {#</div>#}
+
+    {#{{ content.text }}#}
 
 
     {#<div class="wrapper-footer-social">#}
@@ -39,11 +40,6 @@
     {#<hr>#}
 
     <p class="footer-common-link">
-      <strong>JAB</strong>
-    </p>
-    <p class="footer-common-link">&copy; Copyright {{ content.created }}{{ content.year }} {{ content.site_name }}. All rights reserved
-      {#<a href="/cookie" title="Cookie Policy">Cookie Policy</a> |#}
-      {#<a href="/privacy" title="Privacy Policy">Privacy Policy</a>#}
-    </p>
+      <strong>JAB</strong> &copy; Copyright {{ content.created }}{{ content.year }} {{ content.site_name }}. All rights reserved</p>
   </div>
 </div>

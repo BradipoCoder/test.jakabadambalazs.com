@@ -1,0 +1,48 @@
+/* LOADING FULL PAGE COVER OVERLAY */
+.training-calendar-overlay {
+  background: #fff;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+.training-calendar-overlay .loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+.training-calendar-overlay .loading .loading-bar {
+  display: inline-block;
+  width: 5px;
+  height: 18px;
+  border-radius: 4px;
+  animation: loading 1s ease-in-out infinite;
+}
+.training-calendar-overlay .loading .loading-bar:nth-child(1) {
+  background-color: #3498db;
+}
+.training-calendar-overlay .loading .loading-bar:nth-child(2) {
+  background-color: #c0392b;
+  animation-delay: 0.09s;
+}
+.training-calendar-overlay .loading .loading-bar:nth-child(3) {
+  background-color: #f1c40f;
+  animation-delay: .18s;
+}
+.training-calendar-overlay .loading .loading-bar:nth-child(4) {
+  background-color: #27ae60;
+  animation-delay: .27s;
+}
+@keyframes loading {
+  0% {
+    transform: scale(1);
+  }
+  20% {
+    transform: scale(1, 2.2);
+  }
+  40% {
+    transform: scale(1);
+  }
+}
+/*# sourceMappingURL=style.css.map */

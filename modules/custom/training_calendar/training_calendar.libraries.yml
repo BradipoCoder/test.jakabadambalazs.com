@@ -25,6 +25,10 @@ training-calendar:
     theme:
       # Contrib
       /libraries/fullcalendar/fullcalendar.css: {}
+
+      # CORE Application
+      css/style.css: {}
+
   dependencies:
     - core/drupal
     - core/drupalSettings
