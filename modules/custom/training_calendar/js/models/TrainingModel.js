@@ -12,7 +12,7 @@
      * @augments Backbone.Model
      */
     Drupal.trainingCalendar.TrainingModel = Backbone.Model.extend({
-        idAttribute: 'nid',
+        idAttribute: 'id',
 
         /**
          * @type {{}}
@@ -26,7 +26,7 @@
              * Node ID
              * @type {int}
              */
-            "nid": 0,
+            "id": 0,
 
             /**
              * Node type
@@ -41,13 +41,13 @@
             "body": "",
 
             /** @type {string} */
-            "field_date_programmed": "",
+            "field_start_date": "",
 
             /** @type {string} */
             "field_total_distance": "",
 
             /** @type {string} */
-            "field_training_type": "",
+            "field_activity_type": "",
 
             /** @type {string} */
             "created": "",
@@ -95,6 +95,7 @@
 
         // **parse** converts a response into the hash of attributes to be `set` on
         // the model. The default implementation is just to pass the response along.
+        /*
         parse: function (response, options) {
             let answer = {};
             let extraKeys = {};
@@ -121,7 +122,7 @@
             //console.log("PARSED: ", answer);
 
             return answer;
-        },
+        },*/
 
         /**
         get: function (attr) {
@@ -135,7 +136,7 @@
     //------------------------------------------------------------------------------------------------------------------
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
-        url: Drupal.url('rest/trainings'),
+        url: Drupal.url('training_calendar/rest/trainings'),
     });
 
 })(Backbone, Drupal, drupalSettings, _);

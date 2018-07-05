@@ -12,6 +12,15 @@ training_calendar.training_calendar_controller_refresh_tokens:
     _title: 'Training Calendar - refreshTokens'
   requirements:
       _access: 'TRUE'
+
+training_calendar.training_calendar_controller_trainings:
+  path: '/training_calendar/rest/trainings'
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::getTrainings'
+    _title: 'Training Calendar - get trainings list'
+  requirements:
+      _access: 'TRUE'
+
 training_calendar.training_calendar_controller_ping:
   path: '/training_calendar/rest/ping'
   defaults:

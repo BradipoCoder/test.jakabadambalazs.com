@@ -21,27 +21,16 @@
             {
                 let self = Drupal.trainingCalendar.Utilities.ViewManager;
                 //init
-                //self.setupCalendar();
-                self.setupData();
+                self.setupCalendar();
                 //
                 resolve("ViewManager initialized.");
             });
         },
 
-
-        setupData: function()
+        updateCalendarEvents: function()
         {
-            let trainings = new Drupal.trainingCalendar.TrainingModels;
-            trainings.fetch();
+            $trainingCalendarDiv.fullCalendar('refetchEvents');
         },
-        /*
-
-let TrainingCalendarApp = new Drupal.trainingCalendar.TrainingList({
-collection: new Drupal.trainingCalendar.TrainingModels
-});
-*/
-
-
 
         setupCalendar: function()
         {
@@ -50,6 +39,7 @@ collection: new Drupal.trainingCalendar.TrainingModels
                 defaultView: 'month',
                 showNonCurrentDates: true,
                 weekNumbers: true,
+                events: Drupal.trainingCalendar.Utilities.ModelManager.getCalendarEvents,
             });
         },
 

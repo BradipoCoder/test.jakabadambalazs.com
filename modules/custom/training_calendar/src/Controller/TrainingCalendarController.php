@@ -12,12 +12,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Drupal\Core\Entity\EntityTypeManager;
+use \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
+use Drupal\training_calendar\Oauth2\TokenManager;
+use \Drupal\node\Entity\Node;
 use Drupal\Core\Url;
 use Drupal\Core\Link;
 
 
-class TrainingCalendarController extends ControllerBase
-{
+class TrainingCalendarController extends ControllerBase {
   /** @var EntityTypeManager */
   protected $etm;
 
@@ -26,8 +28,7 @@ class TrainingCalendarController extends ControllerBase
    *
    * @param EntityTypeManager $entity_type_manager
    */
-  public function __construct(EntityTypeManager $entity_type_manager)
-  {
+  public function __construct(EntityTypeManager $entity_type_manager) {
     $this->etm = $entity_type_manager;
 
     // Current Language ID
@@ -41,8 +42,7 @@ class TrainingCalendarController extends ControllerBase
    *
    * @return static
    */
-  public static function create(ContainerInterface $container)
-  {
+  public static function create(ContainerInterface $container) {
     /** @var EntityTypeManager $etm */
     $etm = $container->get('entity_type.manager');
 
@@ -54,10 +54,8 @@ class TrainingCalendarController extends ControllerBase
    *
    * @return array|RedirectResponse
    */
-  public function calendar()
-  {
-    if (!\Drupal::currentUser()->hasPermission('tc_access'))
-    {
+  public function calendar() {
+    if (!\Drupal::currentUser()->hasPermission('tc_access')) {
       return $this->redirect('user.page');
     }
 
@@ -78,15 +76,13 @@ class TrainingCalendarController extends ControllerBase
    *
    * @return JsonResponse
    */
-  public function refreshTokens()
-  {
-    /** @var \Drupal\training_calendar\Oauth2\TokenManager $tokenManager */
+  public function refreshTokens() {
+    /** @var TokenManager $tokenManager */
     $tokenManager = \Drupal::service("training_calendar.oauth2.token_manager");
-    try{
+    try {
       $data = $tokenManager->getFreshTokens();
       $data->status = 200;
-    } catch(\Exception $e)
-    {
+    } catch(\Exception $e) {
       $data = new \stdClass();
       $data->message = $e->getMessage();
       $data->status = 400;
@@ -95,16 +91,90 @@ class TrainingCalendarController extends ControllerBase
     return new JsonResponse($data, $data->status);
   }
 
+  /**
+   * path: training_calendar/rest/trainings
+   *
+   * @return \Symfony\Component\HttpFoundation\JsonResponse
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  public function getTrainings() {
+    $answer = [];
+
+    $nodeStorage = $this->etm->getStorage("node");
+    $queryInterface = $nodeStorage->getQuery();
+
+    $nids = $queryInterface->condition('type', ['training'])->execute();
+    $nodes = $nodeStorage->loadMultiple($nids);
+
+    $fields = [
+      'id',
+      'type',
+      'title',
+      'status',
+      'field_start_date',
+      'field_total_distance',
+      'field_activity_type',
+    ];
+
+    /** @var Node $node */
+    foreach ($nodes as $node) {
+      $answer[] = $this->getSimpleObjectFromNode($node, $fields);
+    }
+
+    return new JsonResponse($answer);
+  }
+
+  /**
+   * @param \Drupal\node\Entity\Node $node
+   * @param array $fields
+   *
+   * @return \stdClass
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
+   */
+  protected function getSimpleObjectFromNode(Node $node, $fields) {
+    $answer = new \stdClass();
+
+    foreach ($fields as $fieldName) {
+      $value = null;
+
+      if ($node->hasField($fieldName)) {
+        $field = $node->get($fieldName);
+        switch ($fieldName) {
+          case "type":
+            $value = $field->first()->getString();
+            break;
+          default:
+            $value = $field->first()->getValue();
+            if(isset($value["value"]))
+            {
+              $value = $value["value"];
+            } else if (isset($value["target_id"]))
+            {
+              $value = $value["target_id"];
+            }
+            break;
+        }
+      } else {
+        if ($fieldName == "id") {
+          $value = $node->id();
+        }
+      }
+
+      $answer->$fieldName = $value;
+    }
+
+    return $answer;
+  }
+
 
   /**
    * path: /training_calendar/rest/ping
    *
    * @return JsonResponse
    */
-  public function ping()
-  {
-    if (!\Drupal::currentUser()->hasPermission('tc_access'))
-    {
+  public function ping() {
+    if (!\Drupal::currentUser()->hasPermission('tc_access')) {
       return $this->getUnauthorizedJsonResponse();
     }
 
@@ -128,11 +198,10 @@ class TrainingCalendarController extends ControllerBase
   /**
    * @return JsonResponse
    */
-  protected function getUnauthorizedJsonResponse()
-  {
+  protected function getUnauthorizedJsonResponse() {
     return new JsonResponse(
       [
-        "message"=>"unauthorized"
+        "message" => "unauthorized"
       ]
       , 403
       , [
