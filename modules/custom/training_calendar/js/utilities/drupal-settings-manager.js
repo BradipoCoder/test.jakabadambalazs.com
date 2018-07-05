@@ -2,14 +2,14 @@
  * @file
  */
 (function (Drupal, drupalSettings, _) {
+    let _DRUPAL_SETTINGS_;
+
     /**
      * Utility class for drupalSettings
      *
      * @type {{}}
      */
     Drupal.trainingCalendar.Utilities.DrupalSettingsManager = {
-        ds: null,
-
         /**
          * Initialize
          * @return {Promise<any>}
@@ -21,7 +21,7 @@
                 let self = Drupal.trainingCalendar.Utilities.DrupalSettingsManager;
                 //init
                 if(!_.isUndefined(drupalSettings)) {
-                    self.ds = drupalSettings;
+                    _DRUPAL_SETTINGS_ = drupalSettings;
                 }
                 resolve("DrupalSettingsManager initialized.");
             });
@@ -38,7 +38,7 @@
         getDrupalSettingsValue: function(name, default_value) {
             let answer = default_value || null;
             let keys = [];
-            let target = this.ds;
+            let target = _DRUPAL_SETTINGS_;
 
             if(_.isString(name)) {
                 keys = name.split(".");

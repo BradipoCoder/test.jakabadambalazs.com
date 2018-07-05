@@ -67,6 +67,28 @@
         */
 
         /**
+         * Write operations in Drupal require CSRF token.
+         *
+         * @param {function} callback
+         * @param {string} method
+         *
+         * @todo: bleeeehh!
+         */
+        getCsrfToken: function(callback, method)
+        {
+            let requireTokenMethods = ["create", "update", "patch"];
+            if(_.contains(requireTokenMethods, method)) {
+                $.get(Drupal.url('session/token'))
+                    .done(function(data)
+                    {
+                        callback(data);
+                    });
+            } else {
+                callback(null);
+            }
+        },
+
+        /**
          * Main (generic) request method
          *
          * @param {{}} settings
@@ -131,25 +153,28 @@
         let self = this;
         options = options || {};
 
+        let token_type = Drupal.trainingCalendar.Utilities.TokenManager.token_type;
+        let access_token = Drupal.trainingCalendar.Utilities.TokenManager.access_token;
 
-        Drupal.trainingCalendar.getCsrfToken(function(csrfToken)
-        {
-            let headers = _.has(options, "headers") ? options.headers : {};
+        // Drupal.trainingCalendar.getCsrfToken(function(csrfToken)
+        // {// }, method);
+        // if(!_.isNull(csrfToken)) {
+        //     headers["X-CSRF-Token"] = csrfToken;
+        // }
 
-            headers = _.extend(headers, {
-                'Accept': 'application/hal+json',
-                'Authorization': 'Basic ' + Drupal.trainingCalendar.getUserhash(),
-            });
+        let headers = _.has(options, "headers") ? options.headers : {};
 
-            if(!_.isNull(csrfToken)) {
-                headers["X-CSRF-Token"] = csrfToken;
-            }
-            options.headers = headers;
+        headers = _.extend(headers, {
+            /*'Accept': 'application/hal+json',*/
+            "Authorization": token_type + " " + access_token,
+        });
 
-            console.log("SYNC[" + method + "]OPT: ", options);
+        options.headers = headers;
 
-            return Backbone._sync.call(self, method, model, options);
-        }, method);
+        console.log("SYNC[" + method + "]OPT: ", options);
+
+        return Backbone._sync.call(self, method, model, options);
+
     };
 
     //------------------------------------------------------------------------------------------Backbone override - AJAX

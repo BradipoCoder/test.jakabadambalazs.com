@@ -13,7 +13,8 @@ training-calendar:
     js/utilities/drupal-settings-manager.js: {}
     js/utilities/communication-manager.js: {}
     js/utilities/token-manager.js: {}
-
+    js/utilities/model-manager.js: {}
+    js/utilities/view-manager.js: {}
 
     # Models
     js/models/TrainingModel.js: {}
