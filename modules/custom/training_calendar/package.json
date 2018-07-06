@@ -1,0 +1,24 @@
+{
+  "name": "training-calendar-typescript",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/example.js",
+  "dependencies": {
+    "fullcalendar": "^3.9.0",
+    "jquery": "^3.3.1"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.3.0",
+    "awesome-typescript-loader": "^3.4.1",
+    "source-map-loader": "^0.2.3",
+    "typescript": "^2.6.2",
+    "webpack": "^3.10.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "clean": "rm -rf ./dist"
+  },
+  "author": "Adam Jakab jakabadambalazs@gmail.com.com>",
+  "license": "MIT"
+}
