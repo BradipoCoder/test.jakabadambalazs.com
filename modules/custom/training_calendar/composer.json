@@ -6,6 +6,22 @@
   "license": "MIT",
   "minimum-stability": "dev",
   "require": {
-
-  }
+  },
+  "require-dev": {
+    "fullcalendar/fullcalendar": "master"
+  },
+  "repositories": [
+    {
+      "type":"package",
+      "package": {
+        "name": "fullcalendar/fullcalendar",
+        "version":"master",
+        "source": {
+          "url": "https://github.com/fullcalendar/fullcalendar.git",
+          "type": "git",
+          "reference":"master"
+        }
+      }
+    }
+  ]
 }
