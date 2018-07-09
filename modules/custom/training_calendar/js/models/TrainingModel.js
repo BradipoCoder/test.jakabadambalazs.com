@@ -3,7 +3,7 @@
  * Training Model
  */
 
-(function (Backbone, Drupal, drupalSettings, _) {
+(function (Backbone, Drupal, drupalSettings, _, moment) {
     /**
      * Backbone model for the Wizard.
      *
@@ -137,6 +137,74 @@
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
         url: Drupal.url('training_calendar/rest/trainings'),
+
+        models_loaded_from_date: null,
+        models_loaded_to_date: null,
+
+        /**
+         *
+         * @param {moment} from_date
+         * @param {moment} to_date
+         * @return {boolean}
+         */
+        areModelsLoadedForTimespan: function(from_date, to_date)
+        {
+            let answer = false;
+
+            if(moment.isMoment(from_date) && moment.isMoment(to_date))
+            {
+                if(moment.isMoment(this.models_loaded_from_date) && moment.isMoment(this.models_loaded_to_date))
+                {
+                    if(moment.min(this.models_loaded_from_date, from_date) == this.models_loaded_from_date
+                        && moment.max(this.models_loaded_to_date, to_date) == this.models_loaded_to_date)
+                    {
+                        answer = true;
+                    }
+                }
+            }
+
+            return answer;
+        },
+
+        /**
+         *
+         * @param {moment} from_date
+         */
+        setModelsLoadedFromDate: function(from_date)
+        {
+            this.models_loaded_from_date = from_date;
+            console.log("setModelsLoadedFromDate: " + this.models_loaded_from_date.format());
+        },
+
+        /**
+         *
+         * @param {moment} to_date
+         */
+        setModelsLoadedToDate: function(to_date)
+        {
+            this.models_loaded_to_date = to_date;
+            console.log("setModelsLoadedToDate: " + this.models_loaded_to_date.format());
+        },
+
+        /**
+         *
+         * @return {moment}
+         */
+        getModelsLoadedFromDate: function()
+        {
+            return this.models_loaded_from_date;
+        },
+
+        /**
+         *
+         * @return {moment}
+         */
+        getModelsLoadedToDate: function()
+        {
+            return this.models_loaded_to_date;
+        },
     });
 
-})(Backbone, Drupal, drupalSettings, _);
+
+
+})(Backbone, Drupal, drupalSettings, _, moment);

@@ -11,6 +11,7 @@ use Drupal\Core\Controller\ControllerBase;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use \Symfony\Component\HttpFoundation\RequestStack;
 use Drupal\Core\Entity\EntityTypeManager;
 use \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\training_calendar\Oauth2\TokenManager;
@@ -23,16 +24,18 @@ class TrainingCalendarController extends ControllerBase {
   /** @var EntityTypeManager */
   protected $etm;
 
+  /** @var RequestStack */
+  protected $rs;
+
   /**
    * TrainingCalendarController constructor.
    *
    * @param EntityTypeManager $entity_type_manager
+   * @param RequestStack $requestStack
    */
-  public function __construct(EntityTypeManager $entity_type_manager) {
+  public function __construct(EntityTypeManager $entity_type_manager, RequestStack $requestStack) {
     $this->etm = $entity_type_manager;
-
-    // Current Language ID
-    //$this->cLangId = \Drupal::languageManager()->getCurrentLanguage()->getId();
+    $this->rs = $requestStack;
   }
 
   /**
@@ -46,7 +49,10 @@ class TrainingCalendarController extends ControllerBase {
     /** @var EntityTypeManager $etm */
     $etm = $container->get('entity_type.manager');
 
-    return new static($etm);
+    /** @var RequestStack $rs */
+    $rs = $container->get('request_stack');
+
+    return new static($etm, $rs);
   }
 
   /**
@@ -101,10 +107,18 @@ class TrainingCalendarController extends ControllerBase {
   public function getTrainings() {
     $answer = [];
 
+    $start_date = $this->rs->getCurrentRequest()->query->get("start_date");
+    $end_date = $this->rs->getCurrentRequest()->query->get("end_date");
+    //$timezone = $this->rs->getCurrentRequest()->query->get("timezone");
+
     $nodeStorage = $this->etm->getStorage("node");
     $queryInterface = $nodeStorage->getQuery();
 
-    $nids = $queryInterface->condition('type', ['training'])->execute();
+    $nids = $queryInterface
+      ->condition('type', ['training'])
+      ->condition('field_start_date', $start_date, '>=')
+      ->condition('field_start_date', $end_date, '<')
+      ->execute();
     $nodes = $nodeStorage->loadMultiple($nids);
 
     $fields = [

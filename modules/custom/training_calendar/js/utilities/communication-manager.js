@@ -190,13 +190,15 @@
      */
     Backbone.ajax = function()
     {
+        /*
         let url = arguments[0].url;
         let re = new RegExp("[^?]*\?_format=hal_json$");
         if(!re.test(url)) {
             arguments[0].url = url + "?_format=hal_json";
         }
-
         //console.log("AJAX-OPT: ", arguments);
+        */
+
         return Backbone._ajax.apply(this, arguments);
     };
 

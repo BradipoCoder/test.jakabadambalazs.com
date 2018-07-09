@@ -1,7 +1,7 @@
 /**
  * @file
  */
-(function (Drupal, _) {
+(function (Drupal, _, moment) {
     /** Backbone collection */
     let trainings;
     /**
@@ -19,57 +19,61 @@
         {
             return new Promise(function(resolve)
             {
-                let self = Drupal.trainingCalendar.Utilities.ModelManager;
+                //let self = Drupal.trainingCalendar.Utilities.ModelManager;
                 //init
-                self.setupData();
+                trainings = new Drupal.trainingCalendar.TrainingModels;
+                //self.setupData();
                 //
                 resolve("ModelManager initialized.");
             });
         },
 
-
         /**
-         * Main EventData call to populate calendar with data
-         * @see: https://fullcalendar.io/docs/event-data
          *
-         *
-         * @param start
-         * @param end
-         * @param timezone
-         * @param callback
+         * @param {{start_date, end_date, timezone}} params
+         * @return {Promise<Backbone.Collection>}
          */
-        getCalendarEvents: function(start, end, timezone, callback)
+        fetchCalendarEvents: function(params)
         {
-            let answer = [];
+            return new Promise(function(resolve, reject)
+            {
+                let ajaxParams = params || {};
 
-            trainings.each(function(training) {
-                let event = {};
-                event.id = training.id;
-                event.title = training.get("title");
-                event.start = training.get("field_start_date");
-                //event.end = training.get("end");
-                event.className = ['event', 'generic'];
-                event.overlap = false;
-                event.allDay = true;
-                event.editable = true;
+                let start_date = ajaxParams.start_date;
+                let end_date = ajaxParams.end_date;
 
-                answer.push(event);
+                //let alreadyLoaded = Drupal.trainingCalendar.TrainingModels.areModelsLoadedForTimespan(start_date, end_date);
+                let alreadyLoaded = false;
+
+
+                console.info("Fetching collection with params: " + JSON.stringify(ajaxParams));
+                console.info("ALREADY LOADED: " + alreadyLoaded);
+
+                ajaxParams.start_date = ajaxParams.start_date.format();
+                ajaxParams.end_date = ajaxParams.end_date.format();
+
+                trainings.fetch({
+                    data: ajaxParams,
+                    success: function(collection, response, options)
+                    {
+                        //console.info("TRAININGS LOADED FROM REMOTE - fetch OK");
+                        console.info(trainings.toJSON());
+                        //Drupal.trainingCalendar.TrainingModels.setModelsLoadedFromDate(start_date);
+                        //Drupal.trainingCalendar.TrainingModels.setModelsLoadedToDate(end_date);
+                        resolve(collection);
+                    },
+                    error: function(collection, response, options)
+                    {
+                        reject(new Error("Unable to fetch Calendar Events!"));
+                    }
+                });
             });
+        }
 
-            callback(answer);
-        },
-
-        setupData: function()
-        {
-            trainings = new Drupal.trainingCalendar.TrainingModels;
-            trainings.fetch({
-                success: function(collection, response, options)
-                {
-                    console.warn("TRAININGS LOADED FROM REMOTE - updating calendar");
-                    //console.warn(trainings.toJSON());
-                    Drupal.trainingCalendar.Utilities.ViewManager.updateCalendarEvents();
-                }
-            });
-        },
     };
-})(Drupal, _);
+
+    //---------------------------------------------------------------------------------------------------PRIVATE METHODS
+
+
+
+})(Drupal, _, moment);
