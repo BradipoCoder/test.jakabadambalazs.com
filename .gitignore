@@ -11,8 +11,11 @@
 # including Drupal core.
 core
 
-# Core's dependencies are managed with Composer.
+# Composer dependencies
 vendor
+
+# Node dependencies
+node_modules
 
 # Contrib modules
 modules/contrib
