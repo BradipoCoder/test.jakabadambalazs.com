@@ -45,4 +45,8 @@
     transform: scale(1);
   }
 }
+/* Modal */
+.tc-modals .bbm-modal__form .form-group {
+  display: flex;
+}
 /*# sourceMappingURL=style.css.map */

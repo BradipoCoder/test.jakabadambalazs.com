@@ -27,13 +27,12 @@
 		<h3 class="bbm-modal__title"><%= title %></h3>
 	</div>
 	<div class="bbm-modal__section">
-		<small><%= id %></small>
-		<p>Date: <%= field_start_date %></p>
-		<p>Total distance: <%= field_total_distance %></p>
-		<p><%= body %></p>
+		<div class="bbm-modal__form">
+			{#FORM WILL GO HERE#}
+		</div>
 	</div>
 	<div class="bbm-modal__bottombar">
-		<a href="#" class="bbm-button">close</a>
+		<button type="submit" name="save" class="btn submit-model">Save</button>
 	</div>
 </script>
 
@@ -45,7 +44,6 @@
 		<p>ID: <%= nid %></p>
 		<p>Date: <%= field_date_programmed %></p>
 		<p>Total distance: <%= field_total_distance %></p>
-		<p><%= body %></p>
 		{#<pre class="debug"><% print(JSON.stringify(this.model)); %></pre>#}
 		<button type="button" class="training-calendar--event--action-1">Edit title</button>
 	</div>

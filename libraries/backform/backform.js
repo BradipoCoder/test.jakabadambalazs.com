@@ -6,7 +6,7 @@
   Written by Martin Drapeau
   Licensed under the MIT @license
  */
-(function() {
+(function($) {
 
   // Backform namespace and global options
   Backform = {
@@ -534,4 +534,4 @@
     buttonStatusSuccessClassname: "text-success"
   });
 
-}).call(this);
+}).call(this, jQuery);

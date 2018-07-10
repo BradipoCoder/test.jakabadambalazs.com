@@ -9,10 +9,8 @@
     let $trainingCalendarDiv = $('.tc-calendar', $trainingCalendarApp);
     let $trainingCalendarModal = $('.tc-modals', $trainingCalendarApp);
 
-    let TrainingEditModal = Backbone.Modal.extend({
-        template: '#template--training-edit',
-        cancelEl: '.bbm-button'
-    });
+    /* The full calenda event that was clicked to activate the edit view */
+    let eventBeingEdited;
 
     /**
      * Utility class for views and interface
@@ -35,11 +33,6 @@
                 //
                 resolve("ViewManager initialized.");
             });
-        },
-
-        updateCalendarEvents: function()
-        {
-            $trainingCalendarDiv.fullCalendar('refetchEvents');
         },
 
         setupCalendar: function()
@@ -73,6 +66,7 @@
                 eventClick: function(calEvent, jsEvent, view)
                 {
                     console.log('Clicked Event('+calEvent.id+'): ' + calEvent.title);
+                    eventBeingEdited = calEvent;
 
                     let viewOptions = {};
 
@@ -81,56 +75,8 @@
                         viewOptions.model = training;
                     }
 
-                    let TrainingEditModalView = new TrainingEditModal(viewOptions);
+                    let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
                     $trainingCalendarModal.html(TrainingEditModalView.render().el);
-
-                    /*
-                    let fields = [
-                        {
-                            name: 'id',
-                            label: "ID",
-                            control: "input",
-                            disabled: true,
-
-                        },
-                        {
-                            name: "title",
-                            label: "Title",
-                            control: "input",
-                            helpMessage: "Be creative!"
-                        },
-                        {
-                            control: "button",
-                            label: "Save"
-                        }
-                    ];
-
-
-                    let editForm = new Backform.Form({
-                        el: $trainingCalendarModal,
-                        model: training,
-                        fields: fields, // Will get converted to a collection of Backbone.Field models
-                        events: {
-                            "submit": function(e) {
-                                e.preventDefault();
-                                /*
-                                this.model.save()
-                                    .done(function(result) {
-                                        alert("Successful!");
-                                    })
-                                    .fail(function(error) {
-                                        alert(error);
-                                    });
-                                    * /
-                                console.warn("SAVE")
-                                return false;
-                            }
-                        }
-                    });
-
-                    editForm.render();
-                    */
-
 
                     //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
                     //alert('View: ' + view.name);
@@ -138,6 +84,22 @@
                 }
             });
         },
+
+        /**
+         * event needs to be aupdated from model first
+         * @todo: fix this and use this in favor of refetchEventsForCurrentView
+         */
+        updateEditedEvent: function()
+        {
+            //console.warn(eventBeingEdited);
+            //$trainingCalendarDiv.fullCalendar('updateEvent', eventBeingEdited);
+        },
+
+        refetchEventsForCurrentView: function()
+        {
+            $trainingCalendarDiv.fullCalendar('refetchEvents');
+        },
+
 
         /**
          * Main EventData call to populate calendar with data called by FullCalendar
@@ -188,7 +150,7 @@
     //---------------------------------------------------------------------------------------------------PRIVATE METHODS
 
     /**
-     *
+     * @todo: move this to collection
      * @param {Array} data - The full collection
      * @return {Array}
      */
@@ -197,31 +159,11 @@
         let answer = [];
 
         _.each(data, function(training) {
-            answer.push(createCalendarEventFromModel(training));
+            //answer.push(createCalendarEventFromModel(training));
+            answer.push(training.getCalendarEventData());
         });
 
         return answer;
-    };
-
-    /**
-     *
-     * @param {Drupal.trainingCalendar.TrainingModel} training
-     * @return {{}}
-     */
-    let createCalendarEventFromModel = function(training)
-    {
-        let event = {};
-
-        event.id = training.id;
-        event.title = training.get("title");
-        event.start = training.get("field_start_date");
-        //event.end = training.get("end");
-        event.className = ['event', 'generic'];
-        event.overlap = false;
-        event.allDay = true;
-        event.editable = true;
-
-        return event;
     };
 
 

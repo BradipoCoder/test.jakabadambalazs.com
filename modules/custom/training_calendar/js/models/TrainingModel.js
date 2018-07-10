@@ -61,34 +61,15 @@
 
         url: function () {
             let id = this.get(this.idAttribute);
-            return Drupal.url("node/" + encodeURIComponent(id));
+            return Drupal.url("training_calendar/rest/training/" + encodeURIComponent(id));
         },
 
         save: function (attrs, options) {
-            let self = this;
             options = options || {};
             options.patch = true;
             options.wait = true;
 
-            /*NOT WORKING: https://stackoverflow.com/questions/9892717/why-does-my-backbone-model-haschanged-always-return-false*/
-            //let changedKeys = _.keys(this.changedAttributes());
-
-            /**
-             * We need to extend backbone's model definition and create a custom array of "dirty" fields
-             */
-
-
-            let changedKeys = _.keys(this.defaults);
-            console.log("CHANGED-KEYS: ", changedKeys);
-
-            attrs = {};
-            _.each(changedKeys, function (key) {
-                attrs[key] = [{"value": self.get(key)}];
-            });
-            delete attrs["field_training_type"];
-
-            attrs["type"] = [{"target_id": this.get("type")}];
-
+            attrs = this.getSaveData();
             console.log("ATTRS-2-SAVE:  ", attrs);
 
 
@@ -102,6 +83,7 @@
          * @param options
          */
         parse: function (response, options) {
+            console.warn("PARSING: ", response);
             let answer = {};
             let defaultKeys = _.keys(this.defaults);
             _.each(response, function (value, key) {
@@ -127,6 +109,52 @@
             let val = Backbone.Model.prototype.get.call(this, attr);
             return val;
         },*/
+
+        /* This data will be pushed to server for being saved*/
+        getSaveData: function()
+        {
+            let self = this;
+            let answer  = {};
+            /*NOT WORKING: https://stackoverflow.com/questions/9892717/why-does-my-backbone-model-haschanged-always-return-false*/
+            //let changedKeys = _.keys(this.changedAttributes());
+            /**
+             * We need to extend backbone's model definition and create a custom array of "dirty" fields
+             */
+
+            let changedKeys = _.keys(this.defaults);
+
+            _.each(changedKeys, function (key) {
+                switch(key)
+                {
+                    case "field_start_date":
+                        answer[key] = self.get(key).format();
+                        break;
+                    default:
+                        answer[key] = self.get(key);
+                }
+            });
+
+            delete answer["field_training_type"];
+
+            return answer;
+        },
+
+        getCalendarEventData: function()
+        {
+            let event = {};
+
+            event.id = this.id;
+            event.title = this.get("title");
+            event.start = this.get("field_start_date");
+            //event.end = training.get("end");
+            event.className = ['event', 'generic'];
+            event.overlap = false;
+            event.allDay = true;
+            event.editable = true;
+
+            return event;
+        },
+
     });
 })(Backbone, Drupal, _, moment);
 

@@ -23,6 +23,7 @@ training-calendar:
 
     # Views
     js/views/TrainingView.js: {}
+    js/views/TrainingEdit.js: {}
 
   css:
     theme:

@@ -140,6 +140,18 @@ class TrainingCalendarController extends ControllerBase {
   }
 
   /**
+   * @param int $id
+   * @return JsonResponse
+   */
+  public function storeTraining($id) {
+    $answer = [
+      "message" => "Saved node with id: ${id}",
+    ];
+
+    return new JsonResponse($answer);
+  }
+
+  /**
    * @param \Drupal\node\Entity\Node $node
    * @param array $fields
    *

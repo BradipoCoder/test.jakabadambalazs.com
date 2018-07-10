@@ -21,6 +21,15 @@ training_calendar.training_calendar_controller_trainings:
   requirements:
       _access: 'TRUE'
 
+training_calendar.training_calendar_controller_training_save:
+  path: '/training_calendar/rest/training/{id}'
+  methods: ['PATCH', 'POST']
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::storeTraining'
+    _title: 'Training Calendar - save training'
+  requirements:
+      _access: 'TRUE'
+
 training_calendar.training_calendar_controller_ping:
   path: '/training_calendar/rest/ping'
   defaults:
