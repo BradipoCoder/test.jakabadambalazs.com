@@ -18,7 +18,7 @@
          */
         init: function()
         {
-            console.log("Starting trainingCalendar...");
+            console.log("Starting Training Calendar...");
 
             let classesToInit = [
                 Drupal.trainingCalendar.Utilities.DrupalSettingsManager.init,

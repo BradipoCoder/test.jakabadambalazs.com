@@ -3,7 +3,7 @@
  * A Backbone view for the Wizard.
  */
 
-(function ($, Backbone, Drupal, drupalSettings, _) {
+(function (Backbone, Drupal, $, _) {
 
 
     Drupal.trainingCalendar.TrainingView = Backbone.View.extend({
@@ -42,31 +42,4 @@
     });
 
 
-    Drupal.trainingCalendar.TrainingList = Backbone.View.extend({
-        el: $('#trainings-list-container'),
-
-
-        template: _.template($('#template--trainings-list').html()),
-
-        initialize: function () {
-            self = this;
-            this.collection.fetch({
-                success: function () {
-                    self.render();
-                }
-            });
-        },
-
-        render: function () {
-            this.el.innerHTML = this.template();
-            let $list = this.$el.find('div.trainings');
-
-            this.collection.forEach(function (model) {
-                $list.append((new Drupal.trainingCalendar.TrainingView({model: model})).render().el);
-            }, this);
-
-            return this;
-        },
-    });
-
-})(jQuery, Backbone, Drupal, drupalSettings, _);
+})(Backbone, Drupal, jQuery, _);

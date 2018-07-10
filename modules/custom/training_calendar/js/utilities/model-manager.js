@@ -27,6 +27,17 @@
             });
         },
 
+
+        /**
+         *
+         * @param id
+         * @return {*}
+         */
+        getTrainingById: function(id)
+        {
+            return trainings.get(id);
+        },
+
         /**
          *
          * @param {{start_date, end_date, timezone}} params
@@ -72,7 +83,6 @@
                 }
             });
         }
-
     };
 
     //---------------------------------------------------------------------------------------------------PRIVATE METHODS

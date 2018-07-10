@@ -1,10 +1,19 @@
 /**
  * @file
  */
-(function(Drupal, $, _)
+(function(Backbone, Drupal, $, _)
 {
     let $overlayDiv = $('.training-calendar-overlay');
-    let $trainingCalendarDiv = $('#training-calendar');
+
+    let $trainingCalendarApp = $('#training-calendar-main');
+    let $trainingCalendarDiv = $('.tc-calendar', $trainingCalendarApp);
+    let $trainingCalendarModal = $('.tc-modals', $trainingCalendarApp);
+
+    let TrainingEditModal = Backbone.Modal.extend({
+        template: '#template--training-edit',
+        cancelEl: '.bbm-button'
+    });
+
     /**
      * Utility class for views and interface
      *
@@ -63,7 +72,66 @@
                 },
                 eventClick: function(calEvent, jsEvent, view)
                 {
-                    alert('Event: ' + calEvent.title);
+                    console.log('Clicked Event('+calEvent.id+'): ' + calEvent.title);
+
+                    let viewOptions = {};
+
+                    let training = Drupal.trainingCalendar.Utilities.ModelManager.getTrainingById(calEvent.id);
+                    if(training){
+                        viewOptions.model = training;
+                    }
+
+                    let TrainingEditModalView = new TrainingEditModal(viewOptions);
+                    $trainingCalendarModal.html(TrainingEditModalView.render().el);
+
+                    /*
+                    let fields = [
+                        {
+                            name: 'id',
+                            label: "ID",
+                            control: "input",
+                            disabled: true,
+
+                        },
+                        {
+                            name: "title",
+                            label: "Title",
+                            control: "input",
+                            helpMessage: "Be creative!"
+                        },
+                        {
+                            control: "button",
+                            label: "Save"
+                        }
+                    ];
+
+
+                    let editForm = new Backform.Form({
+                        el: $trainingCalendarModal,
+                        model: training,
+                        fields: fields, // Will get converted to a collection of Backbone.Field models
+                        events: {
+                            "submit": function(e) {
+                                e.preventDefault();
+                                /*
+                                this.model.save()
+                                    .done(function(result) {
+                                        alert("Successful!");
+                                    })
+                                    .fail(function(error) {
+                                        alert(error);
+                                    });
+                                    * /
+                                console.warn("SAVE")
+                                return false;
+                            }
+                        }
+                    });
+
+                    editForm.render();
+                    */
+
+
                     //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
                     //alert('View: ' + view.name);
                     //$(this).css('border-color', 'red');
@@ -96,7 +164,7 @@
             Drupal.trainingCalendar.Utilities.ModelManager.fetchTrainings(fetchParams).then(function(data)
             {
                 console.info("Got trainings for period: ", data.length);
-                let events = createCalendarEventsFromCollection(data);
+                let events = createCalendarEventsFromModels(data);
                 callback(events);
             }).catch(function(e)
             {
@@ -117,12 +185,14 @@
         }
     };
 
+    //---------------------------------------------------------------------------------------------------PRIVATE METHODS
+
     /**
      *
      * @param {Array} data - The full collection
      * @return {Array}
      */
-    let createCalendarEventsFromCollection = function(data)
+    let createCalendarEventsFromModels = function(data)
     {
         let answer = [];
 
@@ -141,6 +211,7 @@
     let createCalendarEventFromModel = function(training)
     {
         let event = {};
+
         event.id = training.id;
         event.title = training.get("title");
         event.start = training.get("field_start_date");
@@ -154,4 +225,4 @@
     };
 
 
-})(Drupal, jQuery, _);
+})(Backbone, Drupal, jQuery, _);

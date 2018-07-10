@@ -10,13 +10,9 @@
 	</div>
 </div>
 
-<div class="training-calendar-main">
-	{#<h1>{{ content.component_title }}</h1>#}
-	{#<hr />#}
-
-	<div id="trainings-list-container">
-		<div id='training-calendar'></div>
-	</div>
+<div id="training-calendar-main">
+	<div class='tc-modals'></div>
+	<div class='tc-calendar'></div>
 </div>
 
 
@@ -25,7 +21,24 @@
 {#----------------------------------------------------- TEMPLATES ----------------------------------------------------#}
 {#--------------------------------------------------------------------------------------------------------------------#}
 
-{#--- TRAINING ELEMENT TEMPLATE ---#}
+{#--- TRAINING EDIT TEMPLATE ---#}
+<script type="text/template" id="template--training-edit">
+	<div class="bbm-modal__topbar">
+		<h3 class="bbm-modal__title"><%= title %></h3>
+	</div>
+	<div class="bbm-modal__section">
+		<small><%= id %></small>
+		<p>Date: <%= field_start_date %></p>
+		<p>Total distance: <%= field_total_distance %></p>
+		<p><%= body %></p>
+	</div>
+	<div class="bbm-modal__bottombar">
+		<a href="#" class="bbm-button">close</a>
+	</div>
+</script>
+
+
+{#--- UNUSED! - TRAINING ELEMENT TEMPLATE ---#}
 <script type="text/template" id="template--training-view">
 	<div class="training col-md-4">
 		<h2><%= title %></h2>
@@ -38,8 +51,3 @@
 	</div>
 </script>
 
-{#--- TRAINING ELEMENT LIST TEMPLATE ---#}
-<script type="text/template" id="template--trainings-list">
-	<div class="row trainings">
-	</div>
-</script>

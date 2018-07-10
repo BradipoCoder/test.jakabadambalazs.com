@@ -154,7 +154,7 @@
         if(!moment.isMoment(loaded_from_date) || from_date.isBefore(loaded_from_date))
         {
             loaded_from_date = from_date;
-            console.log("set new loaded_from_date: " + loaded_from_date.format());
+            //console.log("set new loaded_from_date: " + loaded_from_date.format());
             answer = true;
         }
 
@@ -173,7 +173,7 @@
         if(!moment.isMoment(loaded_to_date) || to_date.isAfter(loaded_to_date))
         {
             loaded_to_date = to_date;
-            console.log("set new loaded_to_date: " + loaded_to_date.format());
+            //console.log("set new loaded_to_date: " + loaded_to_date.format());
             answer = true;
         }
 
