@@ -3,7 +3,10 @@
  * Training Model
  */
 
-(function (Backbone, Drupal, drupalSettings, _, moment) {
+//------------------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------- MODEL ---
+//------------------------------------------------------------------------------------------------------------------
+(function (Backbone, Drupal, _, moment) {
     /**
      * Backbone model for the Wizard.
      *
@@ -40,8 +43,8 @@
             /** @type {string} */
             "body": "",
 
-            /** @type {string} */
-            "field_start_date": "",
+            /** @type {moment} */
+            "field_start_date": null,
 
             /** @type {string} */
             "field_total_distance": "",
@@ -93,36 +96,31 @@
             Backbone.Model.prototype.save.call(this, attrs, options);
         },
 
-        // **parse** converts a response into the hash of attributes to be `set` on
-        // the model. The default implementation is just to pass the response along.
-        /*
+        /**
+         * Convert XHR response for model
+         * @param response
+         * @param options
+         */
         parse: function (response, options) {
             let answer = {};
-            let extraKeys = {};
             let defaultKeys = _.keys(this.defaults);
-
             _.each(response, function (value, key) {
-                if (_.contains(defaultKeys, key)) {
-                    let first = _.first(value);
-                    if (first) {
-                        if (_.has(first, "value")) {
-                            answer[key] = first["value"];
-                        } else if(_.has(first, "target_id")) {
-                            //node type
-                            answer[key] = first["target_id"];
-                        }
-                    }
-                } else {
-                    extraKeys[key] = value;
+                //if (_.contains(defaultKeys, key)) {}
+                switch(key)
+                {
+                    case "field_start_date":
+                        let custom_value = moment(value);
+                        answer[key] = custom_value;
+                        break;
+                    default:
+                        answer[key] = value;
+                        break;
                 }
+                //console.log("K("+key+"): " + value);
             });
 
-            //console.log("DK: ", defaultKeys);
-            //console.log("extraKeys: ", extraKeys);
-            //console.log("PARSED: ", answer);
-
             return answer;
-        },*/
+        },
 
         /**
         get: function (attr) {
@@ -130,81 +128,116 @@
             return val;
         },*/
     });
+})(Backbone, Drupal, _, moment);
 
-    //------------------------------------------------------------------------------------------------------------------
-    //----------------------------------------------------------------------------------------------------COLLECTION ---
-    //------------------------------------------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------------------COLLECTION ---
+//------------------------------------------------------------------------------------------------------------------
+(function(Backbone, Drupal, _, moment)
+{
+    /** @type {moment} */
+    let loaded_from_date;
+
+    /** @type {moment} */
+    let loaded_to_date;
+
+    /**
+     *
+     * @param {moment} from_date
+     * @return {boolean}
+     */
+    let _setLoadedFromDate = function(from_date)
+    {
+        let answer = false;
+
+        if(!moment.isMoment(loaded_from_date) || moment.min(loaded_from_date, from_date) == from_date)
+        {
+            loaded_from_date = from_date;
+            //console.log("set new loaded_from_date: " + loaded_from_date.format());
+            answer = true;
+        }
+
+        return answer;
+    };
+
+    /**
+     *
+     * @param {moment} to_date
+     * @return {boolean}
+     */
+    let _setLoadedToDate = function(to_date)
+    {
+        let answer = false;
+
+        if(!moment.isMoment(loaded_to_date) || moment.max(loaded_to_date, to_date) == to_date)
+        {
+            loaded_to_date = to_date;
+            //console.log("set new loaded_to_date: " + loaded_to_date.format());
+            answer = true;
+        }
+
+        return answer;
+    };
+
     Drupal.trainingCalendar.TrainingModels = Backbone.Collection.extend({
         model: Drupal.trainingCalendar.TrainingModel,
         url: Drupal.url('training_calendar/rest/trainings'),
 
-        models_loaded_from_date: null,
-        models_loaded_to_date: null,
+        /**
+         * will set new loaded_from_date and loaded_to_date ONLY if necessary
+         * If any of the dates is changed then will return true to indicate
+         * that loading of new models is required
+         *
+         * @param {moment} start_date
+         * @param {moment} end_date
+         * @return {boolean}
+         */
+        setNewLoadDateLimits: function(start_date, end_date)
+        {
+            let start = _setLoadedFromDate(start_date);
+            let stop =  _setLoadedToDate(end_date);
+            return start || stop;
+        },
 
         /**
          *
-         * @param {moment} from_date
-         * @param {moment} to_date
-         * @return {boolean}
+         * @param {moment} start_date
+         * @param {moment} end_date
+         * @return array
          */
-        areModelsLoadedForTimespan: function(from_date, to_date)
+        getModelsBetweenDates: function(start_date, end_date)
         {
-            let answer = false;
+            let answer = [];
 
-            if(moment.isMoment(from_date) && moment.isMoment(to_date))
-            {
-                if(moment.isMoment(this.models_loaded_from_date) && moment.isMoment(this.models_loaded_to_date))
+            /** @type {Drupal.trainingCalendar.TrainingModel} training */
+            _.each(this.models, function(training) {
+                if(training.get("field_start_date").isBetween(start_date, end_date))
                 {
-                    if(moment.min(this.models_loaded_from_date, from_date) == this.models_loaded_from_date
-                        && moment.max(this.models_loaded_to_date, to_date) == this.models_loaded_to_date)
-                    {
-                        answer = true;
-                    }
+                    answer.push(training);
                 }
-            }
+            });
 
             return answer;
         },
 
-        /**
-         *
-         * @param {moment} from_date
-         */
-        setModelsLoadedFromDate: function(from_date)
-        {
-            this.models_loaded_from_date = from_date;
-            console.log("setModelsLoadedFromDate: " + this.models_loaded_from_date.format());
-        },
 
         /**
          *
-         * @param {moment} to_date
+         * @return {moment}
          */
-        setModelsLoadedToDate: function(to_date)
+        getLoadedFromDate: function()
         {
-            this.models_loaded_to_date = to_date;
-            console.log("setModelsLoadedToDate: " + this.models_loaded_to_date.format());
+            return loaded_from_date;
         },
 
         /**
          *
          * @return {moment}
          */
-        getModelsLoadedFromDate: function()
+        getLoadedToDate: function()
         {
-            return this.models_loaded_from_date;
-        },
-
-        /**
-         *
-         * @return {moment}
-         */
-        getModelsLoadedToDate: function()
-        {
-            return this.models_loaded_to_date;
+            return loaded_to_date;
         },
     });
-
-
-
-})(Backbone, Drupal, drupalSettings, _, moment);
+})(Backbone, Drupal, _, moment);

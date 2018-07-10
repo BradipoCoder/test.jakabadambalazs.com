@@ -90,12 +90,13 @@
                 end_date: moment(end),
                 timezone: timezone,
             };
-            console.warn("Getting events for calendar["+fetchParams.start_date.format()+" --- "+fetchParams.end_date.format()+"]("+fetchParams.timezone+")");
 
-            Drupal.trainingCalendar.Utilities.ModelManager.fetchCalendarEvents(fetchParams).then(function(collection)
+            console.info("Requesting trainings for calendar ["+fetchParams.start_date.format()+" : "+fetchParams.end_date.format()+"]");
+
+            Drupal.trainingCalendar.Utilities.ModelManager.fetchTrainings(fetchParams).then(function(data)
             {
-                console.warn("GOT TRAININGS - updating calendar");
-                let events = createCalendarEventsFromCollection(collection);
+                console.info("Got trainings for period: ", data.length);
+                let events = createCalendarEventsFromCollection(data);
                 callback(events);
             }).catch(function(e)
             {
@@ -118,13 +119,14 @@
 
     /**
      *
-     * @param {Drupal.trainingCalendar.TrainingModels} collection
+     * @param {Array} data - The full collection
      * @return {Array}
      */
-    let createCalendarEventsFromCollection = function(collection)
+    let createCalendarEventsFromCollection = function(data)
     {
         let answer = [];
-        collection.each(function(training) {
+
+        _.each(data, function(training) {
             answer.push(createCalendarEventFromModel(training));
         });
 

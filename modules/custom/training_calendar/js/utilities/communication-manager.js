@@ -171,7 +171,7 @@
 
         options.headers = headers;
 
-        console.log("SYNC[" + method + "]OPT: ", options);
+        //console.log("SYNC[" + method + "]OPT: ", options);
 
         return Backbone._sync.call(self, method, model, options);
 
