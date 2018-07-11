@@ -40,6 +40,19 @@
 
         /**
          *
+         * @param {{}} trainingData
+         * @return {*}
+         */
+        getNewTrainingModel: function(trainingData)
+        {
+            let training = new Drupal.trainingCalendar.TrainingModel(trainingData);
+            trainings.add(training);
+
+            return training;
+        },
+
+        /**
+         *
          * @param {{start_date, end_date, timezone}} params
          * @return {Promise<Array>}
          */

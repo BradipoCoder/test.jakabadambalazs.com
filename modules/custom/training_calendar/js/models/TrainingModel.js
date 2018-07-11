@@ -33,7 +33,7 @@
              * Node ID
              * @type {int}
              */
-            "id": 0,
+            "id": null,
 
             /**
              * Node type
@@ -53,8 +53,8 @@
             /** @type {moment} */
             "field_start_date": null,
 
-            /** @type {string} */
-            "field_total_distance": "",
+            /** @type {number} */
+            "field_total_distance": 0,
 
             /** @type {number} */
             "field_activity_type": 3,
@@ -66,11 +66,14 @@
             "changed": null,
         },
 
+
         url: function () {
+            return Backbone.Model.prototype.url.apply(this);
+            /*
             let id = this.get(this.idAttribute);
             return Drupal.url('training_calendar/rest/training'
                 + (id ? '/' + encodeURIComponent(id) : '')
-            );
+            );*/
         },
 
         save: function (attrs, options) {

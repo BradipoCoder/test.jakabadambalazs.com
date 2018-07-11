@@ -159,11 +159,13 @@
     {
         console.log('Creating New Event');
         let trainingData = {
-            title: '...',
+            title: 'New run...',
+            field_total_distance: 3599,
             field_start_date: moment(),
-
         };
-        let training = new Drupal.trainingCalendar.TrainingModel(trainingData);
+
+        //let training = new Drupal.trainingCalendar.TrainingModel(trainingData);
+        let training = Drupal.trainingCalendar.Utilities.ModelManager.getNewTrainingModel(trainingData);
 
         let viewOptions = {
             model: training,

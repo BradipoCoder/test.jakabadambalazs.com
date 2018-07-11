@@ -15,18 +15,28 @@ training_calendar.training_calendar_controller_refresh_tokens:
 
 training_calendar.training_calendar_controller_trainings:
   path: '/training_calendar/rest/trainings'
+  methods: ['GET']
   defaults:
     _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::getTrainings'
     _title: 'Training Calendar - get trainings list'
   requirements:
       _access: 'TRUE'
 
-training_calendar.training_calendar_controller_training_save:
-  path: '/training_calendar/rest/training/{id}'
-  methods: ['PATCH', 'POST']
+training_calendar.training_calendar_controller_training_create:
+  path: '/training_calendar/rest/trainings'
+  methods: ['POST']
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::createTraining'
+    _title: 'Training Calendar - create training'
+  requirements:
+      _access: 'TRUE'
+
+training_calendar.training_calendar_controller_training_store:
+  path: '/training_calendar/rest/trainings/{id}'
+  methods: ['PATCH']
   defaults:
     _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::storeTraining'
-    _title: 'Training Calendar - save training'
+    _title: 'Training Calendar - update training'
   requirements:
       _access: 'TRUE'
 
