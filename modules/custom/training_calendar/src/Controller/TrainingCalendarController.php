@@ -12,6 +12,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use \Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Drupal\Core\Entity\EntityTypeManager;
 use \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException;
 use Drupal\training_calendar\Oauth2\TokenManager;
@@ -26,6 +27,16 @@ class TrainingCalendarController extends ControllerBase {
 
   /** @var RequestStack */
   protected $rs;
+
+  const TRAINING_FIELDS = [
+      'id',
+      'type',
+      'title',
+      'status',
+      'field_start_date',
+      'field_total_distance',
+      'field_activity_type',
+    ];
 
   /**
    * TrainingCalendarController constructor.
@@ -133,7 +144,7 @@ class TrainingCalendarController extends ControllerBase {
 
     /** @var Node $node */
     foreach ($nodes as $node) {
-      $answer[] = $this->getSimpleObjectFromNode($node, $fields);
+      $answer[] = $this->getSimpleObjectFromNode($node, self::TRAINING_FIELDS);
     }
 
     return new JsonResponse($answer);
@@ -142,17 +153,86 @@ class TrainingCalendarController extends ControllerBase {
   /**
    * @param int $id
    * @return JsonResponse
+   * @throws \Drupal\Component\Plugin\Exception\InvalidPluginDefinitionException
+   * @throws \Drupal\Core\Entity\EntityStorageException
+   * @throws \Drupal\Core\TypedData\Exception\MissingDataException
    */
   public function storeTraining($id) {
-    $answer = [
-      "message" => "Saved node with id: ${id}",
-    ];
+    if (!\Drupal::currentUser()->hasPermission('tc_access')) {
+      return $this->getUnauthorizedJsonResponse();
+    }
+
+    $nodeStorage = $this->etm->getStorage("node");
+
+    /** @var Node $node $node */
+    $node = $nodeStorage->load($id);
+
+    if(!$node)
+    {
+      return new JsonResponse(
+        [
+          "message" => "Node ${id} not found!"
+        ]
+        , 404
+      );
+    }
+
+    //Convert patch to post!?
+    $post = $this->rs->getCurrentRequest()->request;
+    $patchContent = $this->rs->getCurrentRequest()->getContent();
+    if($patchContent)
+    {
+      $patchData = json_decode($patchContent, true);
+      $post->replace($patchData);
+    }
+    //-------------------------
+
+    $node = $this->mapPostDataOntoNode($node, $post);
+    $node->save();
+
+    $answer[] = $this->getSimpleObjectFromNode($node, self::TRAINING_FIELDS);
 
     return new JsonResponse($answer);
   }
 
   /**
-   * @param \Drupal\node\Entity\Node $node
+   * @param Node $node
+   * @param ParameterBag $post
+   *
+   * @return mixed
+   */
+  protected function mapPostDataOntoNode($node, $post)
+  {
+    $excludedFields = ["nid", "tid", "status", "sticky", "created", "modified"];
+    $datakeys = $post->keys();
+    foreach ($datakeys as $fieldName) {
+      if ($node->hasField($fieldName)) {
+        switch ($fieldName) {
+          case "field_total_distance":
+            $value = $post->get($fieldName, 1);
+            $node->set($fieldName, $value);
+            break;
+            case "field_start_date":
+            $value = $post->get($fieldName);
+            $dt = new \DateTime($value);
+            $dtv = $dt->format("Y-m-d\Th:i:s");//DATETIME_DATETIME_STORAGE_FORMAT OR DATETIME_DATE_STORAGE_FORMAT
+            $node->set($fieldName, $dtv);
+            break;
+          default:
+            if(!in_array($fieldName, $excludedFields))
+            {
+              $value = $post->get($fieldName);
+              $node->set($fieldName, $value);
+            }
+        }
+      }
+    }
+
+    return $node;
+  }
+
+  /**
+   * @param Node $node
    * @param array $fields
    *
    * @return \stdClass
