@@ -47,20 +47,23 @@
             /** @type {string} */
             "body": "",
 
+            /** @type {number} */
+            "status": 0,
+
             /** @type {moment} */
             "field_start_date": null,
 
             /** @type {string} */
             "field_total_distance": "",
 
-            /** @type {string} */
-            "field_activity_type": "",
+            /** @type {number} */
+            "field_activity_type": 0,
 
-            /** @type {string} */
-            "created": "",
+            /** @type {moment} */
+            "created": null,
 
-            /** @type {string} */
-            "changed": "",
+            /** @type {moment} */
+            "changed": null,
         },
 
         url: function () {
@@ -90,13 +93,21 @@
             //console.warn("PARSING: ", response);
             let answer = {};
             let defaultKeys = _.keys(this.defaults);
+            let cv;
             _.each(response, function (value, key) {
                 //if (_.contains(defaultKeys, key)) {}
                 switch(key)
                 {
                     case "field_start_date":
-                        let custom_value = moment(value);
-                        answer[key] = custom_value;
+                        answer[key] = moment(value);
+                        break;
+                    case "created":
+                    case "changed":
+                        answer[key] = moment.unix(value);
+                        break;
+                    case "field_activity_type":
+                        cv = parseInt(value);
+                        answer[key] = cv;
                         break;
                     default:
                         answer[key] = value;
@@ -139,7 +150,7 @@
             return val;
         },*/
 
-        /* This data will be pushed to server for being saved*/
+        /* This data will be pushed to server for being saved */
         getSaveData: function()
         {
             let self = this;
@@ -151,15 +162,19 @@
              */
 
             let changedKeys = _.keys(this.defaults);
+            let excludedKeys = ['created', 'changed'];
 
             _.each(changedKeys, function (key) {
-                switch(key)
+                if(!_.contains(excludedKeys, key))
                 {
-                    // case "field_start_date":
-                    //     answer[key] = self.get(key).format();
-                    //     break;
-                    default:
-                        answer[key] = self.get(key);
+                    switch(key)
+                    {
+                        // case "field_start_date":
+                        //     answer[key] = self.get(key).format();
+                        //     break;
+                        default:
+                            answer[key] = self.get(key);
+                    }
                 }
             });
 
@@ -176,8 +191,16 @@
             event.title = this.get("title");
             event.start = this.get("field_start_date");
             //event.end = training.get("end");
-            event.className = ['event', 'generic'];
-            event.overlap = false;
+
+            event.field_activity_type = this.get("field_activity_type");
+            event.field_total_distance = this.get("field_total_distance");
+            event.distance_km = Math.round(event.field_total_distance / 1000);
+
+            let activityTypeClassName = 'activity-type-' + this.get("field_activity_type");
+            event.className = [activityTypeClassName];
+
+
+            event.overlap = true;
             event.allDay = true;
             event.editable = true;
 

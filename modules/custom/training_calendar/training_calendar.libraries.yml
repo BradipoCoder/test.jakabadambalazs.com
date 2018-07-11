@@ -5,6 +5,7 @@ training-calendar:
     /libraries/backbone.modal/backbone.modal-min.js: {}
     /libraries/backform/backform.js: {}
     /libraries/moment/moment.min.js: {}
+    /libraries/bootstrap.datepicker/js/bootstrap-datepicker.js: {}
     /libraries/bluebird/bluebird.min.js: {}
     /libraries/fullcalendar/fullcalendar.min.js: {}
 
@@ -31,6 +32,7 @@ training-calendar:
       /libraries/fullcalendar/fullcalendar.css: {}
       /libraries/backbone.modal/backbone.modal.css: {}
       /libraries/backbone.modal/backbone.modal.theme.css: {}
+      /libraries/bootstrap.datepicker/css/datepicker.css: {}
 
 
       # CORE Application

@@ -1,4 +1,16 @@
-/* LOADING FULL PAGE COVER OVERLAY */
+/**
+ * @file: style.less
+ */
+/**
+ * @file: variables.less
+ */
+/* RUN */
+/* BIKE */
+/* SWIM */
+/* WALK */
+/**
+ * @file: structure.less
+ */
 .training-calendar-overlay {
   background: #fff;
   position: fixed;
@@ -45,8 +57,45 @@
     transform: scale(1);
   }
 }
-/* Modal */
+/* Modal EDIT form*/
 .tc-modals .bbm-modal__form .form-group {
   display: flex;
+}
+/**
+ * @file: fullcalendar.less
+ */
+#training-calendar-main .tc-calendar .fc-event-container .fc-event {
+  border-color: #bbbbbb;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event.activity-type-3 {
+  background-color: #d29eff;
+  border-color: #835eaf;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event.activity-type-4 {
+  background-color: #c8e5bc;
+  border-color: #c8e5bc;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event.activity-type-5 {
+  background-color: #8daee5;
+  border-color: #8daee5;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event.activity-type-6 {
+  background-color: #e1e590;
+  border-color: #e1e590;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event .fc-content {
+  font-size: 0.8em;
+  color: #323232;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event .fc-content .fc-title {
+  font-size: 1.1em;
+  line-height: 1.5em;
+  width: 70%;
+  overflow: hidden;
+}
+#training-calendar-main .tc-calendar .fc-event-container .fc-event .fc-content .fc-distance {
+  float: right;
+  margin-top: -20px;
+  font-size: 1.5em;
 }
 /*# sourceMappingURL=style.css.map */

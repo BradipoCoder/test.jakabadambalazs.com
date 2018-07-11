@@ -1,0 +1,46 @@
+/**
+ * @file: fullcalendar.less
+ */
+@import "variables";
+
+#training-calendar-main{
+  .tc-calendar{
+    .fc-event-container{
+      .fc-event{
+        border-color: #bbbbbb;
+        &.activity-type-3{
+          background-color: @color-bg-activity-type-3;
+          border-color: @color-fg-activity-type-3;
+        }
+        &.activity-type-4{
+          background-color: @color-bg-activity-type-4;
+          border-color: @color-bg-activity-type-4;
+        }
+        &.activity-type-5{
+          background-color: @color-bg-activity-type-5;
+          border-color: @color-bg-activity-type-5;
+        }
+        &.activity-type-6{
+          background-color: @color-bg-activity-type-6;
+          border-color: @color-bg-activity-type-6;
+        }
+        .fc-content{
+          font-size: 0.8em;
+          color: #323232;
+          .fc-title{
+            font-size: 1.1em;
+            line-height: 1.5em;
+            width: 70%;
+            overflow: hidden;
+            //font-weight: bold;
+          }
+          .fc-distance{
+            float: right;
+            margin-top: -20px;
+            font-size: 1.5em;
+          }
+        }
+      }
+    }
+  }
+}

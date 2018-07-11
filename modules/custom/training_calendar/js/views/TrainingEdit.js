@@ -3,21 +3,82 @@
  * A Backbone view for the Wizard.
  */
 
-(function (Backbone, Drupal, $, _)
+(function(Backbone, Drupal, $, _, moment)
 {
+    //----------------------------------------------------@todo: move me elsewhere
+    Backform.MomentFormatter = function()
+    {
+    };
+    _.extend(Backform.MomentFormatter.prototype, {
+        fromRaw: function(rawData, model)
+        {
+            let d = model.get("field_start_date");
+            let formattedData = d.format("YYYY-MM-DD");
+            console.warn("MF(fromRaw):", formattedData);
+            return formattedData;
+        },
+        toRaw: function(formattedDate, model)
+        {
+            formattedDate = formattedDate + 'T12:00:00.000Z';
+            let rawDate = moment(formattedDate);
+            console.warn("MF(toRaw):" + formattedDate + " - " + rawDate);
+            return rawDate;
+        }
+    });
+
+    /*@see: https://www.eyecon.ro/bootstrap-datepicker */
+    Backform.DatepickerMomentControl = Backform.DatepickerControl.extend({
+        formatter: Backform.MomentFormatter,
+    });
+    //----------------------------------------------------@todo: move me elsewhere
+
+
     let editFormFields = [
         {
             name: "title",
             label: "Title",
             control: "input",
+            required: true,
+        },
+        {
+            name: "field_activity_type",
+            label: "Activity",
+            control: "select",
+            options: [
+                {value: 3, label: "Run"},
+                {value: 4, label: "Bike"},
+                {value: 5, label: "Swim"},
+                {value: 6, label: "Walk"},
+            ],
+            required: true,
+        },
+        {
+            name: "field_start_date",
+            label: "Date",
+            control: Backform.DatepickerMomentControl,
+            /*required: true,*/
+            options: {
+                format: 'yyyy-mm-dd',
+                weekStart: 1,
+            }
         },
         {
             name: "field_total_distance",
-            label: "Distance",
+            label: "Distance(m)",
             control: "input",
-            helpMessage: "Distance in meters."
-        }
+            type: 'number',
+            required: true,
+            /*helpMessage: "Distance in meters."*/
+        },
+        {
+            name: "body",
+            label: "Instructions",
+            control: "textarea",
+        },
+
     ];
+
+
 
 
     Drupal.trainingCalendar.TrainingEdit = Backbone.Modal.extend({
@@ -27,17 +88,18 @@
         submitEl: '.btn.submit-model',
 
 
-        initialize: function initialize() {
+        initialize: function initialize()
+        {
             Backbone.Modal.prototype.initialize.apply(this);
             //this.listenTo(this.model, 'change', this.render);
         },
 
-        beforeSubmit:function()
+        beforeSubmit: function()
         {
             return true;
         },
 
-        submit:function()
+        submit: function()
         {
             let saveOptions = {
                 success: function(model, response, options)
@@ -79,4 +141,4 @@
         },
     });
 
-})(Backbone, Drupal, jQuery, _);
+})(Backbone, Drupal, jQuery, _, moment);

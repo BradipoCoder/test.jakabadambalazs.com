@@ -67,7 +67,13 @@
                 eventDrop: fullCalendarEventDrop,
                 eventRender: function(event, element)
                 {
-                    element.addClass("custom-ev-class");
+                    //element.addClass("custom-ev-class");
+                    let $eventContent = $('.fc-content', element);
+
+                    //DISTANCE
+                    $eventContent.html("");
+                    $eventContent.append("<div class='fc-title'>" + event.title + "</div>");
+                    $eventContent.append("<div class='fc-distance'>" + event.distance_km + "Km</div>");
                 },
             });
         },

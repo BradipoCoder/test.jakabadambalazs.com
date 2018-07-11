@@ -32,10 +32,13 @@ class TrainingCalendarController extends ControllerBase {
       'id',
       'type',
       'title',
+      'body',
       'status',
       'field_start_date',
       'field_total_distance',
       'field_activity_type',
+      'created',
+      'changed',
     ];
 
   /**
@@ -249,6 +252,12 @@ class TrainingCalendarController extends ControllerBase {
         switch ($fieldName) {
           case "type":
             $value = $field->first()->getString();
+            break;
+          case "body":
+            if(isset($field->getValue()[0]["value"]))
+            {
+              $value = $field->getValue()[0]["value"];
+            }
             break;
           default:
             $value = $field->first()->getValue();
