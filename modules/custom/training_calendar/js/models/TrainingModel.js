@@ -7,8 +7,9 @@
 //-------------------------------------------------------------------------------------------------------- MODEL ---
 //------------------------------------------------------------------------------------------------------------------
 (function (Backbone, Drupal, _, moment) {
+
     /**
-     * Backbone model for the Wizard.
+     * Backbone model for Training.
      *
      * @constructor
      *
@@ -16,6 +17,9 @@
      */
     Drupal.trainingCalendar.TrainingModel = Backbone.Model.extend({
         idAttribute: 'id',
+
+        // An array of attributes whose value differ since instance creation.
+        dirty: [],
 
         /**
          * @type {{}}
@@ -70,7 +74,7 @@
             options.wait = true;
 
             attrs = this.getSaveData();
-            console.log("ATTRS-2-SAVE:  ", attrs);
+            console.info("SAVING MODEL DATA:  ", attrs);
 
 
             // Proxy the call to the original save function
@@ -83,7 +87,7 @@
          * @param options
          */
         parse: function (response, options) {
-            console.warn("PARSING: ", response);
+            //console.warn("PARSING: ", response);
             let answer = {};
             let defaultKeys = _.keys(this.defaults);
             _.each(response, function (value, key) {
@@ -103,6 +107,31 @@
 
             return answer;
         },
+
+        /*
+        //--- override set method to set dirty fields to use when saving
+
+        set: function(key, val, options)
+        {
+            let _kv;
+            if (typeof key !== 'object')
+            {
+                _kv = {};
+                _kv[key] = val;
+            } else {
+                _kv = key;
+            }
+            _.each(_kv, function(v,k){
+                console.log("MODEL-SET KEY("+k+"):" + v);
+            });
+
+            Backbone.Model.prototype.set.call(this, key, val, options);
+            console.log("MODEL-SET KEYS: ", key);
+            console.log("MODEL-SET VALUES: ", val);
+            console.log("MODEL-SET OPTIONS: ", options);
+            return this;
+        },
+        */
 
         /**
         get: function (attr) {
@@ -126,9 +155,9 @@
             _.each(changedKeys, function (key) {
                 switch(key)
                 {
-                    case "field_start_date":
-                        answer[key] = self.get(key).format();
-                        break;
+                    // case "field_start_date":
+                    //     answer[key] = self.get(key).format();
+                    //     break;
                     default:
                         answer[key] = self.get(key);
                 }

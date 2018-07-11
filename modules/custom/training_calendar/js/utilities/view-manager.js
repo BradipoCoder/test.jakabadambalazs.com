@@ -47,7 +47,6 @@
                 weekNumberTitle: 'WEEK',
                 /*fixedWeekCount: 2,*/
                 /*dayCount: 14,*/
-                events: Drupal.trainingCalendar.Utilities.ViewManager.getCalendarEvents,
                 defaultView: 'month',
                 header: {
                     left: 'month newTrainingButton',
@@ -63,25 +62,13 @@
                         }
                     }
                 },
-                eventClick: function(calEvent, jsEvent, view)
+                events: fullCalendarGetEvents,
+                eventClick: fullCalendarEventClick,
+                eventDrop: fullCalendarEventDrop,
+                eventRender: function(event, element)
                 {
-                    console.log('Clicked Event('+calEvent.id+'): ' + calEvent.title);
-                    eventBeingEdited = calEvent;
-
-                    let viewOptions = {};
-
-                    let training = Drupal.trainingCalendar.Utilities.ModelManager.getTrainingById(calEvent.id);
-                    if(training){
-                        viewOptions.model = training;
-                    }
-
-                    let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
-                    $trainingCalendarModal.html(TrainingEditModalView.render().el);
-
-                    //alert('Coordinates: ' + jsEvent.pageX + ',' + jsEvent.pageY);
-                    //alert('View: ' + view.name);
-                    //$(this).css('border-color', 'red');
-                }
+                    element.addClass("custom-ev-class");
+                },
             });
         },
 
@@ -100,42 +87,6 @@
             $trainingCalendarDiv.fullCalendar('refetchEvents');
         },
 
-
-        /**
-         * Main EventData call to populate calendar with data called by FullCalendar
-         * @see: https://fullcalendar.io/docs/event-data
-         *
-         *
-         * @param start
-         * @param end
-         * @param timezone
-         * @param callback
-         */
-        getCalendarEvents: function(start, end, timezone, callback)
-        {
-            let answer = [];
-
-            let fetchParams = {
-                start_date: moment(start),
-                end_date: moment(end),
-                timezone: timezone,
-            };
-
-            console.info("Requesting trainings for calendar ["+fetchParams.start_date.format()+" : "+fetchParams.end_date.format()+"]");
-
-            Drupal.trainingCalendar.Utilities.ModelManager.fetchTrainings(fetchParams).then(function(data)
-            {
-                console.info("Got trainings for period: ", data.length);
-                let events = createCalendarEventsFromModels(data);
-                callback(events);
-            }).catch(function(e)
-            {
-                console.error(e);
-                callback(answer);
-            });
-        },
-
-
         overlayHide: function()
         {
             $overlayDiv.delay(500).fadeOut(500);
@@ -149,8 +100,91 @@
 
     //---------------------------------------------------------------------------------------------------PRIVATE METHODS
 
+    let fullCalendarEventDrop = function(calEvent, delta, revertFunc, jsEvent, ui, view)
+    {
+        console.log('Dropped Event(' + calEvent.id + '): ' + calEvent.title + ' to date: ' + calEvent.start.format());
+        let training = Drupal.trainingCalendar.Utilities.ModelManager.getTrainingById(calEvent.id);
+        if(!training) {
+            console.error('No model found for calendar event!');
+            revertFunc.call();
+            return;
+        }
+
+        eventBeingEdited = calEvent;
+        training.set("field_start_date", calEvent.start);
+        console.log('Model date modified: ', training.get("field_start_date").format());
+
+        let saveOptions = {
+            success: function(model, response, options)
+            {
+                console.info('Calendar event was saved with new date!');
+            },
+            error: function(model, response, options)
+            {
+                console.error('Error saving calendar event!');
+                revertFunc.call();
+            }
+        };
+        training.save(null, saveOptions);
+    };
+
+    let fullCalendarEventClick = function(calEvent, jsEvent, view)
+    {
+        console.log('Clicked Event(' + calEvent.id + '): ' + calEvent.title);
+        let training = Drupal.trainingCalendar.Utilities.ModelManager.getTrainingById(calEvent.id);
+        if(!training) {
+            console.error('No model found for calendar event!');
+            return;
+        }
+
+        eventBeingEdited = calEvent;
+
+        let viewOptions = {
+            model: training,
+        };
+
+
+        let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
+        $trainingCalendarModal.html(TrainingEditModalView.render().el);
+    };
+
+    /**
+     * Main EventData call to populate calendar with data called by FullCalendar
+     * @see: https://fullcalendar.io/docs/event-data
+     *
+     *
+     * @param start
+     * @param end
+     * @param timezone
+     * @param callback
+     */
+    let fullCalendarGetEvents = function(start, end, timezone, callback)
+    {
+        let answer = [];
+
+        let fetchParams = {
+            start_date: moment(start),
+            end_date: moment(end),
+            timezone: timezone,
+        };
+
+        console.info("Requesting trainings for calendar [" + fetchParams.start_date.format() + " : " + fetchParams.end_date.format() + "]");
+
+        Drupal.trainingCalendar.Utilities.ModelManager.fetchTrainings(fetchParams).then(function(data)
+        {
+            console.info("Got trainings for period: ", data.length);
+            let events = createCalendarEventsFromModels(data);
+            callback(events);
+        }).catch(function(e)
+        {
+            console.error(e);
+            callback(answer);
+        });
+    };
+
     /**
      * @todo: move this to collection
+     *
      * @param {Array} data - The full collection
      * @return {Array}
      */
@@ -158,8 +192,8 @@
     {
         let answer = [];
 
-        _.each(data, function(training) {
-            //answer.push(createCalendarEventFromModel(training));
+        _.each(data, function(training)
+        {
             answer.push(training.getCalendarEventData());
         });
 

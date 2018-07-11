@@ -34,20 +34,24 @@
 
         beforeSubmit:function()
         {
-            let isValid = true;
-
-            console.warn("BEFORE!");
-            console.info(this.model.toJSON());
-
-            return isValid;
+            return true;
         },
 
         submit:function()
         {
-            this.model.save();
-            console.warn("YEAH!");
-
-            Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
+            let saveOptions = {
+                success: function(model, response, options)
+                {
+                    console.info('Calendar event was saved.');
+                    Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
+                },
+                error: function(model, response, options)
+                {
+                    console.error('Error saving calendar event!');
+                    Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
+                }
+            };
+            this.model.save(null, saveOptions);
 
             return true;
         },
