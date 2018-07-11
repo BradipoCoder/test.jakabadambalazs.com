@@ -56,28 +56,13 @@
                 customButtons: {
                     newTrainingButton: {
                         text: '+Training',
-                        click: function()
-                        {
-                            alert('Adding new training!');
-                        }
+                        click: fullCalendarCreateNewEvent
                     }
                 },
                 events: fullCalendarGetEvents,
                 eventClick: fullCalendarEventClick,
                 eventDrop: fullCalendarEventDrop,
-                eventRender: function(event, element)
-                {
-                    //element.addClass("custom-ev-class");
-                    let $eventContent = $('.fc-content', element);
-
-                    let activityImageUrl = Drupal.url("modules/custom/training_calendar/images/activity_type/"+event.field_activity_type +".png");
-
-                    //DISTANCE
-                    $eventContent.html("");
-                    $eventContent.append("<div class='fc-activity-type'><img src='"+activityImageUrl+"'/></div>");
-                    $eventContent.append("<div class='fc-title'>" + event.title + "</div>");
-                    $eventContent.append("<div class='fc-distance'>" + event.distance_km + "Km</div>");
-                },
+                eventRender: fullCalendarEventRender,
             });
         },
 
@@ -108,6 +93,19 @@
     };
 
     //---------------------------------------------------------------------------------------------------PRIVATE METHODS
+    let fullCalendarEventRender = function(event, element)
+    {
+        //element.addClass("custom-ev-class");
+        let $eventContent = $('.fc-content', element);
+
+        let activityImageUrl = Drupal.url("modules/custom/training_calendar/images/activity_type/"+event.field_activity_type +".png");
+
+        //DISTANCE
+        $eventContent.html("");
+        $eventContent.append("<div class='fc-activity-type'><img src='"+activityImageUrl+"'/></div>");
+        $eventContent.append("<div class='fc-title'>" + event.title + "</div>");
+        $eventContent.append("<div class='fc-distance'>" + event.distance_km + "Km</div>");
+    };
 
     let fullCalendarEventDrop = function(calEvent, delta, revertFunc, jsEvent, ui, view)
     {
@@ -152,6 +150,24 @@
             model: training,
         };
 
+
+        let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
+        $trainingCalendarModal.html(TrainingEditModalView.render().el);
+    };
+
+    let fullCalendarCreateNewEvent = function()
+    {
+        console.log('Creating New Event');
+        let trainingData = {
+            title: '...',
+            field_start_date: moment(),
+
+        };
+        let training = new Drupal.trainingCalendar.TrainingModel(trainingData);
+
+        let viewOptions = {
+            model: training,
+        };
 
         let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
         $trainingCalendarModal.html(TrainingEditModalView.render().el);

@@ -39,7 +39,7 @@
              * Node type
              * @type {string}
              */
-            "type": "",
+            "type": "training",
 
             /** @type {string} */
             "title": "",
@@ -48,7 +48,7 @@
             "body": "",
 
             /** @type {number} */
-            "status": 0,
+            "status": 1,
 
             /** @type {moment} */
             "field_start_date": null,
@@ -57,7 +57,7 @@
             "field_total_distance": "",
 
             /** @type {number} */
-            "field_activity_type": 0,
+            "field_activity_type": 3,
 
             /** @type {moment} */
             "created": null,
@@ -68,13 +68,22 @@
 
         url: function () {
             let id = this.get(this.idAttribute);
-            return Drupal.url("training_calendar/rest/training/" + encodeURIComponent(id));
+            return Drupal.url('training_calendar/rest/training'
+                + (id ? '/' + encodeURIComponent(id) : '')
+            );
         },
 
         save: function (attrs, options) {
             options = options || {};
-            options.patch = true;
             options.wait = true;
+
+            let id = this.get(this.idAttribute);
+            if(id)
+            {
+                options.patch = true;
+            } else {
+                options.method = "POST";
+            }
 
             attrs = this.getSaveData();
             console.info("SAVING MODEL DATA:  ", attrs);
