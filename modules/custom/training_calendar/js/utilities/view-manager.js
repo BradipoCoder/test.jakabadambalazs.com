@@ -70,8 +70,11 @@
                     //element.addClass("custom-ev-class");
                     let $eventContent = $('.fc-content', element);
 
+                    let activityImageUrl = Drupal.url("modules/custom/training_calendar/images/activity_type/"+event.field_activity_type +".png");
+
                     //DISTANCE
                     $eventContent.html("");
+                    $eventContent.append("<div class='fc-activity-type'><img src='"+activityImageUrl+"'/></div>");
                     $eventContent.append("<div class='fc-title'>" + event.title + "</div>");
                     $eventContent.append("<div class='fc-distance'>" + event.distance_km + "Km</div>");
                 },
