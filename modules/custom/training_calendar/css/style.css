@@ -12,6 +12,7 @@
  * @file: structure.less
  */
 .training-calendar-overlay {
+  z-index: 999;
   background: #fff;
   position: fixed;
   bottom: 0;
