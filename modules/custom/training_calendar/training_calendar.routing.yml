@@ -5,19 +5,30 @@ training_calendar.training_calendar_controller_calendar:
     _title: 'Training Calendar - Main calendar page'
   requirements:
     _permission: 'tc_access'
+
+
 training_calendar.training_calendar_controller_refresh_tokens:
   path: '/training_calendar/rest/refresh_tokens'
   defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::refreshTokens'
+    _controller: '\Drupal\training_calendar\Controller\Rest\OauthController::refreshTokens'
     _title: 'Training Calendar - refreshTokens'
   requirements:
       _access: 'TRUE'
+
+training_calendar.training_calendar_controller_ping:
+  path: '/training_calendar/rest/ping'
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\Rest\OauthController::ping'
+    _title: 'Training Calendar - ping'
+  requirements:
+      _access: 'TRUE'
+
 
 training_calendar.training_calendar_controller_trainings:
   path: '/training_calendar/rest/trainings'
   methods: ['GET']
   defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::getTrainings'
+    _controller: '\Drupal\training_calendar\Controller\Rest\TrainingController::getTrainings'
     _title: 'Training Calendar - get trainings list'
   requirements:
       _access: 'TRUE'
@@ -26,7 +37,7 @@ training_calendar.training_calendar_controller_training_create:
   path: '/training_calendar/rest/trainings'
   methods: ['POST']
   defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::createTraining'
+    _controller: '\Drupal\training_calendar\Controller\Rest\TrainingController::createTraining'
     _title: 'Training Calendar - create training'
   requirements:
       _access: 'TRUE'
@@ -35,7 +46,7 @@ training_calendar.training_calendar_controller_training_store:
   path: '/training_calendar/rest/trainings/{id}'
   methods: ['PATCH']
   defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::storeTraining'
+    _controller: '\Drupal\training_calendar\Controller\Rest\TrainingController::storeTraining'
     _title: 'Training Calendar - update training'
   requirements:
       _access: 'TRUE'
@@ -44,15 +55,9 @@ training_calendar.training_calendar_controller_training_detete:
   path: '/training_calendar/rest/trainings/{id}'
   methods: ['DELETE']
   defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::deleteTraining'
+    _controller: '\Drupal\training_calendar\Controller\Rest\TrainingController::deleteTraining'
     _title: 'Training Calendar - delete training'
   requirements:
       _access: 'TRUE'
 
-training_calendar.training_calendar_controller_ping:
-  path: '/training_calendar/rest/ping'
-  defaults:
-    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::ping'
-    _title: 'Training Calendar - ping'
-  requirements:
-      _access: 'TRUE'
+

@@ -67,6 +67,8 @@
  */
 #training-calendar-main .tc-calendar .fc-event {
   border-color: #bbbbbb;
+  transition: none;
+  -webkit-transition: none;
 }
 #training-calendar-main .tc-calendar .fc-event.activity-type-3 {
   background-color: #d29eff;
