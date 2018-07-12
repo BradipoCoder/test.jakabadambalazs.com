@@ -317,23 +317,5 @@
             return answer;
         },
 
-
-        /**
-         *
-         * @return {moment}
-         */
-        getLoadedFromDate: function()
-        {
-            return loaded_from_date;
-        },
-
-        /**
-         *
-         * @return {moment}
-         */
-        getLoadedToDate: function()
-        {
-            return loaded_to_date;
-        },
     });
 })(Backbone, Drupal, _, moment);

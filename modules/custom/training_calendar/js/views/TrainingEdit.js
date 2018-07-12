@@ -13,16 +13,16 @@
         fromRaw: function(rawData, model)
         {
             let d = model.get("field_start_date");
-            let formattedData = d.format("YYYY-MM-DD");
-            console.warn("MF(fromRaw):", formattedData);
-            return formattedData;
+            //let formattedData = d.format("YYYY-MM-DD");
+            //console.warn("MF(fromRaw):", formattedData);
+            return d.format("YYYY-MM-DD");
         },
         toRaw: function(formattedDate, model)
         {
             formattedDate = formattedDate + 'T12:00:00.000Z';
-            let rawDate = moment(formattedDate);
-            console.warn("MF(toRaw):" + formattedDate + " - " + rawDate);
-            return rawDate;
+            //let rawDate = moment(formattedDate);
+            //console.warn("MF(toRaw):" + formattedDate + " - " + rawDate);
+            return moment(formattedDate);
         }
     });
 
@@ -172,10 +172,6 @@
             );
 
             editForm.render();
-
-            this.events = {
-                'click .btn.submit-model': 'doFunkyStuff',
-            };
 
             return this;
         },
