@@ -63,6 +63,7 @@
                 eventClick: fullCalendarEventClick,
                 eventDrop: fullCalendarEventDrop,
                 eventRender: fullCalendarEventRender,
+                dayClick: fullCalendarDayClick,
             });
         },
 
@@ -160,11 +161,28 @@
         console.log('Creating New Event');
         let trainingData = {
             title: '',
-            field_total_distance: 5000,
             field_start_date: moment(),
         };
 
-        //let training = new Drupal.trainingCalendar.TrainingModel(trainingData);
+        let training = Drupal.trainingCalendar.Utilities.ModelManager.getNewTrainingModel(trainingData);
+
+        let viewOptions = {
+            model: training,
+        };
+
+        let TrainingEditModalView = new Drupal.trainingCalendar.TrainingEdit(viewOptions);
+        $trainingCalendarModal.html(TrainingEditModalView.render().el);
+    };
+
+    let fullCalendarDayClick = function(clickedDate, jsEvent, view)
+    {
+        console.log('Clicked on day: ' + clickedDate.format());
+
+        let trainingData = {
+            title: '',
+            field_start_date: clickedDate,
+        };
+
         let training = Drupal.trainingCalendar.Utilities.ModelManager.getNewTrainingModel(trainingData);
 
         let viewOptions = {

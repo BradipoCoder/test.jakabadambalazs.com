@@ -99,8 +99,29 @@
 
         deleteTraining: function()
         {
-            alert("DELETE? Not implemented yet!");
+            if(!confirm("DELETE?"))
+            {
+                this.triggerCancel();
+                return true;
+            }
+
+            let destroyOptions = {
+                success: function(model, response, options)
+                {
+
+
+                    console.info('Calendar event was deleted.');
+                    Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
+                },
+                error: function(model, response, options)
+                {
+                    console.error('Error deleting calendar event!');
+                    Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
+                }
+            };
+
             this.triggerCancel();
+            this.model.destroy(destroyOptions);
         },
 
         beforeSubmit: function()

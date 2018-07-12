@@ -238,6 +238,51 @@ class TrainingCalendarController extends ControllerBase {
   }
 
   /**
+   * @param $id
+   *
+   * @return JsonResponse
+   * @throws InvalidPluginDefinitionException
+   * @throws EntityStorageException
+   */
+  public function deleteTraining($id)
+  {
+    if (!\Drupal::currentUser()->hasPermission('tc_access')) {
+      return $this->getUnauthorizedJsonResponse();
+    }
+
+    $nodeStorage = $this->etm->getStorage("node");
+
+    /** @var Node $node */
+    $node = $nodeStorage->load($id);
+
+    if (!$node) {
+      return new JsonResponse(
+        [
+          "message" => "Node ${id} not found!"
+        ]
+        , 404
+      );
+    }
+
+
+    if($node->getOwnerId() != \Drupal::currentUser()->id())
+    {
+      return new JsonResponse(
+        [
+          "message" => "Node ${id} is not yours!"
+        ]
+        , 401
+      );
+    }
+
+    $node->delete();
+
+    $answer = [];
+
+    return new JsonResponse($answer, 204);
+  }
+
+  /**
    * @param Node $node
    * @param ParameterBag $post
    *

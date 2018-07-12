@@ -40,6 +40,15 @@ training_calendar.training_calendar_controller_training_store:
   requirements:
       _access: 'TRUE'
 
+training_calendar.training_calendar_controller_training_detete:
+  path: '/training_calendar/rest/trainings/{id}'
+  methods: ['DELETE']
+  defaults:
+    _controller: '\Drupal\training_calendar\Controller\TrainingCalendarController::deleteTraining'
+    _title: 'Training Calendar - delete training'
+  requirements:
+      _access: 'TRUE'
+
 training_calendar.training_calendar_controller_ping:
   path: '/training_calendar/rest/ping'
   defaults:
