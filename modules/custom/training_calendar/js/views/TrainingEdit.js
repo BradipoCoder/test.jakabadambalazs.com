@@ -79,19 +79,28 @@
     ];
 
 
-
-
     Drupal.trainingCalendar.TrainingEdit = Backbone.Modal.extend({
         //tagName: 'div',
         //template: '#template--training-edit',
         template: _.template($('#template--training-edit').html()),
-        submitEl: '.btn.submit-model',
+        submitEl: '.btn.submit-modal',
+        cancelEl: '.btn.cancel-modal',
 
 
         initialize: function initialize()
         {
             Backbone.Modal.prototype.initialize.apply(this);
             //this.listenTo(this.model, 'change', this.render);
+        },
+
+        events: {
+            'click .btn.delete-modal': 'deleteTraining',
+        },
+
+        deleteTraining: function()
+        {
+            alert("DELETE? Not implemented yet!");
+            this.triggerCancel();
         },
 
         beforeSubmit: function()
@@ -104,6 +113,16 @@
             let saveOptions = {
                 success: function(model, response, options)
                 {
+                    if(model.isNew())
+                    {
+                        let storedData = _.first(response);
+                        if(_.has(storedData, "id"))
+                        {
+                            model.set("id", storedData.id);
+                            console.info('new model now has ID:' + model.getId());
+                        }
+                    }
+
                     console.info('Calendar event was saved.');
                     Drupal.trainingCalendar.Utilities.ViewManager.refetchEventsForCurrentView();
                 },

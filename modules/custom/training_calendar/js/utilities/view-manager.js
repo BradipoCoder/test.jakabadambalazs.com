@@ -159,8 +159,8 @@
     {
         console.log('Creating New Event');
         let trainingData = {
-            title: 'New run...',
-            field_total_distance: 3599,
+            title: '',
+            field_total_distance: 5000,
             field_start_date: moment(),
         };
 

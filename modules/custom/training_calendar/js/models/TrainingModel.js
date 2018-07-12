@@ -66,6 +66,10 @@
             "changed": null,
         },
 
+        getId: function()
+        {
+            return this.get(this.idAttribute);
+        },
 
         url: function () {
             return Backbone.Model.prototype.url.apply(this);
@@ -80,7 +84,7 @@
             options = options || {};
             options.wait = true;
 
-            let id = this.get(this.idAttribute);
+            let id = this.getId();
             if(id)
             {
                 options.patch = true;
